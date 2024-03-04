@@ -1,12 +1,11 @@
 import "./App.css";
-import { Button } from "@/components/ui/button";
+import PostCards from "./pages/PostCards";
 
 function App() {
   return (
-    <>
-      <h1>SimpliAnimate</h1>
-      <Button variant="destructive">Namaskara</Button>
-    </>
+    <div style={{ height: "calc(100vh - 45px)" }}>
+      <PostCards />
+    </div>
   );
 }
 
