@@ -26,7 +26,9 @@ const PostCards = () => {
     setFormData((prevState) => ({ ...prevState, [key]: value }));
   };
 
-  const handleExportAnimation = () => {};
+  const handleExportAnimation = (fileName: string, fileFormat: string) => {
+    console.log(fileName, fileFormat);
+  };
 
   const handlegetSize = (size: number) => {
     setCanvasDimesnion((prevState) => ({

@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import ExportModal from "@/components/export-modal";
 
 const TemplateNavbar = ({
   screenResolution,
@@ -16,7 +17,7 @@ const TemplateNavbar = ({
   screenResolution: string;
   handlePressBack: () => void;
   handleFormDataChange: (key: string, value: string) => void;
-  handleExportAnimation: () => void;
+  handleExportAnimation: (fileName: string, fileFormat: string) => void;
 }) => {
   return (
     <div
@@ -52,9 +53,7 @@ const TemplateNavbar = ({
           </ToggleGroupItem>
         </ToggleGroup>
       </div>
-      <Button size="sm" onClick={handleExportAnimation}>
-        Export
-      </Button>
+      <ExportModal handleExportAnimation={handleExportAnimation} />
     </div>
   );
 };
