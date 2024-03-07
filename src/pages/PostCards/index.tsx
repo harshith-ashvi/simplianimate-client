@@ -17,7 +17,11 @@ const PostCards = () => {
   const [formData, setFormData] = useState({
     screenResolution: "Portrait",
     backgroundColor: "#ffffff",
-    animationType: "",
+    flyerType: "text",
+    font: "Arial",
+    fontSize: 200,
+    fontColor: "#1616FF",
+    flyerText: `Let's Goooo!`,
   });
 
   const handlePressBack = () => {};

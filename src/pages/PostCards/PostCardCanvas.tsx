@@ -1,3 +1,4 @@
+import { utils } from "@/utils";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 const aspectRatio: {
@@ -18,9 +19,14 @@ const PostCardCanvas = ({
   formData: {
     screenResolution: string;
     backgroundColor: string;
-    animationType: string;
+    flyerType: string;
+    font: string;
+    fontSize: number;
+    fontColor: string;
+    flyerText: string;
   };
 }) => {
+  // console.log("flyerText", formData.flyerText.split("\n"));
   const [canvasDimension, setCanvasDimesnion] = useState({
     width: (height * 9) / 16,
     height: height,
@@ -61,9 +67,74 @@ const PostCardCanvas = ({
       const width = canvasRef.current.width;
       const height = canvasRef.current.height;
 
+      const fl = 300;
+      const shapes = [];
+      const numShapes = 24;
+
       if (!once.current) {
+        // once.current = true;
+        context.clearRect(0, 0, width, height);
+        // context.clearRect(-width / 2, -height / 2, width, height);
         context.fillStyle = formData.backgroundColor;
         context.fillRect(0, 0, width, height);
+
+        for (let i = 0; i < numShapes; i++) {
+          shapes.push({
+            x: utils.randomRange(-2000, 2000),
+            y: utils.randomRange(-2000, 2000),
+            z: utils.randomRange(0, 10000),
+            // char: String.fromCharCode(utils.randomRange(65, 91)),
+            char: formData.flyerText,
+          });
+        }
+
+        flyerAnimation();
+      }
+
+      function flyerAnimation() {
+        shapes.sort((a, b) => b.z - a.z);
+        context.clearRect(0, 0, width, height);
+
+        context.fillStyle = formData.backgroundColor;
+        context.fillRect(0, 0, width, height);
+
+        context.save();
+        context.translate(width / 2, height / 2);
+        let shape = {};
+        let perspective = 0;
+        for (let i = 0; i < numShapes; i++) {
+          shape = shapes[i];
+          perspective = fl / (fl + shape.z);
+
+          context.save();
+          context.translate(shape.x * perspective, shape.y * perspective);
+          context.scale(perspective, perspective);
+          context.fillStyle = formData.fontColor;
+
+          context.font = `bold ${formData.fontSize}px ${formData.font}`;
+          context.textAlign = "center";
+          context.textBaseline = "middle";
+          context.fillText(shape.char, -100, -100);
+          // context.drawImage(
+          //   imagesRef.current[shape.imageSRC],
+          //   -100,
+          //   -100,
+          //   700,
+          //   700
+          //   // 480,
+          //   // 270
+          // );
+
+          context.restore();
+
+          shape.z -= 10;
+          if (shape.z < 0) {
+            shape.z = 10000;
+          }
+        }
+        context.restore();
+
+        requestAnimationFrame(flyerAnimation);
       }
     }
   }, [formData, canvasDimension]);
