@@ -21,6 +21,7 @@ const PostCards = () => {
     font: "Arial",
     fontSize: 200,
     fontColor: "#1616FF",
+    direction: "forward",
     flyerText: `Let's Goooo!`,
   });
 

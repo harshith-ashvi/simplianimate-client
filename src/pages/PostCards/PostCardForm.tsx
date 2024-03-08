@@ -1,5 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   Select,
   SelectContent,
@@ -43,6 +44,7 @@ const PostCardForm = ({
     font: string;
     fontSize: number;
     fontColor: string;
+    direction: string;
     flyerText: string;
   };
   handleFormDataChange: (key: string, value: string) => void;
@@ -119,6 +121,23 @@ const PostCardForm = ({
           value={formData.fontColor}
           onChange={(e) => handleFormDataChange("fontColor", e.target.value)}
         />
+      </div>
+      <div>
+        <Label htmlFor="direction">Direction</Label>
+        <RadioGroup
+          defaultValue="option-one"
+          value={formData.direction}
+          onValueChange={(value) => handleFormDataChange("direction", value)}
+        >
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem value="forward" id="forward" />
+            <Label htmlFor="forward">Forward</Label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <RadioGroupItem value="backward" id="backward" />
+            <Label htmlFor="backward">Backward</Label>
+          </div>
+        </RadioGroup>
       </div>
       <div className="flex items-center gap-5">
         <Label htmlFor="text">Flyer Text</Label>

@@ -23,6 +23,7 @@ const PostCardCanvas = ({
     font: string;
     fontSize: number;
     fontColor: string;
+    direction: string;
     flyerText: string;
   };
 }) => {
@@ -127,9 +128,16 @@ const PostCardCanvas = ({
 
           context.restore();
 
-          shape.z -= 10;
-          if (shape.z < 0) {
-            shape.z = 10000;
+          if (formData.direction === "forward") {
+            shape.z -= 10;
+            if (shape.z < 0) {
+              shape.z = 10000;
+            }
+          } else {
+            shape.z += 10;
+            if (shape.z > 10000) {
+              shape.z = 0;
+            }
           }
         }
         context.restore();
