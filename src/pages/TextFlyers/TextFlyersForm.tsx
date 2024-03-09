@@ -56,7 +56,7 @@ const TextFlyersForm = ({
       className="p-5"
       style={{ backgroundColor: "#f4f6fb", height: "calc(100vh - 45px)" }}
     >
-      <div className="flex items-center gap-5">
+      <div>
         <Label htmlFor="color">Background color</Label>
         <Input
           id="color"
@@ -67,7 +67,7 @@ const TextFlyersForm = ({
           }
         />
       </div>
-      <div className="flex items-center gap-5">
+      <div>
         <Label htmlFor="color">Font</Label>
         <Select
           defaultValue="Arial"
@@ -88,7 +88,7 @@ const TextFlyersForm = ({
           </SelectContent>
         </Select>
       </div>
-      <div className="flex items-center gap-5">
+      <div>
         <Label htmlFor="fontSize">Font Size</Label>
         <Input
           id="fontSize"
@@ -97,7 +97,7 @@ const TextFlyersForm = ({
           onChange={(e) => handleFormDataChange("fontSize", e.target.value)}
         />
       </div>
-      <div className="flex items-center gap-5">
+      <div>
         <Label htmlFor="color">Font color</Label>
         <Input
           id="color"
@@ -106,12 +106,13 @@ const TextFlyersForm = ({
           onChange={(e) => handleFormDataChange("fontColor", e.target.value)}
         />
       </div>
-      <div>
+      <div className="mb-2">
         <Label htmlFor="direction">Direction</Label>
         <RadioGroup
           defaultValue="option-one"
           value={formData.direction}
           onValueChange={(value) => handleFormDataChange("direction", value)}
+          className="mt-1"
         >
           <div className="flex items-center space-x-2">
             <RadioGroupItem value="forward" id="forward" />
@@ -123,7 +124,7 @@ const TextFlyersForm = ({
           </div>
         </RadioGroup>
       </div>
-      <div>
+      <div className="mb-2">
         <Label htmlFor="direction">Flyers Speed</Label>
         <Slider
           defaultValue={[formData.speed]}
@@ -132,9 +133,10 @@ const TextFlyersForm = ({
           step={1}
           value={[formData.speed]}
           onValueChange={([value]) => handleFormDataChange("speed", value)}
+          className="mt-2"
         />
       </div>
-      <div>
+      <div className="mb-2">
         <Label htmlFor="direction">Flyers Count</Label>
         <Slider
           defaultValue={[formData.flyersCount]}
@@ -145,9 +147,10 @@ const TextFlyersForm = ({
           onValueChange={([value]) =>
             handleFormDataChange("flyersCount", value)
           }
+          className="mt-2"
         />
       </div>
-      <div className="flex items-center gap-5">
+      <div>
         <Label htmlFor="text">Flyer Text</Label>
         <Textarea
           id="text"

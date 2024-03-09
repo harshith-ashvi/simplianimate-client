@@ -19,7 +19,17 @@ const TextFlyers = () => {
     width: window.innerWidth * 0.85,
     height: window.innerHeight - 45,
   });
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+    screenResolution: string;
+    backgroundColor: string;
+    font: string;
+    fontSize: number;
+    fontColor: string;
+    direction: string;
+    speed: number;
+    flyersCount: number;
+    flyerText: string;
+  }>({
     screenResolution: "Portrait",
     backgroundColor: "#ffffff",
     font: "Arial",
