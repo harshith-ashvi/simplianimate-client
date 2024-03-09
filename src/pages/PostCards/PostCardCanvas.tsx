@@ -1,5 +1,6 @@
 import { utils } from "@/utils";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import FileSaver from "file-saver";
 
 const aspectRatio: {
   [key: string]: { aspectRatioWidth: number; aspectRatioHeight: number };
@@ -13,6 +14,8 @@ const PostCardCanvas = ({
   width,
   height,
   formData,
+  downloadFile,
+  resetFileDownload,
 }: {
   width: number;
   height: number;
@@ -28,6 +31,12 @@ const PostCardCanvas = ({
     flyersCount: number;
     flyerText: string;
   };
+  downloadFile: {
+    canDownload: boolean;
+    fileName: string;
+    fileFormat: string;
+  };
+  resetFileDownload: () => void;
 }) => {
   const [canvasDimension, setCanvasDimesnion] = useState({
     width: (height * 9) / 16,
@@ -138,6 +147,38 @@ const PostCardCanvas = ({
       }
     }
   }, [formData, canvasDimension]);
+
+  const downloadAnimation = () => {
+    if (canvasRef.current === null) return;
+    const chunks = []; // here we will store our recorded media chunks (Blobs)
+    const stream = canvasRef.current.captureStream(60); // grab our canvas MediaStream
+    const options = { mimeType: `video/webm` };
+    const rec = new MediaRecorder(stream, options); // init the recorder
+    // every time the recorder has new data, we will store it in our array
+    rec.ondataavailable = (e) => chunks.push(e.data);
+    // only when the recorder stops, we construct a complete Blob from all the chunks
+    // rec.onstop = () => exportVid(new Blob(chunks, { type: "video/webm" }));
+    rec.onstop = () =>
+      exportVid(new Blob(chunks, { type: `video/${downloadFile.fileFormat}` }));
+    // rec.onstop = () => exportVid(new Blob(chunks, { type: "video/mp4" }));
+
+    rec.start();
+    setTimeout(() => rec.stop(), 8000); // stop recording in 3s
+  };
+
+  function exportVid(blob) {
+    const fileNameAndFormat =
+      `${downloadFile.fileName}.${downloadFile.fileFormat}` ??
+      `video.${downloadFile.fileFormat}`;
+    FileSaver.saveAs(blob, fileNameAndFormat);
+  }
+
+  useEffect(() => {
+    if (downloadFile.canDownload) {
+      downloadAnimation();
+      resetFileDownload();
+    }
+  }, [downloadFile]);
 
   return (
     <div

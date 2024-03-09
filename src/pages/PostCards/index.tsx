@@ -10,6 +10,11 @@ import PostCardCanvas from "./PostCardCanvas";
 import PostCardForm from "./PostCardForm";
 
 const PostCards = () => {
+  const [downloadFile, setDownloadFile] = useState({
+    canDownload: false,
+    fileName: "",
+    fileFormat: "",
+  });
   const [canvasDimension, setCanvasDimesnion] = useState({
     width: window.innerWidth * 0.85,
     height: window.innerHeight - 45,
@@ -34,8 +39,11 @@ const PostCards = () => {
   };
 
   const handleExportAnimation = (fileName: string, fileFormat: string) => {
-    console.log(fileName, fileFormat);
+    setDownloadFile({ canDownload: true, fileName, fileFormat });
   };
+
+  const resetFileDownload = () =>
+    setDownloadFile({ canDownload: false, fileName: "", fileFormat: "" });
 
   const handlegetSize = (size: number) => {
     setCanvasDimesnion((prevState) => ({
@@ -65,6 +73,8 @@ const PostCards = () => {
             width={canvasDimension.width / 100}
             height={canvasDimension.height}
             formData={formData}
+            downloadFile={downloadFile}
+            resetFileDownload={resetFileDownload}
           />
         </ResizablePanel>
       </ResizablePanelGroup>
