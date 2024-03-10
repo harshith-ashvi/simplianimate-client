@@ -11,7 +11,7 @@ const Home = () => {
   return (
     <div style={{ maxWidth: 1280, margin: "0 auto" }}>
       <div className="py-2">
-        <h1 className="text-3xl">Simplianimate</h1>
+        <h1 className="text-3xl">SimpliAnimate</h1>
       </div>
       <div className="my-10">
         <h4 className="mb-5">Text Based</h4>
