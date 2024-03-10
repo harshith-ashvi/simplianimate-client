@@ -1,24 +1,28 @@
+import { useNavigate } from "react-router-dom";
 import {
   RectangleVertical,
   RectangleHorizontal,
   Square,
   ChevronLeft,
 } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import ExportModal from "@/components/export-modal";
 
 const TemplateNavbar = ({
   screenResolution,
-  handlePressBack,
   handleFormDataChange,
   handleExportAnimation,
 }: {
   screenResolution: string;
-  handlePressBack: () => void;
   handleFormDataChange: (key: string, value: string) => void;
   handleExportAnimation: (fileName: string, fileFormat: string) => void;
 }) => {
+  const navigate = useNavigate();
+
+  const handlePressBack = () => navigate("/");
+
   return (
     <div
       style={{

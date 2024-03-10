@@ -66,8 +66,6 @@ const TextFlyers = () => {
     }
   };
 
-  const handlePressBack = () => {};
-
   const handleFormDataChange = (key: string, value: string | number) => {
     setFormData((prevState) => ({ ...prevState, [key]: value }));
   };
@@ -96,7 +94,6 @@ const TextFlyers = () => {
       />
       <TemplateNavbar
         screenResolution={formData.screenResolution}
-        handlePressBack={handlePressBack}
         handleFormDataChange={handleFormDataChange}
         handleExportAnimation={handleExportAnimation}
       />
