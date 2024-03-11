@@ -3,6 +3,7 @@ import "./App.css";
 
 import Home from "./pages/Home";
 import TextFlyers from "./pages/TextFlyers";
+import TextReveal from "./pages/TextReveal";
 
 function App() {
   return (
@@ -14,6 +15,14 @@ function App() {
           element={
             <div style={{ height: "calc(100vh - 45px)" }}>
               <TextFlyers />
+            </div>
+          }
+        />
+        <Route
+          path="/text-reveal"
+          element={
+            <div style={{ height: "calc(100vh - 45px)" }}>
+              <TextReveal />
             </div>
           }
         />

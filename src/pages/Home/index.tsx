@@ -15,14 +15,17 @@ const Home = () => {
       </div>
       <div className="my-10">
         <h4 className="mb-5">Text Based</h4>
-        {textBasedAnimation.map((template) => (
-          <TemplateCard
-            name={template.name}
-            url={template.url}
-            img={template.img}
-            handleNavigate={handleNavigate}
-          />
-        ))}
+        <div className="flex flex-row flex-wrap gap-x-8">
+          {textBasedAnimation.map((template) => (
+            <TemplateCard
+              key={template.url}
+              name={template.name}
+              url={template.url}
+              img={template.img}
+              handleNavigate={handleNavigate}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

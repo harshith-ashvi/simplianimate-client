@@ -10,4 +10,9 @@ export const textBasedAnimation: {
     url: "/text-flyers",
     img: textFlyers,
   },
+  {
+    name: "Text Reveal",
+    url: "/text-reveal",
+    img: textFlyers,
+  },
 ];
