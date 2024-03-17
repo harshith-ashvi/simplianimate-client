@@ -12,7 +12,7 @@ import {
 // import { Slider } from "@/components/ui/slider";
 import { Textarea } from "@/components/ui/textarea";
 
-const textType = ["Unicode", "Custom"];
+const textType = ["Prefilled", "Custom"];
 
 const fpsOptions = [15, 30, 60];
 
@@ -33,7 +33,7 @@ const MatrixRainForm = ({
 }) => {
   return (
     <div
-      className="p-5"
+      className="p-5 overflow-y-auto"
       style={{ backgroundColor: "#f4f6fb", height: "calc(100vh - 45px)" }}
     >
       <div>
@@ -53,7 +53,9 @@ const MatrixRainForm = ({
           id="fontSize"
           type="number"
           value={formData.fontSize}
-          onChange={(e) => handleFormDataChange("fontSize", e.target.value)}
+          onChange={(e) =>
+            handleFormDataChange("fontSize", Number(e.target.value))
+          }
         />
       </div>
       <div>
@@ -89,7 +91,7 @@ const MatrixRainForm = ({
       <div>
         <Label htmlFor="textType">Text Type</Label>
         <Select
-          defaultValue="Unicode"
+          defaultValue="Prefilled"
           value={formData.textType}
           onValueChange={(value) => handleFormDataChange("textType", value)}
         >
@@ -107,11 +109,7 @@ const MatrixRainForm = ({
           </SelectContent>
         </Select>
       </div>
-      {formData.textType === "Unicode" ? (
-        <>
-          <h1>Hello</h1>
-        </>
-      ) : (
+      {formData.textType === "Custom" && (
         <div>
           <Label htmlFor="text">Text</Label>
           <Textarea

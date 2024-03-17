@@ -2,6 +2,8 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import FileSaver from "file-saver";
 
+import { hexCodeToRGB } from "@/utils/converters";
+
 const aspectRatio: {
   [key: string]: { aspectRatioWidth: number; aspectRatioHeight: number };
 } = {
@@ -26,7 +28,10 @@ class EffectSymbol {
     this.canvasHeight = canvasHeight;
     this.text = "";
   }
-  draw(context: CanvasRenderingContext2D) {
+  draw(context: CanvasRenderingContext2D, customCharacters: string) {
+    this.characters = customCharacters.length
+      ? customCharacters
+      : this.characters;
     this.text = this.characters.charAt(
       Math.floor(Math.random() * this.characters.length)
     );
@@ -102,6 +107,7 @@ const MatrixRainCanvas = ({
   });
   const once = useRef(false);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const requestRef = useRef(0);
 
   useEffect(() => {
     const newHeight = height - 100;
@@ -137,6 +143,10 @@ const MatrixRainCanvas = ({
       const height = canvasRef.current.height;
 
       const matrixRainEffect = new Effect(width, height, formData.fontSize);
+      const backgroundColor: string = hexCodeToRGB(
+        formData.backgroundColor,
+        0.05
+      );
 
       let lastTime = 0;
       const fps = formData.fps;
@@ -148,21 +158,24 @@ const MatrixRainCanvas = ({
         const deltaTime = timestamp - lastTime;
         lastTime = timestamp;
         if (timer > nextFrame) {
-          context.fillStyle = "rgba(0, 0, 0, 0.05)";
+          context.fillStyle = backgroundColor;
           context.fillRect(0, 0, width, height);
           context.textAlign = "center";
           context.fillStyle = formData.fontColor;
-          context.font = matrixRainEffect.fontSize + "px monospace";
-          matrixRainEffect.symbols.forEach((symbol) => symbol.draw(context));
+          context.font = formData.fontSize + "px monospace";
+          matrixRainEffect.symbols.forEach((symbol) =>
+            symbol.draw(context, formData.text)
+          );
           timer = 0;
         } else {
           timer += deltaTime;
         }
-        requestAnimationFrame(matrixRainAnimate);
+        requestRef.current = requestAnimationFrame(matrixRainAnimate);
       }
 
       matrixRainAnimate(0);
     }
+    return () => cancelAnimationFrame(requestRef.current);
   }, [formData, canvasDimension]);
 
   const downloadAnimation = () => {

@@ -34,11 +34,11 @@ const MatrixRain = () => {
     text: string;
   }>({
     screenResolution: "Portrait",
-    backgroundColor: "rgba(0, 0, 0, 0)",
+    backgroundColor: "#000000",
     fontSize: 24,
     fontColor: "#0AFF0A",
     fps: 15,
-    textType: "Unicode",
+    textType: "Prefilled",
     unicode: "",
     text: "",
   });
