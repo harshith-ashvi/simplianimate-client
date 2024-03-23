@@ -1,7 +1,10 @@
 import { useNavigate } from "react-router-dom";
 
 import TemplateCard from "./templateCard";
-import { textBasedAnimation } from "@/data/animationTemplates";
+import {
+  imageBasedAnimation,
+  textBasedAnimation,
+} from "@/data/animationTemplates";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -17,6 +20,20 @@ const Home = () => {
         <h4 className="mb-5">Text Based</h4>
         <div className="flex flex-row flex-wrap gap-x-8">
           {textBasedAnimation.map((template) => (
+            <TemplateCard
+              key={template.url}
+              name={template.name}
+              url={template.url}
+              img={template.img}
+              handleNavigate={handleNavigate}
+            />
+          ))}
+        </div>
+      </div>
+      <div className="my-10">
+        <h4 className="mb-5">Image Based</h4>
+        <div className="flex flex-row flex-wrap gap-x-8">
+          {imageBasedAnimation.map((template) => (
             <TemplateCard
               key={template.url}
               name={template.name}

@@ -22,3 +22,15 @@ export const textBasedAnimation: {
   //   img: textFlyers,
   // },
 ];
+
+export const imageBasedAnimation: {
+  name: string;
+  url: string;
+  img: string;
+}[] = [
+  {
+    name: "Image Flyers",
+    url: "/image-flyers",
+    img: textFlyers,
+  },
+];
