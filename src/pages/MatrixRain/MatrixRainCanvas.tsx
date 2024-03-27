@@ -3,14 +3,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import FileSaver from "file-saver";
 
 import { hexCodeToRGB } from "@/utils/converters";
-
-const aspectRatio: {
-  [key: string]: { aspectRatioWidth: number; aspectRatioHeight: number };
-} = {
-  Portrait: { aspectRatioWidth: 9, aspectRatioHeight: 16 },
-  Landscape: { aspectRatioWidth: 16, aspectRatioHeight: 9 },
-  Square: { aspectRatioWidth: 1, aspectRatioHeight: 1 },
-};
+import { aspectRatio } from "@/data/canvas";
 
 class EffectSymbol {
   characters: string;

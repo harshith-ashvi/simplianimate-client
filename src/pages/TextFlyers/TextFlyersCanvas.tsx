@@ -3,13 +3,7 @@ import { utils } from "@/utils";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import FileSaver from "file-saver";
 
-const aspectRatio: {
-  [key: string]: { aspectRatioWidth: number; aspectRatioHeight: number };
-} = {
-  Portrait: { aspectRatioWidth: 9, aspectRatioHeight: 16 },
-  Landscape: { aspectRatioWidth: 16, aspectRatioHeight: 9 },
-  Square: { aspectRatioWidth: 1, aspectRatioHeight: 1 },
-};
+import { aspectRatio } from "@/data/canvas";
 
 const TextFlyersCanvas = ({
   width,
@@ -88,11 +82,6 @@ const TextFlyersCanvas = ({
       const words = formData.flyerText.split("\n");
 
       if (!once.current && context) {
-        // once.current = true;
-        context.clearRect(0, 0, width, height);
-        context.fillStyle = formData.backgroundColor;
-        context.fillRect(0, 0, width, height);
-
         for (let i = 0; i < numShapes; i++) {
           shapes.push({
             x: utils.randomRange(-2000, 2000),
@@ -127,8 +116,8 @@ const TextFlyersCanvas = ({
           perspective = fl / (fl + shape.z);
 
           context.save();
-          context.translate(shape.x * perspective, shape.y * perspective);
           context.scale(perspective, perspective);
+          context.translate(shape.x, shape.y);
           context.fillStyle = formData.fontColor;
 
           context.font = `bold ${formData.fontSize}px ${formData.font}`;
