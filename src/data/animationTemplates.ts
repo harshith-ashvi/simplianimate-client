@@ -16,11 +16,11 @@ export const textBasedAnimation: {
     url: "/matrix-rain",
     img: matrixRain,
   },
-  // {
-  //   name: "Text Reveal",
-  //   url: "/text-reveal",
-  //   img: textFlyers,
-  // },
+  {
+    name: "Text Reveal",
+    url: "/text-reveal",
+    img: textFlyers,
+  },
 ];
 
 export const imageBasedAnimation: {

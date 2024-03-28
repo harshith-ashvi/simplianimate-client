@@ -4,8 +4,8 @@ import "./App.css";
 import Home from "./pages/Home";
 import TextFlyers from "./pages/TextFlyers";
 import MatrixRain from "./pages/MatrixRain";
-// import TextReveal from "./pages/TextReveal";
-import ImageFlyers from "./pages/ImageFlyers";
+import TextReveal from "./pages/TextReveal";
+// import ImageFlyers from "./pages/ImageFlyers";
 
 function App() {
   return (
@@ -28,22 +28,22 @@ function App() {
             </div>
           }
         />
-        {/* <Route
+        <Route
           path="/text-reveal"
           element={
             <div style={{ height: "calc(100vh - 45px)" }}>
               <TextReveal />
             </div>
           }
-        /> */}
-        <Route
+        />
+        {/* <Route
           path="/image-flyers"
           element={
             <div style={{ height: "calc(100vh - 45px)" }}>
               <ImageFlyers />
             </div>
           }
-        />
+        /> */}
       </Routes>
     </div>
   );
