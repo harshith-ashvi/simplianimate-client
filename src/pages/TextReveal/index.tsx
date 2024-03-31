@@ -35,12 +35,12 @@ const TextReveal = () => {
     text: string;
   }>({
     screenResolution: "Portrait",
-    backgroundColor: "#ffffff",
+    backgroundColor: "#A8DADC",
     font: "Arial",
-    fontSize: 200,
-    fontColor: "#1616FF",
+    fontSize: 36,
+    fontColor: "#E63946",
     stickSpeed: 10,
-    stickColor: "#1616FF",
+    stickColor: "#1D3557",
     stickSize: 10,
     text: "",
   });

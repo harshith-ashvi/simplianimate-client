@@ -41,8 +41,8 @@ const TextRevealCanvas = ({
     width: (height * 9) / 16,
     height: height,
   });
-  const once = useRef(false);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const requestIdRef = useRef(0);
 
   useEffect(() => {
     const newHeight = height - 100;
@@ -67,7 +67,6 @@ const TextRevealCanvas = ({
     }
 
     setCanvasDimesnion({ width: canvasWidth, height: canvasHeight });
-    once.current = false;
   }, [width, height, formData.screenResolution]);
 
   // Easing function for a smoother animation
@@ -85,66 +84,143 @@ const TextRevealCanvas = ({
 
       const width = canvasRef.current.width;
       const height = canvasRef.current.height;
-
+      let animationType = 'expand'
+      
       let startTime: number | null = null;
-      const duration = 2000; // 2 seconds in milliseconds
-      const startWidth = 0;
-      const endWidth = 20;
+      const duration = 1000; // 1 seconds in milliseconds
+      const startWidth = 10;
+      const endWidth = 10;
       const startHeight = 0;
-      const endHeight = 200;
-      const startX = 50;
-      const startY = 50;
+      const endHeight = 150;
 
-      // Function to update the rectangle size over time
-      const draw = (timestamp: number) => {
-        if (!startTime) startTime = timestamp;
-        const elapsedTime = timestamp - startTime;
-        const width = easeInOutQuad(
-          elapsedTime,
-          startWidth,
-          endWidth - startWidth,
-          duration
-        );
-        const height = easeInOutQuad(
-          elapsedTime,
-          startHeight,
-          endHeight - startHeight,
-          duration
-        );
+      let sliderMoveTime: number | null = null;
+      const sliderMoveDuration = 1500; // 1.5 seconds in milliseconds
+      const sliderStartingXPosition = (-width / 2) + 30
+      const sliderEndingXPosition = (width / 2) - 30
 
-        context.clearRect(0, 0, width, height); // Clear the canvas
-        context.fillStyle = "#FF0000";
-        context.fillRect(startX, startY, width, height);
-
-        if (elapsedTime < duration) {
-          // Continue the animation loop
-          requestAnimationFrame(draw);
+      // Function to draw a rotated rectangle with smooth edges
+      function drawRotatedRect(x:number, y:number, width:number, height: number, angle: number, isMask?: boolean) {
+        if(!context) return
+        context.save(); // Save the current state
+        context.translate(x, y); // Move to the rectangle center
+        context.rotate(angle); // Rotate
+        context.translate(-x, -y); // Move back
+        context.beginPath();
+        context.rect(x - width / 2, y - height / 2, width, height); // Draw the rectangle
+        if(isMask) {
+          context.fillStyle = formData.backgroundColor
+        } else {
+          context.fillStyle = formData.stickColor;
         }
-      };
+        context.fill();
+        context.restore(); // Restore the state
+      }
 
-      requestAnimationFrame(draw);
-      context.save();
-      context.translate(width / 2, height / 2);
-      context.moveTo((-width / 2) + 30, -20);
+      function animate(timestamp: number) {
+        if(!context) return
+        if(animationType === 'expand'){
+          if (!startTime) startTime = timestamp;
+          const elapsedTime = timestamp - startTime;
+          const sliderWidth = easeInOutQuad(
+            elapsedTime,
+            startWidth,
+            endWidth - startWidth,
+            duration
+          );
+          const sliderHeight = easeInOutQuad(
+            elapsedTime,
+            startHeight,
+            endHeight - startHeight,
+            duration
+          );
+  
+  
+          context.clearRect(0, 0, width, height); // Clear the canvas
+          context.fillStyle = formData.backgroundColor;
+          context.fillRect(0, 0, width, height);
+          context.save();
+          context.translate(width / 2, height / 2);
+          // Draw a rectangle
+          drawRotatedRect((-width / 2) + 30, 0, sliderWidth, sliderHeight, 10 * Math.PI / 180);
+          drawRotatedRect((-width / 2) + 265, 0, width, height, 10 * Math.PI / 180, true);
+          context.restore()
+  
+          if (elapsedTime < duration) {
+            // Continue the animation loop
+            requestIdRef.current = requestAnimationFrame(animate);
+          } else {
+            startTime = null
+            animationType = 'moveForward'
+            requestIdRef.current = requestAnimationFrame(animate);
+          }
+        } else if(animationType === 'moveForward') {
+          if (!sliderMoveTime) sliderMoveTime = timestamp;
+          const elapsedTime = timestamp - sliderMoveTime;
+          const sliderXPosition = easeInOutQuad(
+            elapsedTime,
+            sliderStartingXPosition,
+            sliderEndingXPosition - sliderStartingXPosition,
+            sliderMoveDuration
+          );
 
-      // Draw line to point (B)
-      context.lineTo((-width / 2) + 50, -20);
+          context.clearRect(0, 0, width, height); // Clear the canvas
+          context.fillStyle = formData.backgroundColor;
+          context.fillRect(0, 0, width, height);
+          context.save();
+          context.translate(width / 2, height / 2);
 
-      // Draw line to point (C)
-      context.lineTo((-width / 2) + 40, 20);
+          context.textAlign = "center";
+          context.fillStyle = formData.fontColor;
+          context.font = `${formData.fontSize}px ${formData.font}`;
+          context.fillText("Harshith", 0, 0)  
 
-      // Draw line to point (D)
-      context.lineTo((-width / 2) + 20, 20);
+          // Draw a rectangle
+          drawRotatedRect(sliderXPosition, 0, endWidth, endHeight, 10 * Math.PI / 180);
+          drawRotatedRect(sliderXPosition + 235, 0, width, height, 10 * Math.PI / 180, true);
+          context.restore()
 
-      // Close the path and complete the parallelogram (back to point A)
-      context.closePath();
+          if (elapsedTime < sliderMoveDuration) {
+            requestIdRef.current = requestAnimationFrame(animate);
+          } else {
+            sliderMoveTime = null
+            animationType = 'moveBackward'
+            requestIdRef.current = requestAnimationFrame(animate);
+          }
+        } else if (animationType === 'moveBackward') {
+          if (!sliderMoveTime) sliderMoveTime = timestamp;
+          const elapsedTime = timestamp - sliderMoveTime;
+          const sliderXPosition = easeInOutQuad(
+            elapsedTime,
+            sliderEndingXPosition,
+            sliderStartingXPosition - sliderEndingXPosition,
+            sliderMoveDuration
+          );
 
-      // You can fill the parallelogram
-      context.fillStyle = 'blue';
-      context.fill();
-      context.restore()
+          context.clearRect(0, 0, width, height); // Clear the canvas
+          context.fillStyle = formData.backgroundColor;
+          context.fillRect(0, 0, width, height);
+          context.save();
+          context.translate(width / 2, height / 2);
 
+          context.textAlign = "center";
+          context.fillStyle = formData.fontColor;
+          context.font = `${formData.fontSize}px ${formData.font}`;
+          context.fillText("Harshith", 0, 0)  
+
+          // Draw a rectangle
+          drawRotatedRect(sliderXPosition, 0, endWidth, endHeight, 10 * Math.PI / 180);
+          drawRotatedRect(sliderXPosition + 235, 0, width, height, 10 * Math.PI / 180, true);
+          context.restore()
+
+          if (elapsedTime < sliderMoveDuration) {
+            requestIdRef.current = requestAnimationFrame(animate);
+          }
+        }
+      }
+
+      animate(0)
     }
+    return () => cancelAnimationFrame(requestIdRef.current);
   }, [formData, canvasDimension]);
 
   const downloadAnimation = () => {
