@@ -24,9 +24,7 @@ const TextRevealCanvas = ({
     font: string;
     fontSize: number;
     fontColor: string;
-    stickSpeed: number;
     stickColor: string;
-    stickSize: number;
     text: string;
   };
   downloadFile: {

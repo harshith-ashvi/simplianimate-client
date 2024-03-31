@@ -29,9 +29,7 @@ const TextReveal = () => {
     font: string;
     fontSize: number;
     fontColor: string;
-    stickSpeed: number;
     stickColor: string;
-    stickSize: number;
     text: string;
   }>({
     screenResolution: "Portrait",
@@ -39,9 +37,7 @@ const TextReveal = () => {
     font: "Arial",
     fontSize: 36,
     fontColor: "#E63946",
-    stickSpeed: 10,
     stickColor: "#1D3557",
-    stickSize: 10,
     text: "",
   });
   const [progress, setProgress] = useState(0);

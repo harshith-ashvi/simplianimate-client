@@ -8,7 +8,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Slider } from "@/components/ui/slider";
 import { Textarea } from "@/components/ui/textarea";
 
 const fonts = [
@@ -43,9 +42,7 @@ const TextRevealForm = ({
     font: string;
     fontSize: number;
     fontColor: string;
-    stickSpeed: number;
     stickColor: string;
-    stickSize: number;
     text: string;
   };
   handleFormDataChange: (key: string, value: string | number) => void;
@@ -103,30 +100,6 @@ const TextRevealForm = ({
           type="color"
           value={formData.fontColor}
           onChange={(e) => handleFormDataChange("fontColor", e.target.value)}
-        />
-      </div>
-      <div className="mb-2">
-        <Label htmlFor="stickSpeed">Stick Speed</Label>
-        <Slider
-          defaultValue={[formData.stickSpeed]}
-          min={0}
-          max={80}
-          step={1}
-          value={[formData.stickSpeed]}
-          onValueChange={([value]) => handleFormDataChange("stickSpeed", value)}
-          className="mt-2"
-        />
-      </div>
-      <div className="mb-2">
-        <Label htmlFor="stickSize">Stick Size</Label>
-        <Slider
-          defaultValue={[formData.stickSize]}
-          min={8}
-          max={80}
-          step={1}
-          value={[formData.stickSize]}
-          onValueChange={([value]) => handleFormDataChange("stickSize", value)}
-          className="mt-2"
         />
       </div>
       <div>
