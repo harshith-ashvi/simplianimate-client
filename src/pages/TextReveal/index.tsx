@@ -38,7 +38,7 @@ const TextReveal = () => {
     fontSize: 36,
     fontColor: "#E63946",
     stickColor: "#1D3557",
-    text: "",
+    text: "SimpliAnimate",
   });
   const [progress, setProgress] = useState(0);
 

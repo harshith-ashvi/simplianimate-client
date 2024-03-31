@@ -104,7 +104,7 @@ const TextRevealCanvas = ({
         context.rotate(angle); // Rotate
         context.translate(-x, -y); // Move back
         context.beginPath();
-        context.rect(x - width / 2, y - height / 2, width, height); // Draw the rectangle
+        context.rect(isMask ? x : x - width / 2, y - height / 2, width, height); // Draw the rectangle
         if(isMask) {
           context.fillStyle = formData.backgroundColor
         } else {
@@ -140,7 +140,7 @@ const TextRevealCanvas = ({
           context.translate(width / 2, height / 2);
           // Draw a rectangle
           drawRotatedRect((-width / 2) + 30, 0, sliderWidth, sliderHeight, 10 * Math.PI / 180);
-          drawRotatedRect((-width / 2) + 265, 0, width, height, 10 * Math.PI / 180, true);
+          drawRotatedRect((-width / 2) + 35, 0, width, height * 2, 10 * Math.PI / 180, true);
           context.restore()
   
           if (elapsedTime < duration) {
@@ -168,13 +168,14 @@ const TextRevealCanvas = ({
           context.translate(width / 2, height / 2);
 
           context.textAlign = "center";
+          context.textBaseline = "middle"
           context.fillStyle = formData.fontColor;
           context.font = `${formData.fontSize}px ${formData.font}`;
-          context.fillText("Harshith", 0, 0)  
+          context.fillText(formData.text, 0, 0)  
 
           // Draw a rectangle
           drawRotatedRect(sliderXPosition, 0, endWidth, endHeight, 10 * Math.PI / 180);
-          drawRotatedRect(sliderXPosition + 235, 0, width, height, 10 * Math.PI / 180, true);
+          drawRotatedRect(sliderXPosition + 5, 0, width, height * 2, 10 * Math.PI / 180, true);
           context.restore()
 
           if (elapsedTime < sliderMoveDuration) {
@@ -201,13 +202,14 @@ const TextRevealCanvas = ({
           context.translate(width / 2, height / 2);
 
           context.textAlign = "center";
+          context.textBaseline = "middle"
           context.fillStyle = formData.fontColor;
           context.font = `${formData.fontSize}px ${formData.font}`;
-          context.fillText("Harshith", 0, 0)  
+          context.fillText(formData.text, 0, 0)  
 
           // Draw a rectangle
           drawRotatedRect(sliderXPosition, 0, endWidth, endHeight, 10 * Math.PI / 180);
-          drawRotatedRect(sliderXPosition + 235, 0, width, height, 10 * Math.PI / 180, true);
+          drawRotatedRect(sliderXPosition + 5, 0, width, height * 2, 10 * Math.PI / 180, true);
           context.restore()
 
           if (elapsedTime < sliderMoveDuration) {
