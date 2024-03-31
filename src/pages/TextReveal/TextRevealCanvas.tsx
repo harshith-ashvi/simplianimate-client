@@ -5,7 +5,6 @@ import FileSaver from "file-saver";
 
 import { aspectRatio } from "@/data/canvas";
 
-
 const TextRevealCanvas = ({
   width,
   height,
@@ -68,7 +67,7 @@ const TextRevealCanvas = ({
   }, [width, height, formData.screenResolution]);
 
   // Easing function for a smoother animation
-  function easeInOutQuad(t: number, b:number, c:number, d:number) {
+  function easeInOutQuad(t: number, b: number, c: number, d: number) {
     t /= d / 2;
     if (t < 1) return (c / 2) * t * t + b;
     t--;
@@ -78,12 +77,14 @@ const TextRevealCanvas = ({
   useLayoutEffect(() => {
     if (canvasRef.current !== null) {
       const context = canvasRef.current.getContext("2d");
-      if(!context) return 
+      if (!context) return;
 
       const width = canvasRef.current.width;
       const height = canvasRef.current.height;
-      let animationType = 'expand'
-      
+      let animationType = "expand";
+      const words = formData.text.split("\n");
+      let wordIndex = 0;
+
       let startTime: number | null = null;
       const duration = 1000; // 1 seconds in milliseconds
       const startWidth = 10;
@@ -93,20 +94,27 @@ const TextRevealCanvas = ({
 
       let sliderMoveTime: number | null = null;
       const sliderMoveDuration = 1500; // 1.5 seconds in milliseconds
-      const sliderStartingXPosition = (-width / 2) + 30
-      const sliderEndingXPosition = (width / 2) - 30
+      const sliderStartingXPosition = -width / 2 + 30;
+      const sliderEndingXPosition = width / 2 - 30;
 
       // Function to draw a rotated rectangle with smooth edges
-      function drawRotatedRect(x:number, y:number, width:number, height: number, angle: number, isMask?: boolean) {
-        if(!context) return
+      function drawRotatedRect(
+        x: number,
+        y: number,
+        width: number,
+        height: number,
+        angle: number,
+        isMask?: boolean
+      ) {
+        if (!context) return;
         context.save(); // Save the current state
         context.translate(x, y); // Move to the rectangle center
         context.rotate(angle); // Rotate
         context.translate(-x, -y); // Move back
         context.beginPath();
         context.rect(isMask ? x : x - width / 2, y - height / 2, width, height); // Draw the rectangle
-        if(isMask) {
-          context.fillStyle = formData.backgroundColor
+        if (isMask) {
+          context.fillStyle = formData.backgroundColor;
         } else {
           context.fillStyle = formData.stickColor;
         }
@@ -115,8 +123,8 @@ const TextRevealCanvas = ({
       }
 
       function animate(timestamp: number) {
-        if(!context) return
-        if(animationType === 'expand'){
+        if (!context) return;
+        if (animationType === "expand") {
           if (!startTime) startTime = timestamp;
           const elapsedTime = timestamp - startTime;
           const sliderWidth = easeInOutQuad(
@@ -131,27 +139,39 @@ const TextRevealCanvas = ({
             endHeight - startHeight,
             duration
           );
-  
-  
+
           context.clearRect(0, 0, width, height); // Clear the canvas
           context.fillStyle = formData.backgroundColor;
           context.fillRect(0, 0, width, height);
           context.save();
           context.translate(width / 2, height / 2);
           // Draw a rectangle
-          drawRotatedRect((-width / 2) + 30, 0, sliderWidth, sliderHeight, 10 * Math.PI / 180);
-          drawRotatedRect((-width / 2) + 35, 0, width, height * 2, 10 * Math.PI / 180, true);
-          context.restore()
-  
+          drawRotatedRect(
+            -width / 2 + 30,
+            0,
+            sliderWidth,
+            sliderHeight,
+            (10 * Math.PI) / 180
+          );
+          drawRotatedRect(
+            -width / 2 + 35,
+            0,
+            width,
+            height * 2,
+            (10 * Math.PI) / 180,
+            true
+          );
+          context.restore();
+
           if (elapsedTime < duration) {
             // Continue the animation loop
             requestIdRef.current = requestAnimationFrame(animate);
           } else {
-            startTime = null
-            animationType = 'moveForward'
+            startTime = null;
+            animationType = "moveForward";
             requestIdRef.current = requestAnimationFrame(animate);
           }
-        } else if(animationType === 'moveForward') {
+        } else if (animationType === "moveForward") {
           if (!sliderMoveTime) sliderMoveTime = timestamp;
           const elapsedTime = timestamp - sliderMoveTime;
           const sliderXPosition = easeInOutQuad(
@@ -168,24 +188,37 @@ const TextRevealCanvas = ({
           context.translate(width / 2, height / 2);
 
           context.textAlign = "center";
-          context.textBaseline = "middle"
+          context.textBaseline = "middle";
           context.fillStyle = formData.fontColor;
           context.font = `${formData.fontSize}px ${formData.font}`;
-          context.fillText(formData.text, 0, 0)  
+          context.fillText(words[wordIndex], 0, 0);
 
           // Draw a rectangle
-          drawRotatedRect(sliderXPosition, 0, endWidth, endHeight, 10 * Math.PI / 180);
-          drawRotatedRect(sliderXPosition + 5, 0, width, height * 2, 10 * Math.PI / 180, true);
-          context.restore()
+          drawRotatedRect(
+            sliderXPosition,
+            0,
+            endWidth,
+            endHeight,
+            (10 * Math.PI) / 180
+          );
+          drawRotatedRect(
+            sliderXPosition + 5,
+            0,
+            width,
+            height * 2,
+            (10 * Math.PI) / 180,
+            true
+          );
+          context.restore();
 
           if (elapsedTime < sliderMoveDuration) {
             requestIdRef.current = requestAnimationFrame(animate);
           } else {
-            sliderMoveTime = null
-            animationType = 'moveBackward'
+            sliderMoveTime = null;
+            animationType = "moveBackward";
             requestIdRef.current = requestAnimationFrame(animate);
           }
-        } else if (animationType === 'moveBackward') {
+        } else if (animationType === "moveBackward") {
           if (!sliderMoveTime) sliderMoveTime = timestamp;
           const elapsedTime = timestamp - sliderMoveTime;
           const sliderXPosition = easeInOutQuad(
@@ -202,23 +235,41 @@ const TextRevealCanvas = ({
           context.translate(width / 2, height / 2);
 
           context.textAlign = "center";
-          context.textBaseline = "middle"
+          context.textBaseline = "middle";
           context.fillStyle = formData.fontColor;
           context.font = `${formData.fontSize}px ${formData.font}`;
-          context.fillText(formData.text, 0, 0)  
+          context.fillText(words[wordIndex], 0, 0);
 
           // Draw a rectangle
-          drawRotatedRect(sliderXPosition, 0, endWidth, endHeight, 10 * Math.PI / 180);
-          drawRotatedRect(sliderXPosition + 5, 0, width, height * 2, 10 * Math.PI / 180, true);
-          context.restore()
+          drawRotatedRect(
+            sliderXPosition,
+            0,
+            endWidth,
+            endHeight,
+            (10 * Math.PI) / 180
+          );
+          drawRotatedRect(
+            sliderXPosition + 5,
+            0,
+            width,
+            height * 2,
+            (10 * Math.PI) / 180,
+            true
+          );
+          context.restore();
 
           if (elapsedTime < sliderMoveDuration) {
+            requestIdRef.current = requestAnimationFrame(animate);
+          } else if (wordIndex < words.length - 1) {
+            ++wordIndex;
+            sliderMoveTime = null;
+            animationType = "moveForward";
             requestIdRef.current = requestAnimationFrame(animate);
           }
         }
       }
 
-      animate(0)
+      animate(0);
     }
     return () => cancelAnimationFrame(requestIdRef.current);
   }, [formData, canvasDimension, downloadFile.canDownload]);
