@@ -1,6 +1,6 @@
 import textFlyers from "@/assets/gif/textFlyers.gif";
 import matrixRain from "@/assets/gif/matrixRain.gif";
-import textReveal from "@/assets/gif/textReveal.gif"
+import textReveal from "@/assets/gif/textReveal.gif";
 
 export const textBasedAnimation: {
   name: string;
@@ -32,6 +32,18 @@ export const imageBasedAnimation: {
   {
     name: "Image Flyers",
     url: "/image-flyers",
+    img: textFlyers,
+  },
+];
+
+export const otherAnimation: {
+  name: string;
+  url: string;
+  img: string;
+}[] = [
+  {
+    name: "Quiz",
+    url: "/quiz",
     img: textFlyers,
   },
 ];

@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import TextFlyers from "./pages/TextFlyers";
 import MatrixRain from "./pages/MatrixRain";
 import TextReveal from "./pages/TextReveal";
+import Kotyadhipati from "./pages/Kotyadhipati";
 // import ImageFlyers from "./pages/ImageFlyers";
 
 function App() {
@@ -44,6 +45,14 @@ function App() {
             </div>
           }
         /> */}
+        <Route
+          path="/quiz"
+          element={
+            <div style={{ height: "calc(100vh - 45px)" }}>
+              <Kotyadhipati />
+            </div>
+          }
+        />
       </Routes>
     </div>
   );
