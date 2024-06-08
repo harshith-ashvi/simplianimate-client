@@ -2,6 +2,12 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import FileSaver from "file-saver";
 
+import {
+  drawOptionsBox,
+  drawQuestionBox,
+  drawTimerCircle,
+} from "@/utils/kotyadhipati";
+
 import { aspectRatio } from "@/data/canvas";
 
 // const xPositionForSlider = {
@@ -73,10 +79,60 @@ const KotyadhipatiCanvas = ({
 
   useLayoutEffect(() => {
     if (canvasRef.current !== null) {
-      // const context = canvasRef.current.getContext("2d");
-      // if (!context) return;
-      // const width = canvasRef.current.width;
-      // const height = canvasRef.current.height;
+      const context = canvasRef.current.getContext("2d");
+      if (!context) return;
+      const width = canvasRef.current.width;
+      const height = canvasRef.current.height;
+      context.clearRect(0, 0, width, height);
+
+      context.fillStyle = "#003791";
+      context.fillRect(0, 0, width, height);
+
+      drawQuestionBox(context, width, height, formData.question);
+      drawOptionsBox(context, width, height, 1);
+      drawOptionsBox(context, width, height, 2);
+      // drawOption(context, width, height, 1, formData.optionA, formData.optionB);
+      // drawOption(context, width, height, 2, formData.optionC, formData.optionD);
+
+      const optionBoxHeight = height * 0.03;
+      context.font = `${optionBoxHeight - 8}px calibre`;
+      const widthHalf = width * 0.5;
+      context.fillStyle = "gold";
+      context.fillText("A. ", widthHalf * 0.3, height * 0.74);
+      context.textAlign = "start";
+      context.fillStyle = "white";
+      context.fillText(formData.optionA, widthHalf * 0.35, height * 0.74);
+
+      context.fillStyle = "gold";
+      context.textAlign = "center";
+      context.fillText("B. ", widthHalf + widthHalf * 0.14, height * 0.74);
+      context.textAlign = "start";
+      context.fillStyle = "white";
+      context.fillText(
+        formData.optionB,
+        widthHalf + widthHalf * 0.18,
+        height * 0.74
+      );
+
+      context.fillStyle = "gold";
+      context.textAlign = "center";
+      context.fillText("C. ", widthHalf * 0.3, height * 0.81);
+      context.textAlign = "start";
+      context.fillStyle = "white";
+      context.fillText(formData.optionC, widthHalf * 0.35, height * 0.81);
+
+      context.fillStyle = "gold";
+      context.textAlign = "center";
+      context.fillText("D. ", widthHalf + widthHalf * 0.14, height * 0.81);
+      context.textAlign = "start";
+      context.fillStyle = "white";
+      context.fillText(
+        formData.optionD,
+        widthHalf + widthHalf * 0.18,
+        height * 0.81
+      );
+
+      drawTimerCircle(context, width, height, formData.timerCount);
     }
   }, [formData, canvasDimension, downloadFile.canDownload]);
 

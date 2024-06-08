@@ -26,7 +26,7 @@ const KotyadhipatiForm = ({
         <Label htmlFor="question">Question</Label>
         <Textarea
           id="question"
-          placeholder="Enter question here."
+          placeholder="Enter question here"
           value={formData.question}
           onChange={(e) => handleFormDataChange("question", e.target.value)}
         />
@@ -36,6 +36,7 @@ const KotyadhipatiForm = ({
         <Input
           id="optionA"
           type="text"
+          placeholder="Enter Option A here"
           value={formData.optionA}
           onChange={(e) => handleFormDataChange("optionA", e.target.value)}
         />
@@ -45,6 +46,7 @@ const KotyadhipatiForm = ({
         <Input
           id="optionB"
           type="text"
+          placeholder="Enter Option B here"
           value={formData.optionB}
           onChange={(e) => handleFormDataChange("optionB", e.target.value)}
         />
@@ -54,6 +56,7 @@ const KotyadhipatiForm = ({
         <Input
           id="optionC"
           type="text"
+          placeholder="Enter Option C here"
           value={formData.optionC}
           onChange={(e) => handleFormDataChange("optionC", e.target.value)}
         />
@@ -63,6 +66,7 @@ const KotyadhipatiForm = ({
         <Input
           id="optionD"
           type="text"
+          placeholder="Enter Option D here"
           value={formData.optionD}
           onChange={(e) => handleFormDataChange("optionD", e.target.value)}
         />

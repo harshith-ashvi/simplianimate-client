@@ -188,12 +188,14 @@ const TextFlyersCanvas = ({
       }}
       className="h-full flex items-center justify-center"
     >
-      <canvas
-        ref={canvasRef}
-        width={canvasDimension.width}
-        height={canvasDimension.height}
-        style={{ backgroundColor: "white", display: "block" }}
-      />
+      <div style={{ backgroundColor: "white" }}>
+        <canvas
+          ref={canvasRef}
+          width={canvasDimension.width}
+          height={canvasDimension.height}
+          style={{ display: "block" }}
+        />
+      </div>
     </div>
   );
 };
