@@ -125,7 +125,7 @@ const KotyadhipatiCanvas = ({
         // drawOption(context, width, height, 2, formData.optionC, formData.optionD);
 
         const optionBoxHeight = height * 0.03;
-        context.font = `${optionBoxHeight - 8}px calibre`;
+        context.font = `${optionBoxHeight - 6}px calibre`;
         if (formData.timerCount !== timerCount) {
           const widthHalf = width * 0.5;
           context.fillStyle = "gold";

@@ -191,9 +191,10 @@ export const drawTimerCircle = (
   context.stroke();
   context.closePath();
 
+  context.font = `${25 - 8}px calibre`;
   context.fillStyle = "gold";
   context.textAlign = "center";
-  context.fillText(`${timerCount}`, centerX, height * 0.6);
+  context.fillText(`${timerCount}`, centerX, height * 0.598);
 };
 
 export const getCorrectRowAndColumn = (option: string) => {
