@@ -6,6 +6,7 @@ import {
   drawOptionsBox,
   drawQuestionBox,
   drawTimerCircle,
+  estimateReadingTime,
   getCorrectRowAndColumn,
 } from "@/utils/kotyadhipati";
 
@@ -81,15 +82,22 @@ const KotyadhipatiCanvas = ({
       const correctOptionRowColumn = getCorrectRowAndColumn(
         formData.correctOption
       );
+      const estimateQuestionReadingTime = estimateReadingTime(
+        formData.question
+      );
 
       const startTime = Date.now();
-      const endTime = startTime + formData.timerCount * 1000;
+      const endTime =
+        startTime + (formData.timerCount + estimateQuestionReadingTime) * 1000;
 
       function animate() {
         if (!context) return;
         const currentTime = Date.now();
         const remainingTime = Math.max(0, endTime - currentTime);
-        const timerCount = Math.ceil(remainingTime / 1000);
+        const timerCount =
+          formData.timerCount >= Math.ceil(remainingTime / 1000)
+            ? Math.ceil(remainingTime / 1000)
+            : formData.timerCount;
 
         context.clearRect(0, 0, width, height);
 
@@ -118,41 +126,43 @@ const KotyadhipatiCanvas = ({
 
         const optionBoxHeight = height * 0.03;
         context.font = `${optionBoxHeight - 8}px calibre`;
-        const widthHalf = width * 0.5;
-        context.fillStyle = "gold";
-        context.fillText("A. ", widthHalf * 0.3, height * 0.74);
-        context.textAlign = "start";
-        context.fillStyle = "white";
-        context.fillText(formData.optionA, widthHalf * 0.35, height * 0.74);
+        if (formData.timerCount !== timerCount) {
+          const widthHalf = width * 0.5;
+          context.fillStyle = "gold";
+          context.fillText("A. ", widthHalf * 0.3, height * 0.74);
+          context.textAlign = "start";
+          context.fillStyle = "white";
+          context.fillText(formData.optionA, widthHalf * 0.35, height * 0.74);
 
-        context.fillStyle = "gold";
-        context.textAlign = "center";
-        context.fillText("B. ", widthHalf + widthHalf * 0.14, height * 0.74);
-        context.textAlign = "start";
-        context.fillStyle = "white";
-        context.fillText(
-          formData.optionB,
-          widthHalf + widthHalf * 0.18,
-          height * 0.74
-        );
+          context.fillStyle = "gold";
+          context.textAlign = "center";
+          context.fillText("B. ", widthHalf + widthHalf * 0.14, height * 0.74);
+          context.textAlign = "start";
+          context.fillStyle = "white";
+          context.fillText(
+            formData.optionB,
+            widthHalf + widthHalf * 0.18,
+            height * 0.74
+          );
 
-        context.fillStyle = "gold";
-        context.textAlign = "center";
-        context.fillText("C. ", widthHalf * 0.3, height * 0.81);
-        context.textAlign = "start";
-        context.fillStyle = "white";
-        context.fillText(formData.optionC, widthHalf * 0.35, height * 0.81);
+          context.fillStyle = "gold";
+          context.textAlign = "center";
+          context.fillText("C. ", widthHalf * 0.3, height * 0.81);
+          context.textAlign = "start";
+          context.fillStyle = "white";
+          context.fillText(formData.optionC, widthHalf * 0.35, height * 0.81);
 
-        context.fillStyle = "gold";
-        context.textAlign = "center";
-        context.fillText("D. ", widthHalf + widthHalf * 0.14, height * 0.81);
-        context.textAlign = "start";
-        context.fillStyle = "white";
-        context.fillText(
-          formData.optionD,
-          widthHalf + widthHalf * 0.18,
-          height * 0.81
-        );
+          context.fillStyle = "gold";
+          context.textAlign = "center";
+          context.fillText("D. ", widthHalf + widthHalf * 0.14, height * 0.81);
+          context.textAlign = "start";
+          context.fillStyle = "white";
+          context.fillText(
+            formData.optionD,
+            widthHalf + widthHalf * 0.18,
+            height * 0.81
+          );
+        }
 
         drawTimerCircle(context, width, height, timerCount);
         if (remainingTime > 0) {
@@ -179,7 +189,11 @@ const KotyadhipatiCanvas = ({
     // rec.onstop = () => exportVid(new Blob(chunks, { type: "video/mp4" }));
 
     rec.start();
-    setTimeout(() => rec.stop(), downloadDuration * 1000); // stop recording in 3s
+    const estimateQuestionReadingTime = estimateReadingTime(formData.question);
+    setTimeout(
+      () => rec.stop(),
+      (downloadDuration + estimateQuestionReadingTime) * 1000
+    ); // stop recording in 3s
   };
 
   function exportVid(blob: Blob) {

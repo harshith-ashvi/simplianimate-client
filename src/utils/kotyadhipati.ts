@@ -204,3 +204,12 @@ export const getCorrectRowAndColumn = (option: string) => {
       return { row: 0, column: 0 };
   }
 };
+
+export const estimateReadingTime = (text: string) => {
+  const wordsPerMinute = 200; // Average reading speed
+  const words = text.trim().split(/\s+/).length; // Count words by splitting the text by whitespace
+  const minutes = words / wordsPerMinute;
+  const seconds = Math.ceil(minutes * 60); // Convert minutes to seconds and round up
+
+  return seconds;
+};
