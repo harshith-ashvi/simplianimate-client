@@ -1,6 +1,7 @@
 import textFlyers from "@/assets/gif/textFlyers.gif";
 import matrixRain from "@/assets/gif/matrixRain.gif";
 import textReveal from "@/assets/gif/textReveal.gif";
+import kannadadaKotyadipath from "@/assets/gif/kannadadaKotyadipathi.gif";
 
 export const textBasedAnimation: {
   name: string;
@@ -44,6 +45,6 @@ export const otherAnimation: {
   {
     name: "Quiz",
     url: "/quiz",
-    img: textFlyers,
+    img: kannadadaKotyadipath,
   },
 ];
