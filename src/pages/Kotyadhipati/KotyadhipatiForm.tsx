@@ -33,7 +33,6 @@ const KotyadhipatiForm = ({
   };
   handleFormDataChange: (key: string, value: string | number) => void;
 }) => {
-  console.log("formData", formData);
   return (
     <div
       className="p-5"

@@ -1,3 +1,31 @@
+const getTextForQuestion = (
+  context: CanvasRenderingContext2D,
+  questionText: string,
+  maxWidth: number
+) => {
+  const words = questionText.split(" "); // Split the text into words
+  let lines: string[] = []; // Array to hold lines of text
+  let currentLine = words[0];
+
+  for (let i = 1; i < words.length; i++) {
+    const word = words[i];
+    const testLine = currentLine + " " + word; // Test this line with the new word
+    const metrics = context.measureText(testLine); // Measure the text width of this potential line
+    if (metrics.width < maxWidth) {
+      // If it fits, continue to add to the current line
+      currentLine = testLine;
+    } else {
+      // If it doesn't fit, push the current line to the lines array and start a new line with the current word
+      lines.push(currentLine);
+      currentLine = word;
+    }
+  }
+  // Push the last line into the lines array if it has any words left
+  lines.push(currentLine);
+
+  return lines;
+};
+
 export const drawQuestionBox = (
   context: CanvasRenderingContext2D,
   width: number,
@@ -27,8 +55,17 @@ export const drawQuestionBox = (
   context.textAlign = "center";
   context.textBaseline = "middle";
   context.fillStyle = "white";
-  context.font = `${boxHeight - 10}px calibre`;
-  context.fillText(question, width / 2, height * 0.65);
+  const lines = getTextForQuestion(context, question, width * 0.6);
+  context.font = `${boxHeight - 10 - (lines.length - 1) * 2}px calibre`;
+  if (lines.length === 1) {
+    context.fillText(question, width / 2, height * 0.65);
+  } else {
+    const textLines = boxHeight / lines.length;
+    for (let i = 0; i < lines.length; i++) {
+      const textLine = textLines + i * 16;
+      context.fillText(lines[i], width / 2, height * 0.62 + textLine);
+    }
+  }
 };
 
 export const drawOptionsBox = (
@@ -107,8 +144,6 @@ export const drawOption = (
   const boxHeight = height * 0.03;
 
   if (Boolean(optionOne)) {
-    // context.globalCompositeOperation = "destination-out";
-    console.log("optionOne", optionOne);
     context.font = `${boxHeight - 8}px calibre`;
     context.fillStyle = "gold";
     context.fillText(
@@ -116,7 +151,6 @@ export const drawOption = (
       widthHalf * 0.3,
       height * questionHeight
     );
-    console.log("hello");
     context.rect(50, 50, 100, 100);
     context.textAlign = "start";
     context.fillStyle = "white";
@@ -140,34 +174,6 @@ export const drawOption = (
       height * questionHeight
     );
   }
-};
-
-export const setResponsiveFont = (
-  context: CanvasRenderingContext2D,
-  text: string,
-  maxWidth: number,
-  maxHeight: number,
-  initialFontSize: number,
-  fontFamily: string
-) => {
-  let fontSize = initialFontSize;
-  context.font = `${fontSize}px ${fontFamily}`;
-  let textMetrics = context.measureText(text);
-
-  // Reduce the font size until the text fits the width and the height
-  while (
-    (textMetrics.width > maxWidth ||
-      textMetrics.actualBoundingBoxAscent +
-        textMetrics.actualBoundingBoxDescent >
-        maxHeight) &&
-    fontSize > 5
-  ) {
-    fontSize--;
-    context.font = `${fontSize}px ${fontFamily}`;
-    textMetrics = context.measureText(text);
-  }
-
-  return fontSize;
 };
 
 export const drawTimerCircle = (
