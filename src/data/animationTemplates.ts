@@ -1,6 +1,7 @@
 import textFlyers from "@/assets/gif/textFlyers.gif";
 import matrixRain from "@/assets/gif/matrixRain.gif";
 import textReveal from "@/assets/gif/textReveal.gif";
+import textFalling from "@/assets/gif/textFalling.gif";
 import kannadadaKotyadipath from "@/assets/gif/kannadadaKotyadipathi.gif";
 
 export const textBasedAnimation: {
@@ -26,7 +27,7 @@ export const textBasedAnimation: {
   {
     name: "Text Falling",
     url: "/text-falling",
-    img: textReveal,
+    img: textFalling,
   },
 ];
 

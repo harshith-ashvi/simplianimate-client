@@ -75,7 +75,7 @@ const TextFallingCanvas = ({
       const width = canvasRef.current.width;
       const height = canvasRef.current.height;
 
-      const bottomLine = height - 50; // The line 10px from the bottom
+      const bottomLine = height - 100; // The line 10px from the bottom
       context.font = `${formData.fontSize}px ${formData.font}`;
       const textMetrics = context.measureText(formData.text);
       const totalTextWidth = textMetrics.width;
