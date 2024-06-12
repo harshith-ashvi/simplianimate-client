@@ -30,6 +30,7 @@ const TextFalling = () => {
     fontColor: string;
     text: string;
     fallDelay: number;
+    fallType: string;
   }>({
     screenResolution: "Portrait",
     backgroundColor: "#A8DADC",
@@ -38,6 +39,7 @@ const TextFalling = () => {
     fontColor: "#E63946",
     text: `SimpliAnimate`,
     fallDelay: 1,
+    fallType: "random",
   });
   const [progress, setProgress] = useState(0);
 
@@ -63,8 +65,8 @@ const TextFalling = () => {
   };
 
   const handleFormDataChange = (key: string, value: string | number) => {
-    if (key === "text") {
-      downloadDuration.current = `${value}`.split("\n").length * 3 + 1.5;
+    if (key === "fallDelay") {
+      downloadDuration.current = +value + 1.5;
     }
     setFormData((prevState) => ({ ...prevState, [key]: value }));
   };

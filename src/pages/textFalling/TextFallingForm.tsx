@@ -34,6 +34,11 @@ const fonts = [
   "Comic Sans MS",
 ];
 
+const fallTypeOptions = [
+  { label: "Normal", value: "normal" },
+  { label: "Random", value: "random" },
+];
+
 const TextFallingForm = ({
   formData,
   handleFormDataChange,
@@ -45,6 +50,7 @@ const TextFallingForm = ({
     fontColor: string;
     text: string;
     fallDelay: number;
+    fallType: string;
   };
   handleFormDataChange: (key: string, value: string | number) => void;
 }) => {
@@ -112,7 +118,7 @@ const TextFallingForm = ({
           onChange={(e) => handleFormDataChange("text", e.target.value)}
         />
       </div>
-      <div className="mt-2">
+      <div className="mt-2 mb-2">
         <Label htmlFor="direction">Fall Delay (seconds)</Label>
         <Slider
           defaultValue={[formData.fallDelay]}
@@ -123,6 +129,27 @@ const TextFallingForm = ({
           onValueChange={([value]) => handleFormDataChange("fallDelay", value)}
           className="mt-2"
         />
+      </div>
+      <div>
+        <Label htmlFor="font">Fall Type</Label>
+        <Select
+          defaultValue="Arial"
+          value={formData.fallType}
+          onValueChange={(value) => handleFormDataChange("fallType", value)}
+        >
+          <SelectTrigger className="col-span-3">
+            <SelectValue placeholder="Fall Type" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              {fallTypeOptions.map((type) => (
+                <SelectItem key={type.value} value={type.value}>
+                  {type.label}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
       </div>
     </div>
   );

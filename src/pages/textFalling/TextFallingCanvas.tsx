@@ -25,6 +25,7 @@ const TextFallingCanvas = ({
     fontColor: string;
     text: string;
     fallDelay: number;
+    fallType: string;
   };
   downloadFile: {
     canDownload: boolean;
@@ -112,11 +113,17 @@ const TextFallingCanvas = ({
         if (!startAnimation) return;
 
         charPositions = charPositions.map((charPos) => {
-          if (!charPos.isFalling) {
-            if (charPos.delay <= 0) {
+          if (formData.fallType === "random") {
+            if (!charPos.isFalling) {
+              if (charPos.delay <= 0) {
+                charPos.isFalling = true;
+              } else {
+                charPos.delay -= 16.67; // Approximate frame duration in milliseconds
+              }
+            }
+          } else if (formData.fallType === "normal") {
+            if (!charPos.isFalling && charPos.y < bottomLine) {
               charPos.isFalling = true;
-            } else {
-              charPos.delay -= 16.67; // Approximate frame duration in milliseconds
             }
           }
 
