@@ -83,7 +83,7 @@ const TextFallingCanvas = ({
       const startX = (width - totalTextWidth) / 2;
 
       // Initial character positions
-      let charPositions = Array.from(formData.text).map((char, index) => {
+      let charPositions = formData.text.split("").map((char, index) => {
         return {
           char,
           x: startX + context.measureText(formData.text.slice(0, index)).width,
@@ -149,7 +149,7 @@ const TextFallingCanvas = ({
       const timer = setTimeout(() => {
         setStartAnimation(true);
         animateText();
-      }, formData.fallDelay * 1000); // Delay of 2 seconds before starting the animation
+      }, formData.fallDelay * 1000); // Delay before starting the animation
 
       return () => clearTimeout(timer);
     }
