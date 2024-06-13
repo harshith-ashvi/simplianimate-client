@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 
 const TemplateCard = ({
   name,
@@ -13,12 +13,12 @@ const TemplateCard = ({
 }) => {
   return (
     <Card onClick={() => handleNavigate(url)} className="w-fit cursor-pointer">
-      <CardHeader className="p-0">
+      <CardContent className="items-center p-0">
         <img src={img} height={200} width={340} />
-      </CardHeader>
-      <CardContent>
-        <p>{name}</p>
       </CardContent>
+      <CardFooter className="p-4">
+        <p className="text-slate-950">{name}</p>
+      </CardFooter>
     </Card>
   );
 };
