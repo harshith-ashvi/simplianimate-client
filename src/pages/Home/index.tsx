@@ -19,7 +19,7 @@ const Home = () => {
     <>
       <Navbar />
       <div className="max-container">
-        <div className="flex items-center justify-center pt-12">
+        <div className="flex items-center justify-center">
           <div className="my-5 mx-5">
             <h4 className="mb-5 text-lg font-medium">Text Based</h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
