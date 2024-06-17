@@ -3,6 +3,7 @@ import matrixRain from "@/assets/gif/matrixRain.gif";
 import textReveal from "@/assets/gif/textReveal.gif";
 import textFalling from "@/assets/gif/textFalling.gif";
 import kannadadaKotyadipath from "@/assets/gif/kannadadaKotyadipathi.gif";
+import gradientArora from "@/assets/gif/gradientArora.gif";
 
 export const textBasedAnimation: {
   name: string;
@@ -52,5 +53,10 @@ export const otherAnimation: {
     name: "Quiz",
     url: "/quiz",
     img: kannadadaKotyadipath,
+  },
+  {
+    name: "Gradient Arora",
+    url: "/gradient-arora",
+    img: gradientArora,
   },
 ];

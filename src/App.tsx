@@ -8,6 +8,7 @@ import TextReveal from "./pages/TextReveal";
 import Kotyadhipati from "./pages/Kotyadhipati";
 import TextFalling from "./pages/TextFalling";
 import TestDemos from "./pages/TestDemo";
+import GradientArora from "./pages/GradientArora";
 // import ImageFlyers from "./pages/ImageFlyers";
 
 function App() {
@@ -60,6 +61,14 @@ function App() {
           element={
             <div style={{ height: "calc(100vh - 45px)" }}>
               <Kotyadhipati />
+            </div>
+          }
+        />
+        <Route
+          path="/gradient-arora"
+          element={
+            <div style={{ height: "calc(100vh - 45px)" }}>
+              <GradientArora />
             </div>
           }
         />
