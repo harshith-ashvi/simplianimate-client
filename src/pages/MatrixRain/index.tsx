@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Menu } from "lucide-react";
 import {
   ResizableHandle,
   ResizablePanel,
@@ -13,6 +14,7 @@ import MatrixRainCanvas from "./MatrixRainCanvas";
 const downloadDuration = 8; //in seconds
 
 const MatrixRain = () => {
+  const [isFormOpen, setIsFormOpen] = useState(false);
   const [downloadFile, setDownloadFile] = useState({
     canDownload: false,
     fileName: "",
@@ -84,6 +86,8 @@ const MatrixRain = () => {
     }));
   };
 
+  const toggleShowForm = () => setIsFormOpen(!isFormOpen);
+
   return (
     <div style={{ height: "inherit" }}>
       <ProgressScreen
@@ -96,8 +100,21 @@ const MatrixRain = () => {
         handleFormDataChange={handleFormDataChange}
         handleExportAnimation={handleExportAnimation}
       />
+      <div
+        className="sm:hidden absolute z-50 cursor-pointer mt-2 ml-2 bg-white"
+        onClick={toggleShowForm}
+      >
+        <Menu className="h-6 w-6 p-4" />
+        {isFormOpen && (
+          <MatrixRainForm
+            formData={formData}
+            handleFormDataChange={handleFormDataChange}
+          />
+        )}
+      </div>
+
       <ResizablePanelGroup direction="horizontal">
-        <ResizablePanel defaultSize={15}>
+        <ResizablePanel defaultSize={15} className="max-sm:hidden">
           <MatrixRainForm
             formData={formData}
             handleFormDataChange={handleFormDataChange}

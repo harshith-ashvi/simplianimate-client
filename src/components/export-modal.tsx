@@ -56,7 +56,10 @@ const ExportModal = ({
         <DialogHeader>
           <DialogTitle>Export Details</DialogTitle>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
+        <p className="flex items-center justify-center sm:hidden">
+          Export works on web browsers
+        </p>
+        <div className="grid gap-4 py-4 max-sm:hidden">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="name" className="text-right">
               File Name
@@ -94,7 +97,7 @@ const ExportModal = ({
             </Select>
           </div>
         </div>
-        <DialogFooter>
+        <DialogFooter className="max-sm:hidden">
           <Button type="submit" onClick={exportAnimation}>
             Export
           </Button>
