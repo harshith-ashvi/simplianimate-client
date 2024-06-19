@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { Menu } from "lucide-react";
-import { X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 import fullLogo from "@/assets/images/simpliAnimate-full.png";
 import { navLinks } from "@/data/home";

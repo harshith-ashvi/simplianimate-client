@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { Menu, X } from "lucide-react";
+
 import {
   ResizableHandle,
   ResizablePanel,
@@ -13,6 +15,7 @@ import TextFlyersForm from "./TextFlyersForm";
 const downloadDuration = 8; //in seconds
 
 const TextFlyers = () => {
+  const [isFormOpen, setIsFormOpen] = useState(false);
   const [downloadFile, setDownloadFile] = useState({
     canDownload: false,
     fileName: "",
@@ -86,6 +89,8 @@ const TextFlyers = () => {
     }));
   };
 
+  const toggleShowForm = () => setIsFormOpen(!isFormOpen);
+
   return (
     <div style={{ height: "inherit" }}>
       <ProgressScreen
@@ -98,8 +103,20 @@ const TextFlyers = () => {
         handleFormDataChange={handleFormDataChange}
         handleExportAnimation={handleExportAnimation}
       />
+      <div
+        className="md:hidden absolute z-20 cursor-pointer mt-2 ml-2 p-1 bg-white"
+        onClick={toggleShowForm}
+      >
+        {isFormOpen ? <X /> : <Menu />}
+        {isFormOpen && (
+          <TextFlyersForm
+            formData={formData}
+            handleFormDataChange={handleFormDataChange}
+          />
+        )}
+      </div>
       <ResizablePanelGroup direction="horizontal">
-        <ResizablePanel defaultSize={15}>
+        <ResizablePanel defaultSize={15} className="max-md:hidden">
           <TextFlyersForm
             formData={formData}
             handleFormDataChange={handleFormDataChange}

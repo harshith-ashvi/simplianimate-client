@@ -53,8 +53,8 @@ const TextFlyersForm = ({
 }) => {
   return (
     <div
-      className="p-5"
-      style={{ backgroundColor: "#f4f6fb", height: "calc(100vh - 45px)" }}
+      className="p-5 h-screen-minus-45"
+      style={{ backgroundColor: "#f4f6fb" }}
     >
       <div>
         <Label htmlFor="color">Background color</Label>

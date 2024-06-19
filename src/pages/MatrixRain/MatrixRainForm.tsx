@@ -33,8 +33,8 @@ const MatrixRainForm = ({
 }) => {
   return (
     <div
-      className="p-5 overflow-y-auto"
-      style={{ backgroundColor: "#f4f6fb", height: "calc(100vh - 45px)" }}
+      className="p-5 overflow-y-auto h-screen-minus-45"
+      style={{ backgroundColor: "#f4f6fb" }}
     >
       <div>
         <Label htmlFor="backgroundColor">Background color</Label>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Menu } from "lucide-react";
+import { Menu, X } from "lucide-react";
+
 import {
   ResizableHandle,
   ResizablePanel,
@@ -101,10 +102,10 @@ const MatrixRain = () => {
         handleExportAnimation={handleExportAnimation}
       />
       <div
-        className="sm:hidden absolute z-50 cursor-pointer mt-2 ml-2 bg-white"
+        className="md:hidden absolute z-20 cursor-pointer mt-2 ml-2 p-1 bg-white"
         onClick={toggleShowForm}
       >
-        <Menu className="h-6 w-6 p-4" />
+        {isFormOpen ? <X /> : <Menu />}
         {isFormOpen && (
           <MatrixRainForm
             formData={formData}
@@ -114,7 +115,7 @@ const MatrixRain = () => {
       </div>
 
       <ResizablePanelGroup direction="horizontal">
-        <ResizablePanel defaultSize={15} className="max-sm:hidden">
+        <ResizablePanel defaultSize={15} className="max-md:hidden">
           <MatrixRainForm
             formData={formData}
             handleFormDataChange={handleFormDataChange}

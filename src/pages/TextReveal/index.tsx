@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import { Menu, X } from "lucide-react";
+
 import {
   ResizableHandle,
   ResizablePanel,
@@ -12,6 +14,7 @@ import TextRevealCanvas from "./TextRevealCanvas";
 
 const TextReveal = () => {
   const downloadDuration = useRef(8); //in seconds
+  const [isFormOpen, setIsFormOpen] = useState(false);
   const [downloadFile, setDownloadFile] = useState({
     canDownload: false,
     fileName: "",
@@ -85,6 +88,8 @@ SimpliAnimate`,
     }));
   };
 
+  const toggleShowForm = () => setIsFormOpen(!isFormOpen);
+
   return (
     <div style={{ height: "inherit" }}>
       <ProgressScreen
@@ -97,8 +102,20 @@ SimpliAnimate`,
         handleFormDataChange={handleFormDataChange}
         handleExportAnimation={handleExportAnimation}
       />
+      <div
+        className="md:hidden absolute z-20 cursor-pointer mt-2 ml-2 p-1 bg-white"
+        onClick={toggleShowForm}
+      >
+        {isFormOpen ? <X /> : <Menu />}
+        {isFormOpen && (
+          <TextRevealForm
+            formData={formData}
+            handleFormDataChange={handleFormDataChange}
+          />
+        )}
+      </div>
       <ResizablePanelGroup direction="horizontal">
-        <ResizablePanel defaultSize={15}>
+        <ResizablePanel defaultSize={15} className="max-md:hidden">
           <TextRevealForm
             formData={formData}
             handleFormDataChange={handleFormDataChange}
