@@ -73,6 +73,10 @@ module.exports = {
       },
       height: {
         "screen-minus-45": "calc(100vh - 45px)",
+        "screen-minus-70": "calc(100vh - 70px)",
+      },
+      backgroundColor: {
+        "template-form": "#f4f6fb",
       },
     },
   },
