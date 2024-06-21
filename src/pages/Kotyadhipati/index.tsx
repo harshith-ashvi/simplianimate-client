@@ -1,11 +1,18 @@
 import { useEffect, useRef, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { TextCursorInput } from "lucide-react";
 
 import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import ProgressScreen from "@/components/progressScreen";
 import TemplateNavbar from "@/components/template-navbar";
 
@@ -103,18 +110,6 @@ const Kotyadhipati = () => {
         handleFormDataChange={handleFormDataChange}
         handleExportAnimation={handleExportAnimation}
       />
-      <div
-        className="md:hidden absolute z-20 cursor-pointer mt-2 ml-2 p-1 bg-white"
-        onClick={toggleShowForm}
-      >
-        {isFormOpen ? <X /> : <Menu />}
-        {isFormOpen && (
-          <KotyadhipatiForm
-            formData={formData}
-            handleFormDataChange={handleFormDataChange}
-          />
-        )}
-      </div>
       <ResizablePanelGroup direction="horizontal">
         <ResizablePanel defaultSize={15} className="max-md:hidden">
           <KotyadhipatiForm
@@ -135,6 +130,32 @@ const Kotyadhipati = () => {
           />
         </ResizablePanel>
       </ResizablePanelGroup>
+      <div className="md:hidden">
+        <Sheet>
+          <SheetTrigger>
+            <div className="md:hidden w-full flex items-center justify-center absolute bottom-0 cursor-pointer py-2 z-50 bg-template-form">
+              <div className="bg-template-form flex flex-col items-center">
+                <TextCursorInput
+                  size={20}
+                  onClick={toggleShowForm}
+                  className="bg-template-form"
+                />
+                <p className="text-xs">Input</p>
+              </div>
+            </div>
+          </SheetTrigger>
+          <SheetContent side="bottom" className="bg-template-form">
+            <SheetHeader>
+              <SheetDescription>
+                <KotyadhipatiForm
+                  formData={formData}
+                  handleFormDataChange={handleFormDataChange}
+                />
+              </SheetDescription>
+            </SheetHeader>
+          </SheetContent>
+        </Sheet>
+      </div>
     </div>
   );
 };

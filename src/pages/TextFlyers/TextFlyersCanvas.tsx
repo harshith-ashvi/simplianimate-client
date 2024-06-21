@@ -182,20 +182,13 @@ const TextFlyersCanvas = ({
   }, [downloadFile]);
 
   return (
-    <div
-      style={{
-        backgroundColor: "#D9D9D9",
-      }}
-      className="h-full flex items-center justify-center"
-    >
-      <div style={{ backgroundColor: "white" }}>
-        <canvas
-          ref={canvasRef}
-          width={canvasDimension.width}
-          height={canvasDimension.height}
-          style={{ display: "block" }}
-        />
-      </div>
+    <div className="h-full flex items-center justify-center bg-template-canvas">
+      <canvas
+        ref={canvasRef}
+        width={canvasDimension.width}
+        height={canvasDimension.height}
+        className="block bg-white max-md:mb-10"
+      />
     </div>
   );
 };

@@ -191,17 +191,12 @@ const TextFallingCanvas = ({
   }, [downloadFile]);
 
   return (
-    <div
-      style={{
-        backgroundColor: "#D9D9D9",
-      }}
-      className="h-full flex items-center justify-center"
-    >
+    <div className="h-full flex items-center justify-center bg-template-canvas">
       <canvas
         ref={canvasRef}
         width={canvasDimension.width}
         height={canvasDimension.height}
-        style={{ backgroundColor: "white", display: "block" }}
+        className="block bg-white max-md:mb-10"
       />
     </div>
   );

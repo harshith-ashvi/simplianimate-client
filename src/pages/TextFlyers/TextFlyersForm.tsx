@@ -52,10 +52,7 @@ const TextFlyersForm = ({
   handleFormDataChange: (key: string, value: string | number) => void;
 }) => {
   return (
-    <div
-      className="p-5 h-screen-minus-45"
-      style={{ backgroundColor: "#f4f6fb" }}
-    >
+    <div className="p-5 overflow-y-auto md:h-screen-minus-45 max-md:h-fit bg-template-form">
       <div>
         <Label htmlFor="color">Background color</Label>
         <Input
