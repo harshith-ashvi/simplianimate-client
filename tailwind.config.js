@@ -77,6 +77,7 @@ module.exports = {
       },
       backgroundColor: {
         "template-form": "#f4f6fb",
+        "template-canvas": "#D9D9D9",
       },
     },
   },

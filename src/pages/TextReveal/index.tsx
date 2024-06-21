@@ -135,11 +135,11 @@ SimpliAnimate`,
             <div className="md:hidden w-full flex items-center justify-center absolute bottom-0 cursor-pointer py-2 z-50 bg-template-form">
               <div className="bg-template-form flex flex-col items-center">
                 <TextCursorInput
-                  size={30}
+                  size={18}
                   onClick={toggleShowForm}
                   className="bg-template-form"
                 />
-                <p>Input</p>
+                <p className="text-xs">Input</p>
               </div>
             </div>
           </SheetTrigger>
