@@ -19,7 +19,7 @@ function App() {
         <Route
           path="/text-flyers"
           element={
-            <div style={{ height: "calc(100vh - 45px)" }}>
+            <div className="md:h-screen-minus-45 max-md:h-screen-minus-70">
               <TextFlyers />
             </div>
           }
@@ -27,7 +27,7 @@ function App() {
         <Route
           path="/matrix-rain"
           element={
-            <div style={{ height: "calc(100vh - 45px)" }}>
+            <div className="md:h-screen-minus-45 max-md:h-screen-minus-70">
               <MatrixRain />
             </div>
           }
@@ -35,7 +35,7 @@ function App() {
         <Route
           path="/text-reveal"
           element={
-            <div style={{ height: "calc(100vh - 45px)" }}>
+            <div className="md:h-screen-minus-45 max-md:h-screen-minus-70">
               <TextReveal />
             </div>
           }
@@ -43,7 +43,7 @@ function App() {
         <Route
           path="/text-falling"
           element={
-            <div style={{ height: "calc(100vh - 45px)" }}>
+            <div className="md:h-screen-minus-45 max-md:h-screen-minus-70">
               <TextFalling />
             </div>
           }
@@ -59,7 +59,7 @@ function App() {
         <Route
           path="/quiz"
           element={
-            <div style={{ height: "calc(100vh - 45px)" }}>
+            <div className="md:h-screen-minus-45 max-md:h-screen-minus-70">
               <Kotyadhipati />
             </div>
           }
@@ -67,7 +67,7 @@ function App() {
         <Route
           path="/gradient-arora"
           element={
-            <div style={{ height: "calc(100vh - 45px)" }}>
+            <div className="md:h-screen-minus-45 max-md:h-screen-minus-70">
               <GradientArora />
             </div>
           }
@@ -75,7 +75,7 @@ function App() {
         <Route
           path="/test-demos"
           element={
-            <div style={{ height: "calc(100vh - 45px)" }}>
+            <div className="md:h-screen-minus-45 max-md:h-screen-minus-70">
               <TestDemos />
             </div>
           }
