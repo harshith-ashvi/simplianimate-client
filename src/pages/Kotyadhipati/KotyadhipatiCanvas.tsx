@@ -121,46 +121,44 @@ const KotyadhipatiCanvas = ({
           timerCount === 0,
           correctOptionRowColumn
         );
-        // drawOption(context, width, height, 1, formData.optionA, formData.optionB);
-        // drawOption(context, width, height, 2, formData.optionC, formData.optionD);
 
         const optionBoxHeight = height * 0.03;
         context.font = `${optionBoxHeight - 6}px calibre`;
         if (formData.timerCount !== timerCount) {
           const widthHalf = width * 0.5;
           context.fillStyle = "gold";
-          context.fillText("A. ", widthHalf * 0.3, height * 0.74);
+          context.fillText("A. ", widthHalf * 0.3, height * 0.49);
           context.textAlign = "start";
           context.fillStyle = "white";
-          context.fillText(formData.optionA, widthHalf * 0.35, height * 0.74);
+          context.fillText(formData.optionA, widthHalf * 0.35, height * 0.49);
 
           context.fillStyle = "gold";
           context.textAlign = "center";
-          context.fillText("B. ", widthHalf + widthHalf * 0.14, height * 0.74);
+          context.fillText("B. ", widthHalf + widthHalf * 0.14, height * 0.49);
           context.textAlign = "start";
           context.fillStyle = "white";
           context.fillText(
             formData.optionB,
             widthHalf + widthHalf * 0.18,
-            height * 0.74
+            height * 0.49
           );
 
           context.fillStyle = "gold";
           context.textAlign = "center";
-          context.fillText("C. ", widthHalf * 0.3, height * 0.81);
+          context.fillText("C. ", widthHalf * 0.3, height * 0.56);
           context.textAlign = "start";
           context.fillStyle = "white";
-          context.fillText(formData.optionC, widthHalf * 0.35, height * 0.81);
+          context.fillText(formData.optionC, widthHalf * 0.35, height * 0.56);
 
           context.fillStyle = "gold";
           context.textAlign = "center";
-          context.fillText("D. ", widthHalf + widthHalf * 0.14, height * 0.81);
+          context.fillText("D. ", widthHalf + widthHalf * 0.14, height * 0.56);
           context.textAlign = "start";
           context.fillStyle = "white";
           context.fillText(
             formData.optionD,
             widthHalf + widthHalf * 0.18,
-            height * 0.81
+            height * 0.56
           );
         }
 

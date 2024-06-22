@@ -43,7 +43,7 @@ const TextFalling = () => {
     fallType: string;
   }>({
     screenResolution: "Portrait",
-    backgroundColor: "#A8DADC",
+    backgroundColor: "#81D58F",
     font: "Arial",
     fontSize: 36,
     fontColor: "#E63946",

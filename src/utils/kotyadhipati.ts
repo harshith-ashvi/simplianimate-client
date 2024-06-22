@@ -32,7 +32,7 @@ export const drawQuestionBox = (
   height: number,
   question: string
 ) => {
-  const questionHeight = height * 0.65;
+  const questionHeight = height * 0.4;
   const boxHeight = height * 0.04;
   context.beginPath();
   context.moveTo(0, questionHeight);
@@ -58,12 +58,12 @@ export const drawQuestionBox = (
   const lines = getTextForQuestion(context, question, width * 0.6);
   context.font = `${boxHeight - 10 - (lines.length - 1) * 2}px calibre`;
   if (lines.length === 1) {
-    context.fillText(question, width / 2, height * 0.65);
+    context.fillText(question, width / 2, height * 0.4);
   } else {
     const textLines = boxHeight / lines.length;
     for (let i = 0; i < lines.length; i++) {
-      const textLine = textLines + i * 16;
-      context.fillText(lines[i], width / 2, height * 0.62 + textLine);
+      const textLine = textLines + i * 18;
+      context.fillText(lines[i], width / 2, height * 0.37 + textLine);
     }
   }
 };
@@ -77,7 +77,7 @@ export const drawOptionsBox = (
   correctOptionRowColumn: { row: number; column: number }
 ) => {
   const widthHalf = width * 0.5;
-  const questionHeight = height * (optionsRow === 1 ? 0.74 : 0.81);
+  const questionHeight = height * (optionsRow === 1 ? 0.49 : 0.56);
   const boxHeight = height * 0.03;
   context.beginPath();
   context.moveTo(0, questionHeight);
@@ -140,7 +140,7 @@ export const drawOption = (
   optionTwo: string
 ) => {
   const widthHalf = width * 0.5;
-  const questionHeight = height * (optionsRow === 1 ? 0.74 : 0.81);
+  const questionHeight = height * (optionsRow === 1 ? 0.49 : 0.56);
   const boxHeight = height * 0.03;
 
   if (Boolean(optionOne)) {
@@ -183,7 +183,7 @@ export const drawTimerCircle = (
   timerCount: number
 ) => {
   const centerX = width / 2;
-  const centerY = height * 0.6 + height * 0.01;
+  const centerY = height * 0.35 + height * 0.01;
   context.beginPath();
   context.arc(centerX, centerY, 25, Math.PI, 0, false);
   context.lineWidth = 3;
@@ -191,10 +191,12 @@ export const drawTimerCircle = (
   context.stroke();
   context.closePath();
 
-  context.font = `${25 - 8}px calibre`;
+  const scalingFactor = 0.08; // Adjust this factor as needed
+  const dynamicFontSize = Math.min(18, Math.floor(height * scalingFactor));
+  context.font = `${dynamicFontSize}px calibre`;
   context.fillStyle = "gold";
   context.textAlign = "center";
-  context.fillText(`${timerCount}`, centerX, height * 0.598);
+  context.fillText(`${timerCount}`, centerX, height * 0.348);
 };
 
 export const getCorrectRowAndColumn = (option: string) => {
