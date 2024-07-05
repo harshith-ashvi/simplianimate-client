@@ -71,6 +71,9 @@ module.exports = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      width: {
+        "auth-content": "420px",
+      },
       height: {
         "screen-minus-45": "calc(100vh - 45px)",
         "screen-minus-70": "calc(100vh - 70px)",
