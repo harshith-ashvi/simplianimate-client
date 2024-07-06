@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -13,15 +15,18 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
 
 import GoogleIcon from "@/assets/svg/GoogleIcon";
 
 type FormValues = {
+  name: string;
   email: string;
   password: string;
 };
 
 const FormSchema = z.object({
+  name: z.string().min(1, { message: "Name is required" }),
   email: z
     .string()
     .min(1, { message: "Email is required" })
@@ -29,10 +34,12 @@ const FormSchema = z.object({
   password: z.string().min(1, { message: "Password is required" }),
 });
 
-const Login = () => {
+const Signup = () => {
+  const [isTermsAgreed, setIsTermsAgreed] = useState(false);
+
   const form = useForm<FormValues>({
     resolver: zodResolver(FormSchema),
-    defaultValues: { email: "", password: "" },
+    defaultValues: { name: "", email: "", password: "" },
   });
 
   const onSubmit = (data: FormValues) => {
@@ -44,16 +51,16 @@ const Login = () => {
       <div className="flex flex-col items-center justify-center w-full h-screen space-y-3 ">
         <div className="w-auth-content p-8 border border-solid rounded-xl border-gray-200 shadow-lg">
           <p className="text-lg font-semibold ml-2 mb-4">
-            Sign into SimpliAnimate
+            Sign up to SimpliAnimate
           </p>
           <Button className="w-full my-3" variant="outline">
             <GoogleIcon className="mr-2" />
-            Sign in with Google
+            Sign up with Google
           </Button>
           <div className="flex items-center justify-center py-2">
             <hr className="w-8/12 mr-1" />
             <p className="w-full mx-2 text-sm text-gray-500">
-              or sign in with email
+              or sign up with email
             </p>
             <hr className="w-8/12 ml-1" />
           </div>
@@ -61,12 +68,25 @@ const Login = () => {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
               <FormField
                 control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-black">Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Naruto" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
                 name="email"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-black">Email</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter Email" {...field} />
+                      <Input placeholder="naruto@konoha.com" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -77,12 +97,7 @@ const Login = () => {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <div className="flex items-center justify-between">
-                      <FormLabel className="text-black">Password</FormLabel>
-                      <Link to="/forgot-password" className="underline text-sm">
-                        Forgot?
-                      </Link>
-                    </div>
+                    <FormLabel className="text-black">Password</FormLabel>
                     <FormControl>
                       <Input
                         type="password"
@@ -94,14 +109,36 @@ const Login = () => {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full mt-2">
-                Submit
+              <div className="flex items-start space-x-2">
+                <Checkbox
+                  id="terms"
+                  checked={isTermsAgreed}
+                  onCheckedChange={() => setIsTermsAgreed(!isTermsAgreed)}
+                />
+                <label htmlFor="terms" className="text-xs">
+                  I agree with SimpliAnimate's{" "}
+                  <Link to="/" className="underline">
+                    Terms of Service
+                  </Link>{" "}
+                  and{" "}
+                  <Link to="/" className="underline">
+                    Privacy Policy
+                  </Link>
+                  .
+                </label>
+              </div>
+              <Button
+                type="submit"
+                className="w-full mt-2"
+                disabled={!isTermsAgreed}
+              >
+                Create an Account
               </Button>
             </form>
           </Form>
           <p className="text-center mt-4">
-            Don't have an account?{" "}
-            <Link to="/signup" className="underline">
+            Already have an account?{" "}
+            <Link to="/signin" className="underline">
               Sign up
             </Link>
           </p>
@@ -111,4 +148,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;
