@@ -13,11 +13,13 @@ const AuthContext = createContext<{
   user: User | null;
   signin: ({ email, password }: FormValues) => void;
   signinWithProvider: () => void;
+  signup: ({ email, password }: FormValues) => void;
   signout: () => void;
 }>({
   user: null,
   signin: () => {},
   signinWithProvider: () => {},
+  signup: () => {},
   signout: () => {},
 });
 
@@ -79,6 +81,22 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  const signup = async ({ email, password }: FormValues) => {
+    setLoading(true);
+    try {
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+      });
+      if (error) throw error;
+      navigate("/");
+    } catch (error) {
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const signout = async () => {
     setLoading(true);
     try {
@@ -96,6 +114,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     user,
     signin,
     signinWithProvider,
+    signup,
     signout,
   };
   return (

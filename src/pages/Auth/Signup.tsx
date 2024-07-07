@@ -17,6 +17,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 
+import { useAuth } from "@/components/auth/Auth";
+
 import GoogleIcon from "@/assets/svg/GoogleIcon";
 
 type FormValues = {
@@ -35,6 +37,7 @@ const FormSchema = z.object({
 });
 
 const Signup = () => {
+  const { signinWithProvider, signup } = useAuth();
   const [isTermsAgreed, setIsTermsAgreed] = useState(false);
 
   const form = useForm<FormValues>({
@@ -42,8 +45,9 @@ const Signup = () => {
     defaultValues: { name: "", email: "", password: "" },
   });
 
-  const onSubmit = (data: FormValues) => {
-    console.log("data", data);
+  const onSubmit = async (formData: FormValues) => {
+    const { email, password } = formData;
+    signup({ email, password });
   };
 
   return (
@@ -53,7 +57,11 @@ const Signup = () => {
           <p className="text-lg font-semibold ml-2 mb-4">
             Sign up to SimpliAnimate
           </p>
-          <Button className="w-full my-3" variant="outline">
+          <Button
+            className="w-full my-3"
+            variant="outline"
+            onClick={signinWithProvider}
+          >
             <GoogleIcon className="mr-2" />
             Sign up with Google
           </Button>
@@ -139,7 +147,7 @@ const Signup = () => {
           <p className="text-center mt-4">
             Already have an account?{" "}
             <Link to="/signin" className="underline">
-              Sign up
+              Sign in
             </Link>
           </p>
         </div>
