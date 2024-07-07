@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
+import { useAuth } from "@/components/auth/Auth";
+
 import GoogleIcon from "@/assets/svg/GoogleIcon";
 
 type FormValues = {
@@ -30,14 +32,13 @@ const FormSchema = z.object({
 });
 
 const Signin = () => {
+  const { signin, signinWithProvider } = useAuth();
   const form = useForm<FormValues>({
     resolver: zodResolver(FormSchema),
     defaultValues: { email: "", password: "" },
   });
 
-  const onSubmit = (data: FormValues) => {
-    console.log("data", data);
-  };
+  const onSubmit = async (formData: FormValues) => signin(formData);
 
   return (
     <div className="h-screen">
@@ -46,7 +47,11 @@ const Signin = () => {
           <p className="text-lg font-semibold ml-2 mb-4">
             Sign into SimpliAnimate
           </p>
-          <Button className="w-full my-3" variant="outline">
+          <Button
+            className="w-full my-3"
+            variant="outline"
+            onClick={signinWithProvider}
+          >
             <GoogleIcon className="mr-2" />
             Sign in with Google
           </Button>
@@ -102,7 +107,7 @@ const Signin = () => {
           <p className="text-center mt-4">
             Don't have an account?{" "}
             <Link to="/signup" className="underline">
-              Sign up
+              Sign Up
             </Link>
           </p>
         </div>
