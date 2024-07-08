@@ -69,7 +69,9 @@ const Signin = () => {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-black">Email</FormLabel>
+                    <FormLabel className="text-black">
+                      Email<span className="text-red-500 ml-1">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input placeholder="Enter Email" {...field} />
                     </FormControl>
@@ -83,7 +85,9 @@ const Signin = () => {
                 render={({ field }) => (
                   <FormItem>
                     <div className="flex items-center justify-between">
-                      <FormLabel className="text-black">Password</FormLabel>
+                      <FormLabel className="text-black">
+                        Password<span className="text-red-500 ml-1">*</span>
+                      </FormLabel>
                       <Link to="/forgot-password" className="underline text-sm">
                         Forgot?
                       </Link>

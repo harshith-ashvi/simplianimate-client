@@ -16,7 +16,6 @@ const UserButton = ({
   handleSignout: () => void;
   avatarUrl: string;
 }) => {
-  console.log(avatarUrl);
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -29,9 +28,7 @@ const UserButton = ({
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          {/* <DropdownMenuItem className="cursor-pointer">
-            Profile
-          </DropdownMenuItem> */}
+          <DropdownMenuItem disabled>Profile</DropdownMenuItem>
           <DropdownMenuItem className="cursor-pointer" onClick={handleSignout}>
             Log out
           </DropdownMenuItem>

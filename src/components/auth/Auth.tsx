@@ -40,9 +40,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
 
     const { data: listener } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
+      (event, session) => {
         setUser(session?.user ?? null);
         setLoading(false);
+        if (event == "PASSWORD_RECOVERY") {
+          console.log(event, session);
+          navigate("/reset-password");
+        }
       }
     );
 

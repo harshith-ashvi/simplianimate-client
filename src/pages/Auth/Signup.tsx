@@ -79,7 +79,9 @@ const Signup = () => {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-black">Name</FormLabel>
+                    <FormLabel className="text-black">
+                      Name<span className="text-red-500 ml-1">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input placeholder="Naruto" {...field} />
                     </FormControl>
@@ -92,7 +94,9 @@ const Signup = () => {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-black">Email</FormLabel>
+                    <FormLabel className="text-black">
+                      Email<span className="text-red-500 ml-1">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input placeholder="naruto@konoha.com" {...field} />
                     </FormControl>
@@ -105,7 +109,9 @@ const Signup = () => {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-black">Password</FormLabel>
+                    <FormLabel className="text-black">
+                      Password<span className="text-red-500 ml-1">*</span>
+                    </FormLabel>
                     <FormControl>
                       <Input
                         type="password"
