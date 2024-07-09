@@ -13,6 +13,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+
+import { useAuth } from "@/components/auth/Auth";
+
 import supabase from "@/data/supabaseClient";
 
 type FormValues = {
@@ -27,6 +30,7 @@ const FormSchema = z.object({
 
 const RecoverPassword = () => {
   const navigate = useNavigate();
+  const { signout } = useAuth();
   const form = useForm<FormValues>({
     resolver: zodResolver(FormSchema),
     defaultValues: { password: "", confirmPassword: "" },
@@ -37,6 +41,7 @@ const RecoverPassword = () => {
       const { error } = await supabase.auth.updateUser({
         password: formData.password,
       });
+      signout();
       if (error) throw error;
       navigate("/signin");
     } catch (error) {

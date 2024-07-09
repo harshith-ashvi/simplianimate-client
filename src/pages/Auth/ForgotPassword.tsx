@@ -36,7 +36,10 @@ const ForgotPassword = () => {
   const onSubmit = async (formData: FormValues) => {
     try {
       const { error } = await supabase.auth.resetPasswordForEmail(
-        formData.email
+        formData.email,
+        {
+          redirectTo: "http://localhost:6969/reset-password",
+        }
       );
       if (error) throw error;
       navigate("/signin");

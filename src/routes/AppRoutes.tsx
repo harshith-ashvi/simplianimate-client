@@ -14,6 +14,7 @@ import Kotyadhipati from "@/pages/Kotyadhipati";
 import GradientArora from "@/pages/GradientArora";
 
 import TestDemos from "@/pages/TestDemo";
+import RecoverPassword from "@/pages/Auth/RecoverPassword";
 
 const AppRoutes = () => {
   const { user } = useAuth();
@@ -22,6 +23,7 @@ const AppRoutes = () => {
 
   return (
     <Routes>
+      <Route path="/reset-password" element={<RecoverPassword />} />
       <Route
         path="/"
         element={
