@@ -23,6 +23,7 @@
     "@radix-ui/react-toggle-group": "^1.0.4",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "fabric": "^6.0.2",
     "file-saver": "^2.0.5",
     "lucide-react": "^0.343.0",
     "posthog-js": "^1.112.0",
