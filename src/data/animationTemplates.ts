@@ -30,6 +30,11 @@ export const textBasedAnimation: {
     url: "/text-falling",
     img: textFalling,
   },
+  {
+    name: "Text Carousel",
+    url: "/text-carousel",
+    img: textFalling,
+  },
 ];
 
 export const imageBasedAnimation: {

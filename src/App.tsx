@@ -9,6 +9,7 @@ import Kotyadhipati from "./pages/Kotyadhipati";
 import TextFalling from "./pages/TextFalling";
 import TestDemos from "./pages/TestDemo";
 import GradientArora from "./pages/GradientArora";
+import TextCarousel from "./pages/TextCarousel";
 // import ImageFlyers from "./pages/ImageFlyers";
 
 function App() {
@@ -45,6 +46,14 @@ function App() {
           element={
             <div className="md:h-screen-minus-45 max-md:h-screen-minus-70">
               <TextFalling />
+            </div>
+          }
+        />
+        <Route
+          path="/text-carousel"
+          element={
+            <div className="md:h-screen-minus-45 max-md:h-screen-minus-70">
+              <TextCarousel />
             </div>
           }
         />
