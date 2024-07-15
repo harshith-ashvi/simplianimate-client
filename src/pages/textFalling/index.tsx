@@ -45,7 +45,7 @@ const TextFalling = () => {
     screenResolution: "Portrait",
     backgroundColor: "#81D58F",
     font: "Arial",
-    fontSize: 36,
+    fontSize: 100,
     fontColor: "#E63946",
     text: `SimpliAnimate`,
     fallDelay: 1,

@@ -132,10 +132,27 @@ const MatrixRainCanvas = ({
     if (canvasRef.current !== null) {
       const context = canvasRef.current.getContext("2d");
 
-      const width = canvasRef.current.width;
-      const height = canvasRef.current.height;
+      const {
+        desiredWidth,
+        desiredHeight,
+      }: { desiredWidth: number; desiredHeight: number } =
+        aspectRatio[formData.screenResolution as keyof typeof aspectRatio];
 
-      const matrixRainEffect = new Effect(width, height, formData.fontSize);
+      const scaleX = canvasDimension.width / desiredWidth;
+      const scaleY = canvasDimension.height / desiredHeight;
+      const scale = Math.min(scaleX, scaleY);
+
+      canvasRef.current.width = desiredWidth;
+      canvasRef.current.height = desiredHeight;
+
+      canvasRef.current.style.width = `${desiredWidth * scale}px`;
+      canvasRef.current.style.height = `${desiredHeight * scale}px`;
+
+      const matrixRainEffect = new Effect(
+        desiredWidth,
+        desiredHeight,
+        formData.fontSize
+      );
       const backgroundColor: string = hexCodeToRGB(
         formData.backgroundColor,
         0.05
@@ -146,23 +163,16 @@ const MatrixRainCanvas = ({
       const nextFrame = 1000 / fps;
       let timer = 0;
 
-      // Calculate a dynamic font size based on the canvas height and user input
-      const scalingFactor = 0.08; // Adjust this factor as needed
-      const dynamicFontSize = Math.min(
-        formData.fontSize,
-        Math.floor(height * scalingFactor)
-      );
-
       function matrixRainAnimate(timestamp: number) {
         if (!context) return;
         const deltaTime = timestamp - lastTime;
         lastTime = timestamp;
         if (timer > nextFrame) {
           context.fillStyle = backgroundColor;
-          context.fillRect(0, 0, width, height);
+          context.fillRect(0, 0, desiredWidth, desiredHeight);
           context.textAlign = "center";
           context.fillStyle = formData.fontColor;
-          context.font = `${dynamicFontSize}px monospace`;
+          context.font = `${formData.fontSize}px monospace`;
           matrixRainEffect.symbols.forEach((symbol) =>
             symbol.draw(context, formData.text)
           );
