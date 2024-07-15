@@ -45,7 +45,7 @@ const MatrixRain = () => {
   }>({
     screenResolution: "Portrait",
     backgroundColor: "#000000",
-    fontSize: 24,
+    fontSize: 36,
     fontColor: "#0AFF0A",
     fps: 15,
     textType: "Prefilled",

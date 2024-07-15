@@ -44,7 +44,7 @@ const TextReveal = () => {
     screenResolution: "Portrait",
     backgroundColor: "#A8DADC",
     font: "Arial",
-    fontSize: 36,
+    fontSize: 60,
     fontColor: "#E63946",
     stickColor: "#1D3557",
     text: `Let's Go!

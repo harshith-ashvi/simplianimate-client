@@ -6,9 +6,15 @@ import FileSaver from "file-saver";
 import { aspectRatio } from "@/data/canvas";
 
 const xPositionForSlider = {
-  Portrait: 40,
-  Landscape: 100,
-  Square: 60,
+  Portrait: 100,
+  Landscape: 140,
+  Square: 100,
+};
+
+const endWidthHeightFactor = {
+  Portrait: { widthFactor: 0.035, heightFactor: 0.2 },
+  Landscape: { widthFactor: 0.02, heightFactor: 0.32 },
+  Square: { widthFactor: 0.03, heightFactor: 0.25 },
 };
 
 const TextRevealCanvas = ({
@@ -85,8 +91,22 @@ const TextRevealCanvas = ({
       const context = canvasRef.current.getContext("2d");
       if (!context) return;
 
-      const width = canvasRef.current.width;
-      const height = canvasRef.current.height;
+      const {
+        desiredWidth,
+        desiredHeight,
+      }: { desiredWidth: number; desiredHeight: number } =
+        aspectRatio[formData.screenResolution as keyof typeof aspectRatio];
+
+      const scaleX = canvasDimension.width / desiredWidth;
+      const scaleY = canvasDimension.height / desiredHeight;
+      const scale = Math.min(scaleX, scaleY);
+
+      canvasRef.current.width = desiredWidth;
+      canvasRef.current.height = desiredHeight;
+
+      canvasRef.current.style.width = `${desiredWidth * scale}px`;
+      canvasRef.current.style.height = `${desiredHeight * scale}px`;
+
       const sliderXPosition =
         xPositionForSlider[
           formData.screenResolution as keyof typeof xPositionForSlider
@@ -95,24 +115,22 @@ const TextRevealCanvas = ({
       const words = formData.text.split("\n");
       let wordIndex = 0;
 
-      // Calculate a dynamic font size based on the canvas height and user input
-      const scalingFactor = 0.05; // Adjust this factor as needed
-      const dynamicFontSize = Math.min(
-        formData.fontSize,
-        Math.floor(height * scalingFactor)
-      );
+      const { widthFactor, heightFactor } =
+        endWidthHeightFactor[
+          formData.screenResolution as keyof typeof endWidthHeightFactor
+        ];
 
       let startTime: number | null = null;
       const duration = 1000; // 1 seconds in milliseconds
       const startWidth = 10;
-      const endWidth = width * 0.035;
+      const endWidth = desiredWidth * widthFactor;
       const startHeight = 0;
-      const endHeight = height * 0.2;
+      const endHeight = desiredHeight * heightFactor;
 
       let sliderMoveTime: number | null = null;
       const sliderMoveDuration = 1500; // 1.5 seconds in milliseconds
-      const sliderStartingXPosition = -width / 2 + sliderXPosition;
-      const sliderEndingXPosition = width / 2 - sliderXPosition;
+      const sliderStartingXPosition = -desiredWidth / 2 + sliderXPosition;
+      const sliderEndingXPosition = desiredWidth / 2 - sliderXPosition;
 
       // Function to draw a rotated rectangle with smooth edges
       function drawRotatedRect(
@@ -157,24 +175,24 @@ const TextRevealCanvas = ({
             duration
           );
 
-          context.clearRect(0, 0, width, height); // Clear the canvas
+          context.clearRect(0, 0, desiredWidth, desiredHeight); // Clear the canvas
           context.fillStyle = formData.backgroundColor;
-          context.fillRect(0, 0, width, height);
+          context.fillRect(0, 0, desiredWidth, desiredHeight);
           context.save();
-          context.translate(width / 2, height / 2);
+          context.translate(desiredWidth / 2, desiredHeight / 2);
           // Draw a rectangle
           drawRotatedRect(
-            -width / 2 + sliderXPosition,
+            -desiredWidth / 2 + sliderXPosition,
             0,
             sliderWidth,
             sliderHeight,
             (10 * Math.PI) / 180
           );
           drawRotatedRect(
-            -width / 2 + sliderXPosition + 5,
+            -desiredWidth / 2 + sliderXPosition + 5,
             0,
-            width,
-            height * 2,
+            desiredWidth,
+            desiredHeight * 2,
             (10 * Math.PI) / 180,
             true
           );
@@ -198,16 +216,16 @@ const TextRevealCanvas = ({
             sliderMoveDuration
           );
 
-          context.clearRect(0, 0, width, height); // Clear the canvas
+          context.clearRect(0, 0, desiredWidth, desiredHeight); // Clear the canvas
           context.fillStyle = formData.backgroundColor;
-          context.fillRect(0, 0, width, height);
+          context.fillRect(0, 0, desiredWidth, desiredHeight);
           context.save();
-          context.translate(width / 2, height / 2);
+          context.translate(desiredWidth / 2, desiredHeight / 2);
 
           context.textAlign = "center";
           context.textBaseline = "middle";
           context.fillStyle = formData.fontColor;
-          context.font = `${dynamicFontSize}px ${formData.font}`;
+          context.font = `${formData.fontSize}px ${formData.font}`;
           context.fillText(words[wordIndex], 0, 0);
 
           // Draw a rectangle
@@ -221,8 +239,8 @@ const TextRevealCanvas = ({
           drawRotatedRect(
             sliderXPosition + 5,
             0,
-            width,
-            height * 2,
+            desiredWidth,
+            desiredHeight * 2,
             (10 * Math.PI) / 180,
             true
           );
@@ -245,16 +263,16 @@ const TextRevealCanvas = ({
             sliderMoveDuration
           );
 
-          context.clearRect(0, 0, width, height); // Clear the canvas
+          context.clearRect(0, 0, desiredWidth, desiredHeight); // Clear the canvas
           context.fillStyle = formData.backgroundColor;
-          context.fillRect(0, 0, width, height);
+          context.fillRect(0, 0, desiredWidth, desiredHeight);
           context.save();
-          context.translate(width / 2, height / 2);
+          context.translate(desiredWidth / 2, desiredHeight / 2);
 
           context.textAlign = "center";
           context.textBaseline = "middle";
           context.fillStyle = formData.fontColor;
-          context.font = `${dynamicFontSize}px ${formData.font}`;
+          context.font = `${formData.fontSize}px ${formData.font}`;
           context.fillText(words[wordIndex], 0, 0);
 
           // Draw a rectangle
@@ -268,8 +286,8 @@ const TextRevealCanvas = ({
           drawRotatedRect(
             sliderXPosition + 5,
             0,
-            width,
-            height * 2,
+            desiredWidth,
+            desiredHeight * 2,
             (10 * Math.PI) / 180,
             true
           );

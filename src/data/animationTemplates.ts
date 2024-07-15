@@ -1,10 +1,3 @@
-import textFlyers from "@/assets/gif/textFlyers.gif";
-import matrixRain from "@/assets/gif/matrixRain.gif";
-import textReveal from "@/assets/gif/textReveal.gif";
-import textFalling from "@/assets/gif/textFalling.gif";
-import kannadadaKotyadipath from "@/assets/gif/kannadadaKotyadipathi.gif";
-import gradientArora from "@/assets/gif/gradientArora.gif";
-
 export const textBasedAnimation: {
   name: string;
   url: string;
@@ -13,36 +6,36 @@ export const textBasedAnimation: {
   {
     name: "Text Flyers",
     url: "/text-flyers",
-    img: textFlyers,
+    img: "https://nvahzazenzjsisbjthhb.supabase.co/storage/v1/object/public/assets/gif/textFlyers.gif",
   },
   {
     name: "Matrix Rain",
     url: "/matrix-rain",
-    img: matrixRain,
+    img: "https://nvahzazenzjsisbjthhb.supabase.co/storage/v1/object/public/assets/gif/matrixRain.gif",
   },
   {
     name: "Text Reveal",
     url: "/text-reveal",
-    img: textReveal,
+    img: "https://nvahzazenzjsisbjthhb.supabase.co/storage/v1/object/public/assets/gif/textReveal.gif",
   },
   {
     name: "Text Falling",
     url: "/text-falling",
-    img: textFalling,
+    img: "https://nvahzazenzjsisbjthhb.supabase.co/storage/v1/object/public/assets/gif/textFalling.gif",
   },
 ];
 
-export const imageBasedAnimation: {
-  name: string;
-  url: string;
-  img: string;
-}[] = [
-  {
-    name: "Image Flyers",
-    url: "/image-flyers",
-    img: textFlyers,
-  },
-];
+// export const imageBasedAnimation: {
+//   name: string;
+//   url: string;
+//   img: string;
+// }[] = [
+//   {
+//     name: "Image Flyers",
+//     url: "/image-flyers",
+//     img: textFlyers,
+//   },
+// ];
 
 export const otherAnimation: {
   name: string;
@@ -52,11 +45,11 @@ export const otherAnimation: {
   {
     name: "Quiz",
     url: "/quiz",
-    img: kannadadaKotyadipath,
+    img: "https://nvahzazenzjsisbjthhb.supabase.co/storage/v1/object/public/assets/gif/kannadadaKotyadipathi.gif",
   },
   {
     name: "Gradient Arora",
     url: "/gradient-arora",
-    img: gradientArora,
+    img: "https://nvahzazenzjsisbjthhb.supabase.co/storage/v1/object/public/assets/gif/gradientArora.gif",
   },
 ];

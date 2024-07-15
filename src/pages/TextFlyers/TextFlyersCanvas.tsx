@@ -73,8 +73,21 @@ const TextFlyersCanvas = ({
     if (canvasRef.current !== null) {
       const context = canvasRef.current.getContext("2d");
 
-      const width = canvasRef.current.width;
-      const height = canvasRef.current.height;
+      const {
+        desiredWidth,
+        desiredHeight,
+      }: { desiredWidth: number; desiredHeight: number } =
+        aspectRatio[formData.screenResolution as keyof typeof aspectRatio];
+
+      const scaleX = canvasDimension.width / desiredWidth;
+      const scaleY = canvasDimension.height / desiredHeight;
+      const scale = Math.min(scaleX, scaleY);
+
+      canvasRef.current.width = desiredWidth;
+      canvasRef.current.height = desiredHeight;
+
+      canvasRef.current.style.width = `${desiredWidth * scale}px`;
+      canvasRef.current.style.height = `${desiredHeight * scale}px`;
 
       const fl = 300;
       const shapes: { x: number; y: number; z: number; char: string }[] = [];
@@ -97,13 +110,13 @@ const TextFlyersCanvas = ({
       function flyerAnimation() {
         if (!context) return;
         shapes.sort((a, b) => b.z - a.z);
-        context.clearRect(0, 0, width, height);
+        context.clearRect(0, 0, desiredWidth, desiredHeight);
 
         context.fillStyle = formData.backgroundColor;
-        context.fillRect(0, 0, width, height);
+        context.fillRect(0, 0, desiredWidth, desiredHeight);
 
         context.save();
-        context.translate(width / 2, height / 2);
+        context.translate(desiredWidth / 2, desiredHeight / 2);
         let shape: { x: number; y: number; z: number; char: string } = {
           x: 0,
           y: 0,
