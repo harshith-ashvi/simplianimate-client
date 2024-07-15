@@ -69,15 +69,28 @@ const GradientAroraCanvas = ({
     if (canvasRef.current !== null) {
       const canvas = canvasRef.current;
 
-      const width = canvasRef.current.width;
-      const height = canvasRef.current.height;
+      const {
+        desiredWidth,
+        desiredHeight,
+      }: { desiredWidth: number; desiredHeight: number } =
+        aspectRatio[formData.screenResolution as keyof typeof aspectRatio];
+
+      const scaleX = canvasDimension.width / desiredWidth;
+      const scaleY = canvasDimension.height / desiredHeight;
+      const scale = Math.min(scaleX, scaleY);
+
+      canvasRef.current.width = desiredWidth;
+      canvasRef.current.height = desiredHeight;
+
+      canvasRef.current.style.width = `${desiredWidth * scale}px`;
+      canvasRef.current.style.height = `${desiredHeight * scale}px`;
 
       canvas.style.setProperty("--gradient-color-1", formData.gradientOne);
       canvas.style.setProperty("--gradient-color-2", formData.gradientTwo);
       canvas.style.setProperty("--gradient-color-3", formData.gradientThree);
       canvas.style.setProperty("--gradient-color-4", formData.gradientFour);
 
-      const gradient = new Gradient(width, height);
+      const gradient = new Gradient(desiredWidth, desiredHeight);
 
       gradient.initGradient(canvas);
     }

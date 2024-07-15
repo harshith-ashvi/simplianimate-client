@@ -1,5 +1,4 @@
 /* eslint-disable no-inner-declarations */
-// import { utils } from "@/utils";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import FileSaver from "file-saver";
 
@@ -73,27 +72,34 @@ const TextFallingCanvas = ({
       const context = canvasRef.current.getContext("2d");
       if (!context) return;
 
-      const width = canvasRef.current.width;
-      const height = canvasRef.current.height;
+      const {
+        desiredWidth,
+        desiredHeight,
+      }: { desiredWidth: number; desiredHeight: number } =
+        aspectRatio[formData.screenResolution as keyof typeof aspectRatio];
 
-      const bottomLine = height - height * 0.1; // The line 10px from the bottom
-      // Calculate a dynamic font size based on the canvas height and user input
-      const scalingFactor = 0.08; // Adjust this factor as needed
-      const dynamicFontSize = Math.min(
-        formData.fontSize,
-        Math.floor(height * scalingFactor)
-      );
-      context.font = `${dynamicFontSize}px ${formData.font}`;
+      const scaleX = canvasDimension.width / desiredWidth;
+      const scaleY = canvasDimension.height / desiredHeight;
+      const scale = Math.min(scaleX, scaleY);
+
+      canvasRef.current.width = desiredWidth;
+      canvasRef.current.height = desiredHeight;
+
+      canvasRef.current.style.width = `${desiredWidth * scale}px`;
+      canvasRef.current.style.height = `${desiredHeight * scale}px`;
+
+      const bottomLine = desiredHeight - desiredHeight * 0.1; // The line 10% from the bottom
+      context.font = `${formData.fontSize}px ${formData.font}`;
       const textMetrics = context.measureText(formData.text);
       const totalTextWidth = textMetrics.width;
-      const startX = (width - totalTextWidth) / 2;
+      const startX = (desiredWidth - totalTextWidth) / 2;
 
       // Initial character positions
       let charPositions = formData.text.split("").map((char, index) => {
         return {
           char,
           x: startX + context.measureText(formData.text.slice(0, index)).width,
-          y: height / 2,
+          y: desiredHeight / 2,
           vy: 0, // Initial velocity
           delay: Math.random() * 1000, // Random delay before starting to fall
           isFalling: false,
@@ -101,13 +107,13 @@ const TextFallingCanvas = ({
       });
 
       const drawText = () => {
-        context.clearRect(0, 0, width, height);
+        context.clearRect(0, 0, desiredWidth, desiredHeight);
 
         context.fillStyle = formData.backgroundColor;
-        context.fillRect(0, 0, width, height);
+        context.fillRect(0, 0, desiredWidth, desiredHeight);
 
         charPositions.forEach((charPos) => {
-          context.font = `${dynamicFontSize}px ${formData.font}`;
+          context.font = `${formData.fontSize}px ${formData.font}`;
           context.fillStyle = formData.fontColor;
           context.fillText(charPos.char, charPos.x, charPos.y);
         });
