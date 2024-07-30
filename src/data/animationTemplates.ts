@@ -26,7 +26,7 @@ export const textBasedAnimation: {
   {
     name: "Text Carousel",
     url: "/text-carousel",
-    img: textFalling,
+    img: "https://nvahzazenzjsisbjthhb.supabase.co/storage/v1/object/public/assets/gif/textFalling.gif",
   },
 ];
 

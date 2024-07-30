@@ -72,40 +72,78 @@ const TextCarouselCanvas = ({
         width: canvasDimension.width,
         height: canvasDimension.height,
         backgroundColor: "white",
-        hasBorder: true,
-        borderColor: "red",
       });
-      console.log("first", canvasRef.current.width, canvasRef.current.height);
 
       const rect = new fabric.Rect({
-        left: 100,
-        top: 100,
-        fill: "red",
-        width: 20,
-        height: 20,
-        angle: 30,
-      });
-
-      const textPath = new fabric.IText("I am Ironman", {
-        top: 150,
-        left: 150,
-        textAlign: "center",
-        charSpacing: -50,
-        path: new fabric.Path("M 0 0 C 50 -100 150 -100 200 0", {
-          strokeWidth: 1,
-          visible: false,
-        }),
-        pathSide: "left",
-        pathStartOffset: 0,
+        left: 50,
+        top: 50,
+        backgroundColor: "red",
+        width: 100,
+        height: 100,
       });
 
       canvas.add(rect);
-      canvas.add(textPath);
 
-      //   rect.set({ left: 20, top: 50 });
+      rect.animate(
+        { backgroundColor: "yellow" },
+        {
+          onChange: canvas.renderAll.bind(canvas),
+          duration: 5000,
+          easing: fabric.util.ease.easeInOutQuad,
+          onComplete: () => {
+            console.log("Color change complete, starting movement");
+            // Animate movement to the right
+            rect.animate(
+              { left: 250 },
+              {
+                onChange: canvas.renderAll.bind(canvas),
+                duration: 1000,
+                easing: fabric.util.ease.easeInOutQuad,
+                onComplete: () => {
+                  console.log("Movement complete");
+                },
+              }
+            );
+            rect.animate(
+              { top: 200 },
+              {
+                onChange: canvas.renderAll.bind(canvas),
+                duration: 1500,
+                easing: fabric.util.ease.easeInOutQuad,
+                onComplete: () => {
+                  console.log("Movement complete");
+                },
+              }
+            );
+            rect.animate(
+              { backgroundColor: "#0000ff" },
+              {
+                onChange: canvas.renderAll.bind(canvas),
+                duration: 1500,
+                easing: fabric.util.ease.easeInOutQuad,
+                onComplete: () => {
+                  console.log("Color Change");
+                  rect.animate(
+                    { width: 100, height: 300, angle: 45, opacity: 0.5 },
+                    {
+                      onChange: canvas.renderAll.bind(canvas),
+                      duration: 1500,
+                      easing: fabric.util.ease.easeInQuad,
+                      onComplete: () => {
+                        console.log("Movement complete");
+                      },
+                    }
+                  );
+                },
+              }
+            );
+          },
+        }
+      );
 
-      //   canvas.renderAll();
+      canvas.renderAll();
 
+      // Cleanup on unmount
       return () => {
         canvas.dispose();
       };
