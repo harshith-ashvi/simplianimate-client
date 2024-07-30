@@ -11,6 +11,40 @@ import {
 } from "@/utils/kotyadhipati";
 
 import { aspectRatio } from "@/data/canvas";
+import { optionRowTwo, optionsRowOne } from "@/data/templateData";
+
+const templateVariables = {
+  Portrait: {
+    lineWidth: 5,
+    timerPosition: 0.36,
+    timerNumberPosition: 0.36,
+    questionFont: 15,
+    optionsFont: 40,
+    timerFont: 38,
+    questionWidth: 0.715,
+    questionLineSpacing: 42,
+  },
+  Landscape: {
+    lineWidth: 4,
+    timerPosition: 0.36,
+    timerNumberPosition: 0.35,
+    questionFont: 8,
+    optionsFont: 30,
+    timerFont: 34,
+    questionWidth: 1.1,
+    questionLineSpacing: 30,
+  },
+  Square: {
+    lineWidth: 3,
+    timerPosition: 0.36,
+    timerNumberPosition: 0.35,
+    questionFont: 8,
+    optionsFont: 25,
+    timerFont: 30,
+    questionWidth: 0.9,
+    questionLineSpacing: 28,
+  },
+};
 
 const KotyadhipatiCanvas = ({
   width,
@@ -77,8 +111,28 @@ const KotyadhipatiCanvas = ({
   useLayoutEffect(() => {
     if (canvasRef.current !== null) {
       const context = canvasRef.current.getContext("2d");
-      const width = canvasRef.current.width;
-      const height = canvasRef.current.height;
+
+      const {
+        desiredWidth,
+        desiredHeight,
+      }: { desiredWidth: number; desiredHeight: number } =
+        aspectRatio[formData.screenResolution as keyof typeof aspectRatio];
+
+      const resolutionValues =
+        templateVariables[
+          formData.screenResolution as keyof typeof templateVariables
+        ];
+
+      const scaleX = canvasDimension.width / desiredWidth;
+      const scaleY = canvasDimension.height / desiredHeight;
+      const scale = Math.min(scaleX, scaleY);
+
+      canvasRef.current.width = desiredWidth;
+      canvasRef.current.height = desiredHeight;
+
+      canvasRef.current.style.width = `${desiredWidth * scale}px`;
+      canvasRef.current.style.height = `${desiredHeight * scale}px`;
+
       const correctOptionRowColumn = getCorrectRowAndColumn(
         formData.correctOption
       );
@@ -99,70 +153,107 @@ const KotyadhipatiCanvas = ({
             ? Math.ceil(remainingTime / 1000)
             : formData.timerCount;
 
-        context.clearRect(0, 0, width, height);
+        context.clearRect(0, 0, desiredWidth, desiredHeight);
 
         context.fillStyle = "#003791";
-        context.fillRect(0, 0, width, height);
+        context.fillRect(0, 0, desiredWidth, desiredHeight);
 
-        drawQuestionBox(context, width, height, formData.question);
+        drawQuestionBox(
+          context,
+          desiredWidth,
+          desiredHeight,
+          formData.question,
+          resolutionValues
+        );
         drawOptionsBox(
           context,
-          width,
-          height,
+          desiredWidth,
+          desiredHeight,
           1,
           timerCount === 0,
-          correctOptionRowColumn
+          correctOptionRowColumn,
+          resolutionValues
         );
         drawOptionsBox(
           context,
-          width,
-          height,
+          desiredWidth,
+          desiredHeight,
           2,
           timerCount === 0,
-          correctOptionRowColumn
+          correctOptionRowColumn,
+          resolutionValues
         );
 
-        const optionBoxHeight = height * 0.03;
-        context.font = `${optionBoxHeight - 6}px calibre`;
+        context.font = `${resolutionValues.optionsFont}px calibre`;
         if (formData.timerCount !== timerCount) {
-          const widthHalf = width * 0.5;
+          const widthHalf = desiredWidth * 0.5;
           context.fillStyle = "gold";
-          context.fillText("A. ", widthHalf * 0.3, height * 0.49);
+          context.fillText(
+            "A. ",
+            widthHalf * 0.3,
+            desiredHeight * optionsRowOne
+          );
           context.textAlign = "start";
           context.fillStyle = "white";
-          context.fillText(formData.optionA, widthHalf * 0.35, height * 0.49);
+          context.fillText(
+            formData.optionA,
+            widthHalf * 0.35,
+            desiredHeight * optionsRowOne
+          );
 
           context.fillStyle = "gold";
           context.textAlign = "center";
-          context.fillText("B. ", widthHalf + widthHalf * 0.14, height * 0.49);
+          context.fillText(
+            "B. ",
+            widthHalf + widthHalf * 0.14,
+            desiredHeight * optionsRowOne
+          );
           context.textAlign = "start";
           context.fillStyle = "white";
           context.fillText(
             formData.optionB,
             widthHalf + widthHalf * 0.18,
-            height * 0.49
+            desiredHeight * optionsRowOne
           );
 
           context.fillStyle = "gold";
           context.textAlign = "center";
-          context.fillText("C. ", widthHalf * 0.3, height * 0.56);
+          context.fillText(
+            "C. ",
+            widthHalf * 0.3,
+            desiredHeight * optionRowTwo
+          );
           context.textAlign = "start";
           context.fillStyle = "white";
-          context.fillText(formData.optionC, widthHalf * 0.35, height * 0.56);
+          context.fillText(
+            formData.optionC,
+            widthHalf * 0.35,
+            desiredHeight * optionRowTwo
+          );
 
           context.fillStyle = "gold";
           context.textAlign = "center";
-          context.fillText("D. ", widthHalf + widthHalf * 0.14, height * 0.56);
+          context.fillText(
+            "D. ",
+            widthHalf + widthHalf * 0.14,
+            desiredHeight * optionRowTwo
+          );
           context.textAlign = "start";
           context.fillStyle = "white";
           context.fillText(
             formData.optionD,
             widthHalf + widthHalf * 0.18,
-            height * 0.56
+            desiredHeight * optionRowTwo
           );
         }
 
-        drawTimerCircle(context, width, height, timerCount);
+        drawTimerCircle(
+          context,
+          desiredWidth,
+          desiredHeight,
+          timerCount,
+          resolutionValues
+        );
         requestIdRef.current = requestAnimationFrame(animate);
       }
       animate();
