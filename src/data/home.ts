@@ -1,5 +1,5 @@
 export const navLinks = [
-  { label: "Roadmap", href: "#" },
-  { label: "About", href: "#" },
-  { label: "Request Template", href: "https://forms.gle/pg7hSkQexpLTpMXv8" },
+  { label: "Request Templates", href: "https://simplianimate.canny.io/" },
 ];
+
+export const mainURL = "https://simplianimate.com";

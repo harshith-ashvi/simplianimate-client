@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 
 import TemplateScreen from "@/layouts/TemplateScreen";
+import DashboardLayout from "@/layouts/DashboardLayout";
 import { useAuth } from "@/components/auth/Auth";
 
 import Home from "@/pages/Home";
@@ -27,9 +28,9 @@ const AppRoutes = () => {
       <Route
         path="/"
         element={
-          <TemplateScreen>
+          <DashboardLayout>
             <Home />
-          </TemplateScreen>
+          </DashboardLayout>
         }
       />
       <Route

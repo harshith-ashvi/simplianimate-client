@@ -6,7 +6,7 @@ import UserButton from "./navbar/UserButton";
 import { useAuth } from "./auth/Auth";
 
 import { navLinks } from "@/data/home";
-import fullLogo from "@/assets/images/simpliAnimate-full.png";
+import fullLogo from "@/assets/images/full-logo.png";
 
 const Navbar = () => {
   const { user, signout } = useAuth();
@@ -35,33 +35,39 @@ const Navbar = () => {
 
   return (
     <header
-      className={`${isScrolled ? "shadow-lg" : ""} w-full fixed top-0 left-0`}
+      className={`w-full fixed top-0 left-0 bg-white z-[100] ${
+        isScrolled ? "shadow-lg" : ""
+      } `}
     >
-      <nav className="md:flex items-center justify-between bg-white py-1 md:px-4 px-3 max-container">
-        {/* logo section */}
-        <a href="/" className="cursor-pointer">
-          <img src={fullLogo} alt="SimpliAnimate" width={200} height={50} />
-        </a>
-        <div className="flex items-center justify-center">
-          {/* Menu icon */}
-          <div
-            onClick={toggleOpenNav}
-            className="absolute right-4 top-1 cursor-pointer md:hidden"
-          >
-            <div className="flex items-center justify-center">
-              {isNavOpen ? (
-                <X className="h-6 w-6 mt-3 mr-5" onClick={toggleOpenNav} />
-              ) : (
-                <Menu className="h-6 w-6 mt-3 mr-5" onClick={toggleOpenNav} />
-              )}
-              <div className="md:hidden mt-2">
-                <UserButton handleSignout={signout} avatarUrl={avatarUrl} />
-              </div>
-            </div>
+      <nav className="flex w-full items-center justify-between px-[20px] py-[16px] lg:container lg:mx-auto lg:px-20 max-w-[1536px]">
+        <div className="flex items-center">
+          <a href="/" className="cursor-pointer">
+            <img src={fullLogo} alt="SimpliAnimate" width={200} height={50} />
+          </a>
+          <div className="hidden lg:flex pl-[74px] gap-x-[56px]">
+            {navLinks.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                className="text-[#36485C] font-medium hover:underline"
+                target={link.label === "Request Templates" ? "_blank" : ""}
+              >
+                {link.label}
+              </a>
+            ))}
           </div>
-          {/* linke items */}
+        </div>
+        <div className="flex lg:gap-x-5 gap-x-2">
+          <UserButton handleSignout={signout} avatarUrl={avatarUrl} />
+          <div className="lg:hidden duration-200 ease-in">
+            {isNavOpen ? (
+              <X size={32} onClick={toggleOpenNav} />
+            ) : (
+              <Menu size={32} onClick={toggleOpenNav} />
+            )}
+          </div>
           <ul
-            className={`md:flex md:items-center md:pb-0 absolute md:static bg-white md:z-auto z-[-1] left-0 w-full md:w-auto md:pl-0 pl-9 transition-all duration-200 ease-in ${
+            className={`lg:hidden absolute bg-white z-[-1] left-0 w-full pl-9 transition-all duration-200 ease-in ${
               isNavOpen ? "top-12" : "top-[-490px]"
             }`}
           >
@@ -72,17 +78,17 @@ const Navbar = () => {
               >
                 <a
                   href={link.href}
-                  className="text-gray-800 hover:text-orange-400 duration-500"
-                  target={link.label === "Request Template" ? "_blank" : ""}
+                  className="text-[#36485C] font-medium hover:underline"
+                  target={
+                    ["Request Templates"].includes(link.label) ? "_blank" : ""
+                  }
+                  onClick={toggleOpenNav}
                 >
                   {link.label}
                 </a>
               </li>
             ))}
           </ul>
-          <div className="max-md:hidden ml-4">
-            <UserButton handleSignout={signout} avatarUrl={avatarUrl} />
-          </div>
         </div>
       </nav>
     </header>
