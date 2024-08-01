@@ -19,7 +19,7 @@ const UserButton = ({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Avatar className="cursor-pointer w-9 h-9">
+        <Avatar className="cursor-pointer w-8 h-8">
           <AvatarImage src={avatarUrl} />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>

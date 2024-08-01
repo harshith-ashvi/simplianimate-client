@@ -131,11 +131,19 @@ const Signup = () => {
                 />
                 <label htmlFor="terms" className="text-xs">
                   I agree with SimpliAnimate's{" "}
-                  <Link to="/" className="underline">
+                  <Link
+                    to="https://www.simplianimate.com/terms-and-condition"
+                    target="_blank"
+                    className="underline"
+                  >
                     Terms of Service
                   </Link>{" "}
                   and{" "}
-                  <Link to="/" className="underline">
+                  <Link
+                    to="https://www.simplianimate.com/privacy-policy"
+                    target="_blank"
+                    className="underline"
+                  >
                     Privacy Policy
                   </Link>
                   .

@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 import TemplateScreen from "@/layouts/TemplateScreen";
 import DashboardLayout from "@/layouts/DashboardLayout";
@@ -89,6 +89,7 @@ const AppRoutes = () => {
           </TemplateScreen>
         }
       />
+      <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );
 };
