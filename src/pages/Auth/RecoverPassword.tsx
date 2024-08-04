@@ -24,7 +24,13 @@ type FormValues = {
 };
 
 const FormSchema = z.object({
-  password: z.string().min(1, { message: "Password is required" }),
+  password: z
+    .string()
+    .min(8, { message: "Password must be at least 8 characters long" })
+    .regex(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+      "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character"
+    ),
   confirmPassword: z.string(),
 });
 
@@ -51,7 +57,7 @@ const RecoverPassword = () => {
   return (
     <div className="h-screen">
       <div className="flex flex-col items-center justify-center w-full h-screen space-y-3 ">
-        <div className="w-auth-content p-8 border border-solid rounded-xl border-gray-200 shadow-lg">
+        <div className="max-w-auth-content min-w-[390px] sm:w-auth-content mx-2 p-8 border border-solid rounded-xl border-gray-200 shadow-lg">
           <p className="text-lg font-semibold mb-2">Reset Password</p>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
@@ -64,7 +70,11 @@ const RecoverPassword = () => {
                       Password<span className="text-red-500 ml-1">*</span>
                     </FormLabel>
                     <FormControl>
-                      <Input placeholder="********" {...field} />
+                      <Input
+                        type="password"
+                        placeholder="********"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -80,7 +90,11 @@ const RecoverPassword = () => {
                       <span className="text-red-500 ml-1">*</span>
                     </FormLabel>
                     <FormControl>
-                      <Input placeholder="********" {...field} />
+                      <Input
+                        type="password"
+                        placeholder="********"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

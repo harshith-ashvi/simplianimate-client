@@ -72,6 +72,9 @@ module.exports = {
       width: {
         "auth-content": "420px",
       },
+      "max-width": {
+        "auth-content": "420px",
+      },
       height: {
         "screen-minus-45": "calc(100vh - 45px)",
         "screen-minus-70": "calc(100vh - 70px)",

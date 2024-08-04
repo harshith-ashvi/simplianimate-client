@@ -22,18 +22,22 @@ import { useAuth } from "@/components/auth/Auth";
 import GoogleIcon from "@/assets/svg/GoogleIcon";
 
 type FormValues = {
-  name: string;
   email: string;
   password: string;
 };
 
 const FormSchema = z.object({
-  name: z.string().min(1, { message: "Name is required" }),
   email: z
     .string()
     .min(1, { message: "Email is required" })
     .email({ message: "Invalid email address" }),
-  password: z.string().min(1, { message: "Password is required" }),
+  password: z
+    .string()
+    .min(8, { message: "Password must be at least 8 characters long" })
+    .regex(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+      "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character"
+    ),
 });
 
 const Signup = () => {
@@ -42,7 +46,7 @@ const Signup = () => {
 
   const form = useForm<FormValues>({
     resolver: zodResolver(FormSchema),
-    defaultValues: { name: "", email: "", password: "" },
+    defaultValues: { email: "", password: "" },
   });
 
   const onSubmit = async (formData: FormValues) => {
@@ -53,7 +57,7 @@ const Signup = () => {
   return (
     <div className="h-screen">
       <div className="flex flex-col items-center justify-center w-full h-screen space-y-3 ">
-        <div className="w-auth-content p-8 border border-solid rounded-xl border-gray-200 shadow-lg">
+        <div className="max-w-[420px] mx-2 p-8 border border-solid rounded-xl border-gray-200 shadow-lg">
           <p className="text-lg font-semibold ml-2 mb-4">
             Sign up to SimpliAnimate
           </p>
@@ -74,21 +78,6 @@ const Signup = () => {
           </div>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-black">
-                      Name<span className="text-red-500 ml-1">*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Input placeholder="Naruto" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
               <FormField
                 control={form.control}
                 name="email"
@@ -115,7 +104,7 @@ const Signup = () => {
                     <FormControl>
                       <Input
                         type="password"
-                        placeholder="Enter Password"
+                        placeholder="********"
                         {...field}
                       />
                     </FormControl>
@@ -136,7 +125,7 @@ const Signup = () => {
                     target="_blank"
                     className="underline"
                   >
-                    Terms of Service
+                    Terms & condition
                   </Link>{" "}
                   and{" "}
                   <Link

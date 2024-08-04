@@ -32,7 +32,7 @@ const FormSchema = z.object({
 });
 
 const Signin = () => {
-  const { signin, signinWithProvider } = useAuth();
+  const { signin, signinWithProvider, loading, errorMessage } = useAuth();
   const form = useForm<FormValues>({
     resolver: zodResolver(FormSchema),
     defaultValues: { email: "", password: "" },
@@ -43,7 +43,7 @@ const Signin = () => {
   return (
     <div className="h-screen">
       <div className="flex flex-col items-center justify-center w-full h-screen space-y-3 ">
-        <div className="w-auth-content p-8 border border-solid rounded-xl border-gray-200 shadow-lg">
+        <div className="max-w-auth-content min-w-[390px] sm:w-auth-content  mx-2 p-8 border border-solid rounded-xl border-gray-200 shadow-lg">
           <p className="text-lg font-semibold ml-2 mb-4">
             Sign into SimpliAnimate
           </p>
@@ -73,7 +73,7 @@ const Signin = () => {
                       Email<span className="text-red-500 ml-1">*</span>
                     </FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter Email" {...field} />
+                      <Input placeholder="naruto@konoha.com" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -95,7 +95,7 @@ const Signin = () => {
                     <FormControl>
                       <Input
                         type="password"
-                        placeholder="Enter Password"
+                        placeholder="********"
                         {...field}
                       />
                     </FormControl>
@@ -103,7 +103,12 @@ const Signin = () => {
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full mt-2">
+              {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+              <Button
+                type="submit"
+                className="w-full mt-2"
+                disabled={!!loading}
+              >
                 Sign In
               </Button>
             </form>

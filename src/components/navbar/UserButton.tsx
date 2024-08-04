@@ -21,7 +21,9 @@ const UserButton = ({
       <DropdownMenuTrigger asChild>
         <Avatar className="cursor-pointer w-8 h-8">
           <AvatarImage src={avatarUrl} />
-          <AvatarFallback>CN</AvatarFallback>
+          <AvatarFallback className="bg-[#FB6068] text-[#FFFFFF]">
+            {"S"}
+          </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end">

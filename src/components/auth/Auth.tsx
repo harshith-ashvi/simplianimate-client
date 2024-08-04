@@ -15,18 +15,23 @@ const AuthContext = createContext<{
   signinWithProvider: () => void;
   signup: ({ email, password }: FormValues) => void;
   signout: () => void;
+  loading: Boolean;
+  errorMessage: String;
 }>({
   user: null,
   signin: () => {},
   signinWithProvider: () => {},
   signup: () => {},
   signout: () => {},
+  loading: false,
+  errorMessage: "",
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<Boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<String>("");
 
   useEffect(() => {
     const setData = async () => {
@@ -72,8 +77,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         email,
         password,
       });
-      if (error) throw error;
-      navigate("/");
+
+      if (error) {
+        setErrorMessage(error.message);
+      }
     } catch (error) {
       throw error;
     } finally {
@@ -89,7 +96,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         password,
       });
       if (error) throw error;
-      navigate("/");
     } catch (error) {
       throw error;
     } finally {
@@ -116,12 +122,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     signinWithProvider,
     signup,
     signout,
+    loading,
+    errorMessage,
   };
-  return (
-    <AuthContext.Provider value={value}>
-      {!loading && children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 // export the useAuth hook
