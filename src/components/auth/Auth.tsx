@@ -15,6 +15,7 @@ const AuthContext = createContext<{
   signinWithProvider: () => void;
   signup: ({ email, password }: FormValues) => void;
   signout: () => void;
+  handleResetPasswordForEmail: (email: string) => void;
   loading: boolean;
   isMessageSent: boolean;
   errorMessage: String;
@@ -24,6 +25,7 @@ const AuthContext = createContext<{
   signinWithProvider: () => {},
   signup: () => {},
   signout: () => {},
+  handleResetPasswordForEmail: () => {},
   loading: false,
   isMessageSent: false,
   errorMessage: "",
@@ -136,12 +138,31 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  const handleResetPasswordForEmail = async (email: string) => {
+    setLoading(true);
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: "http://localhost:6969/reset-password",
+      });
+      if (error) {
+        setErrorMessage(error.message);
+      } else {
+        setIsMessageSent(true);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const value = {
     user,
     signin,
     signinWithProvider,
     signup,
     signout,
+    handleResetPasswordForEmail,
     loading,
     isMessageSent,
     errorMessage,
