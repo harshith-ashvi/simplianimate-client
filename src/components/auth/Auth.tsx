@@ -15,7 +15,8 @@ const AuthContext = createContext<{
   signinWithProvider: () => void;
   signup: ({ email, password }: FormValues) => void;
   signout: () => void;
-  loading: Boolean;
+  loading: boolean;
+  isMessageSent: boolean;
   errorMessage: String;
 }>({
   user: null,
@@ -24,14 +25,16 @@ const AuthContext = createContext<{
   signup: () => {},
   signout: () => {},
   loading: false,
+  isMessageSent: false,
   errorMessage: "",
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState<Boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<String>("");
+  const [isMessageSent, setIsMessageSent] = useState<boolean>(false);
 
   useEffect(() => {
     const setData = async () => {
@@ -77,9 +80,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         email,
         password,
       });
-
       if (error) {
-        setErrorMessage(error.message);
+        setErrorMessage(
+          error.message === "Invalid login credentials"
+            ? "Invalid email or password"
+            : error.message
+        );
+      } else {
+        navigate("/");
       }
     } catch (error) {
       throw error;
@@ -91,11 +99,23 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const signup = async ({ email, password }: FormValues) => {
     setLoading(true);
     try {
-      const { error } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
+        // options: {
+        //   emailRedirectTo: "http://localhost:6969/confirm",
+        // },
       });
-      if (error) throw error;
+      if (error) {
+        setErrorMessage(error.message);
+      } else if (
+        data?.user?.aud === "authenticated" &&
+        data.user?.user_metadata?.email_verified !== false
+      ) {
+        setErrorMessage("Email already exists. Try with a different Email.");
+      } else {
+        setIsMessageSent(true);
+      }
     } catch (error) {
       throw error;
     } finally {
@@ -123,6 +143,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     signup,
     signout,
     loading,
+    isMessageSent,
     errorMessage,
   };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

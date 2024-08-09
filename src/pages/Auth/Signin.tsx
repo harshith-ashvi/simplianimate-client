@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Link } from "react-router-dom";
+import { X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -103,12 +104,13 @@ const Signin = () => {
                   </FormItem>
                 )}
               />
-              {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-              <Button
-                type="submit"
-                className="w-full mt-2"
-                disabled={!!loading}
-              >
+              {errorMessage && (
+                <div className="flex items-center justify-start">
+                  <X size={20} color="red" />
+                  <p className="text-red-500 text-sm ml-2">{errorMessage}</p>
+                </div>
+              )}
+              <Button type="submit" className="w-full mt-2" disabled={loading}>
                 Sign In
               </Button>
             </form>

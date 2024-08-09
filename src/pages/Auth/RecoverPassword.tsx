@@ -23,16 +23,21 @@ type FormValues = {
   confirmPassword: string;
 };
 
-const FormSchema = z.object({
-  password: z
-    .string()
-    .min(8, { message: "Password must be at least 8 characters long" })
-    .regex(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-      "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character"
-    ),
-  confirmPassword: z.string(),
-});
+const FormSchema = z
+  .object({
+    password: z
+      .string()
+      .min(8, { message: "Password must be at least 8 characters long" })
+      .regex(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character"
+      ),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords must match",
+    path: ["confirmPassword"], // This will show the error on the confirmPassword field
+  });
 
 const RecoverPassword = () => {
   const navigate = useNavigate();
