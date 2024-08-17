@@ -11,10 +11,12 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import ExportModal from "@/components/export-modal";
 
 const TemplateNavbar = ({
+  templateName,
   screenResolution,
   handleFormDataChange,
   handleExportAnimation,
 }: {
+  templateName: string;
   screenResolution: string;
   handleFormDataChange: (key: string, value: string) => void;
   handleExportAnimation: (fileName: string, fileFormat: string) => void;
@@ -57,7 +59,11 @@ const TemplateNavbar = ({
           </ToggleGroupItem>
         </ToggleGroup>
       </div>
-      <ExportModal handleExportAnimation={handleExportAnimation} />
+      <ExportModal
+        templateName={templateName}
+        screenResolution={screenResolution}
+        handleExportAnimation={handleExportAnimation}
+      />
     </div>
   );
 };

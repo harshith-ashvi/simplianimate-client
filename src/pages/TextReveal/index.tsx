@@ -105,6 +105,7 @@ SimpliAnimate`,
         progress={progress}
       />
       <TemplateNavbar
+        templateName="text-reveal"
         screenResolution={formData.screenResolution}
         handleFormDataChange={handleFormDataChange}
         handleExportAnimation={handleExportAnimation}

@@ -104,6 +104,7 @@ const MatrixRain = () => {
         progress={progress}
       />
       <TemplateNavbar
+        templateName="matrix-rain"
         screenResolution={formData.screenResolution}
         handleFormDataChange={handleFormDataChange}
         handleExportAnimation={handleExportAnimation}
