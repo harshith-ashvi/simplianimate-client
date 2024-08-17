@@ -106,6 +106,7 @@ const Kotyadhipati = () => {
         progress={progress}
       />
       <TemplateNavbar
+        templateName="quiz"
         screenResolution={formData.screenResolution}
         handleFormDataChange={handleFormDataChange}
         handleExportAnimation={handleExportAnimation}

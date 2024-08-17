@@ -81,7 +81,10 @@ const TextFlyers = () => {
     setFormData((prevState) => ({ ...prevState, [key]: value }));
   };
 
-  const handleExportAnimation = (fileName: string, fileFormat: string) => {
+  const handleExportAnimation = async (
+    fileName: string,
+    fileFormat: string
+  ) => {
     setDownloadFile({ canDownload: true, fileName, fileFormat });
     toggleDownloading();
   };
@@ -106,6 +109,7 @@ const TextFlyers = () => {
         progress={progress}
       />
       <TemplateNavbar
+        templateName="text-flyers"
         screenResolution={formData.screenResolution}
         handleFormDataChange={handleFormDataChange}
         handleExportAnimation={handleExportAnimation}
