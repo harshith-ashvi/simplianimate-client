@@ -146,7 +146,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setLoading(true);
     try {
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: "http://localhost:6969/reset-password",
+        redirectTo: "https://app.simplianimate.com/reset-password",
       });
       if (error) {
         setErrorMessage(error.message);
