@@ -23,11 +23,13 @@ import { useAuth } from "@/components/auth/Auth";
 import GoogleIcon from "@/assets/svg/GoogleIcon";
 
 type FormValues = {
+  name: string;
   email: string;
   password: string;
 };
 
 const FormSchema = z.object({
+  name: z.string().min(1, { message: "Full name is required" }),
   email: z
     .string()
     .min(1, { message: "Email is required" })
@@ -48,11 +50,11 @@ const Signup = () => {
 
   const form = useForm<FormValues>({
     resolver: zodResolver(FormSchema),
-    defaultValues: { email: "", password: "" },
+    defaultValues: { name: "", email: "", password: "" },
   });
 
-  const onSubmit = async ({ email, password }: FormValues) =>
-    signup({ email, password });
+  const onSubmit = async ({ name, email, password }: FormValues) =>
+    signup({ name, email, password });
 
   return (
     <div className="h-screen">
@@ -93,6 +95,19 @@ const Signup = () => {
                   onSubmit={form.handleSubmit(onSubmit)}
                   className="space-y-3"
                 >
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-black">Full Name</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Naruto Uzumaki" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                   <FormField
                     control={form.control}
                     name="email"

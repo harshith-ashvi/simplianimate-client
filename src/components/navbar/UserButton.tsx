@@ -12,9 +12,11 @@ import {
 const UserButton = ({
   handleSignout,
   avatarUrl,
+  userInitial,
 }: {
   handleSignout: () => void;
   avatarUrl: string;
+  userInitial: string;
 }) => {
   return (
     <DropdownMenu>
@@ -22,7 +24,7 @@ const UserButton = ({
         <Avatar className="cursor-pointer w-8 h-8">
           <AvatarImage src={avatarUrl} />
           <AvatarFallback className="bg-[#FB6068] text-[#FFFFFF]">
-            {"S"}
+            {userInitial}
           </AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>

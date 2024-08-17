@@ -5,6 +5,7 @@ import { User } from "@supabase/supabase-js";
 import supabase from "@/data/supabaseClient";
 
 type FormValues = {
+  name?: string;
   email: string;
   password: string;
 };
@@ -13,7 +14,7 @@ const AuthContext = createContext<{
   user: User | null;
   signin: ({ email, password }: FormValues) => void;
   signinWithProvider: () => void;
-  signup: ({ email, password }: FormValues) => void;
+  signup: ({ name, email, password }: FormValues) => void;
   signout: () => void;
   handleResetPasswordForEmail: (email: string) => void;
   loading: boolean;
@@ -98,15 +99,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const signup = async ({ email, password }: FormValues) => {
+  const signup = async ({ name, email, password }: FormValues) => {
     setLoading(true);
     try {
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
-        // options: {
-        //   emailRedirectTo: "http://localhost:6969/confirm",
-        // },
+        options: {
+          data: {
+            full_name: name,
+            // emailRedirectTo: "http://localhost:6969/",
+          },
+        },
       });
       if (error) {
         setErrorMessage(error.message);

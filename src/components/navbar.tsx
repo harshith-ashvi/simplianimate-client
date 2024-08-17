@@ -28,8 +28,11 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const avatarUrl = useMemo(
-    () => user?.user_metadata?.avatar_url ?? "",
+  const { avatarUrl, userInitial } = useMemo(
+    () => ({
+      avatarUrl: user?.user_metadata?.avatar_url ?? "",
+      userInitial: user?.user_metadata?.full_name[0] || "",
+    }),
     [user]
   );
 
@@ -58,7 +61,11 @@ const Navbar = () => {
           </div>
         </div>
         <div className="flex lg:gap-x-5 gap-x-2">
-          <UserButton handleSignout={signout} avatarUrl={avatarUrl} />
+          <UserButton
+            handleSignout={signout}
+            avatarUrl={avatarUrl}
+            userInitial={userInitial}
+          />
           <div className="lg:hidden duration-200 ease-in">
             {isNavOpen ? (
               <X size={32} onClick={toggleOpenNav} />
