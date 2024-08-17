@@ -20,15 +20,25 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
+import { useAuth } from "./auth/Auth";
+
+import supabase from "@/data/supabaseClient";
+import { aspectRatio } from "@/data/canvas";
+
 const ExportModal = ({
+  templateName,
+  screenResolution,
   handleExportAnimation,
 }: {
+  templateName: string;
+  screenResolution: string;
   handleExportAnimation: (fileName: string, fileFormat: string) => void;
 }) => {
+  const { user } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [fileDetails, setFileDetails] = useState({
     fileName: "",
-    fileFormat: "mp4",
+    fileFormat: "webm",
   });
 
   const handleFileDetailsChange = (key: string, value: string) => {
@@ -37,11 +47,37 @@ const ExportModal = ({
 
   const toggleModal = () => {
     setIsModalOpen((prevState) => !prevState);
-    setFileDetails({ fileName: "", fileFormat: "mp4" });
+    setFileDetails({ fileName: "", fileFormat: "webm" });
   };
 
-  const exportAnimation = () => {
+  const exportAnimation = async () => {
     handleExportAnimation(fileDetails.fileName, fileDetails.fileFormat);
+    let { data: standard_templates, error } = await supabase
+      .from("standard_templates")
+      .select("*");
+    if (standard_templates) {
+      const template = standard_templates.find(
+        (temp) => temp.route_name === templateName
+      );
+      if (template?.id && user?.id) {
+        const { error } = await supabase.from("downloads").insert([
+          {
+            user_id: user.id,
+            template_id: template.id,
+            file_name: fileDetails.fileName,
+            file_format: fileDetails.fileFormat,
+            resolution_type: screenResolution,
+            video_resolution: `${aspectRatio[screenResolution].desiredWidth}x${aspectRatio[screenResolution].desiredHeight}`,
+          },
+        ]);
+        if (error) {
+          console.log("error", error);
+        }
+      }
+    }
+    if (error) {
+      console.log("error", error);
+    }
     toggleModal();
   };
 
@@ -89,9 +125,9 @@ const ExportModal = ({
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="mp4">mp4</SelectItem>
                   <SelectItem value="webm">webm</SelectItem>
-                  <SelectItem value="gif">gif</SelectItem>
+                  {/* <SelectItem value="mp4">mp4</SelectItem>
+                  <SelectItem value="gif">gif</SelectItem> */}
                 </SelectGroup>
               </SelectContent>
             </Select>

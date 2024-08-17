@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
 import Navbar from "@/components/navbar";
-import EmailSubscribe from "@/components/email-subscribe";
 import TemplateCard from "./templateCard";
 
 import {
@@ -18,7 +17,7 @@ const Home = () => {
   return (
     <>
       <Navbar />
-      <div className="max-container mt-8">
+      <div className="max-container mt-16 px-2">
         <div className="flex items-center justify-center">
           <div className="my-5 mx-5">
             <h4 className="mb-5 text-lg font-medium">Text Based</h4>
@@ -52,7 +51,6 @@ const Home = () => {
           </div>
         </div>
       </div>
-      <EmailSubscribe />
     </>
   );
 };

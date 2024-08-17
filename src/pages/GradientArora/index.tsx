@@ -98,6 +98,7 @@ const GradientArora = () => {
         progress={progress}
       />
       <TemplateNavbar
+        templateName="gradient-arora"
         screenResolution={formData.screenResolution}
         handleFormDataChange={handleFormDataChange}
         handleExportAnimation={handleExportAnimation}

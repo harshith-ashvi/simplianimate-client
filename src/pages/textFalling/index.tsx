@@ -106,6 +106,7 @@ const TextFalling = () => {
         progress={progress}
       />
       <TemplateNavbar
+        templateName="text-falling"
         screenResolution={formData.screenResolution}
         handleFormDataChange={handleFormDataChange}
         handleExportAnimation={handleExportAnimation}
