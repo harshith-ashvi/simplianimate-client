@@ -19,14 +19,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import supabase from "@/data/supabaseClient";
+
 import { useAuth } from "./auth/Auth";
+
+import supabase from "@/data/supabaseClient";
+import { aspectRatio } from "@/data/canvas";
 
 const ExportModal = ({
   templateName,
+  screenResolution,
   handleExportAnimation,
 }: {
   templateName: string;
+  screenResolution: string;
   handleExportAnimation: (fileName: string, fileFormat: string) => void;
 }) => {
   const { user } = useAuth();
@@ -61,6 +66,8 @@ const ExportModal = ({
             template_id: template.id,
             file_name: fileDetails.fileName,
             file_format: fileDetails.fileFormat,
+            resolution_type: screenResolution,
+            video_resolution: `${aspectRatio[screenResolution].desiredWidth}x${aspectRatio[screenResolution].desiredHeight}`,
           },
         ]);
         if (error) {

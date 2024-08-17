@@ -61,6 +61,7 @@ const TemplateNavbar = ({
       </div>
       <ExportModal
         templateName={templateName}
+        screenResolution={screenResolution}
         handleExportAnimation={handleExportAnimation}
       />
     </div>
