@@ -13,4 +13,7 @@ export default defineConfig({
   optimizeDeps: {
     include: ["fabric"],
   },
+  server: {
+    port: 6969,
+  },
 });
