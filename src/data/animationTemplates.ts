@@ -23,6 +23,11 @@ export const textBasedAnimation: {
     url: "/text-falling",
     img: "https://nvahzazenzjsisbjthhb.supabase.co/storage/v1/object/public/assets/gif/textFalling.gif",
   },
+  {
+    name: "Text Carousel",
+    url: "/text-carousel",
+    img: "https://nvahzazenzjsisbjthhb.supabase.co/storage/v1/object/public/assets/gif/textFalling.gif",
+  },
 ];
 
 // export const imageBasedAnimation: {
