@@ -35,7 +35,7 @@ const ASCIIForm = ({
     if (data) {
       handleFormDataChange(
         "imageUrl",
-        `https://nvahzazenzjsisbjthhb.supabase.co/storage/v1/object/public/user_images/${user.id}/${data[0].name}}`
+        `https://nvahzazenzjsisbjthhb.supabase.co/storage/v1/object/public/user_images/${user.id}/${data[0].name}`
       );
     } else {
       console.log(error, "error loading image");
