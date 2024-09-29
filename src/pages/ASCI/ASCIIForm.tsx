@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from "uuid";
+// import { v4 as uuidv4 } from "uuid";
 
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
@@ -6,9 +6,9 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import FileUpload from "@/components/ui/file-upload";
 
-import { useAuth } from "@/components/auth/Auth";
+// import { useAuth } from "@/components/auth/Auth";
 
-import supabase from "@/data/supabaseClient";
+// import supabase from "@/data/supabaseClient";
 
 import { ASCIIEffectForm } from "@/types/effectsOptions";
 
@@ -19,24 +19,29 @@ const ASCIIForm = ({
   formData: ASCIIEffectForm;
   handleFormDataChange: (key: string, value: string | number | boolean) => void;
 }) => {
-  const { user } = useAuth();
+  // const { user } = useAuth();
 
   const onFilesUploaded = async (files: File[]) => {
     const file = files[0];
 
-    if (!user) return;
-    const uuid = uuidv4();
-    const { data, error } = await supabase.storage
-      .from("user_images")
-      .upload(`${user.id}/${uuid}`, file);
-    if (data) {
-      handleFormDataChange(
-        "imageUrl",
-        `https://nvahzazenzjsisbjthhb.supabase.co/storage/v1/object/public/user_images/${user.id}/${uuid}`
-      );
-    } else {
-      console.log(error, "Upload error");
+    if (file) {
+      const url = URL.createObjectURL(file);
+      handleFormDataChange("imageUrl", url);
     }
+
+    // if (!user) return;
+    // const uuid = uuidv4();
+    // const { data, error } = await supabase.storage
+    //   .from("user_images")
+    //   .upload(`${user.id}/${uuid}`, file);
+    // if (data) {
+    //   handleFormDataChange(
+    //     "imageUrl",
+    //     `https://nvahzazenzjsisbjthhb.supabase.co/storage/v1/object/public/user_images/${user.id}/${uuid}`
+    //   );
+    // } else {
+    //   console.log(error, "Upload error");
+    // }
   };
 
   return (
