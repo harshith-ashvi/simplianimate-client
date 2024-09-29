@@ -33,7 +33,7 @@ export const imageBasedAnimation: {
   {
     name: "ASCII Art",
     url: "/ascii-art",
-    img: "https://nvahzazenzjsisbjthhb.supabase.co/storage/v1/object/public/assets/gif/textFalling.gif",
+    img: "https://nvahzazenzjsisbjthhb.supabase.co/storage/v1/object/public/assets/images/ascii-image.png",
   },
 ];
 

@@ -13,12 +13,14 @@ import ExportModal from "@/components/export-modal";
 import { videoDownloadFormats } from "@/data/canvas";
 
 const TemplateNavbar = ({
+  showScreenResolutionOptions = true,
   templateName,
   screenResolution,
   downloadFormats = videoDownloadFormats,
   handleFormDataChange,
   handleExportAnimation,
 }: {
+  showScreenResolutionOptions?: boolean;
   templateName: string;
   screenResolution: string;
   downloadFormats?: string[];
@@ -40,29 +42,32 @@ const TemplateNavbar = ({
       <Button variant="ghost" onClick={handlePressBack}>
         <ChevronLeft className="mr-2 h-5 w-5" /> Back
       </Button>
-      <div className="flex items-center">
-        <ToggleGroup
-          type="single"
-          variant="outline"
-          defaultValue="Portrait"
-          value={screenResolution}
-          onValueChange={(value) => {
-            if (value) {
-              handleFormDataChange("screenResolution", value);
-            }
-          }}
-        >
-          <ToggleGroupItem value="Portrait" aria-label="Toggle Portrait">
-            <RectangleVertical className="h-6 w-6" />
-          </ToggleGroupItem>
-          <ToggleGroupItem value="Landscape" aria-label="Toggle Landscape">
-            <RectangleHorizontal className="h-6 w-6" />
-          </ToggleGroupItem>
-          <ToggleGroupItem value="Square" aria-label="Toggle Square">
-            <Square className="h-6 w-6" />
-          </ToggleGroupItem>
-        </ToggleGroup>
-      </div>
+      {showScreenResolutionOptions && (
+        <div className="flex items-center">
+          <ToggleGroup
+            type="single"
+            variant="outline"
+            defaultValue="Portrait"
+            value={screenResolution}
+            onValueChange={(value) => {
+              if (value) {
+                handleFormDataChange("screenResolution", value);
+              }
+            }}
+          >
+            <ToggleGroupItem value="Portrait" aria-label="Toggle Portrait">
+              <RectangleVertical className="h-6 w-6" />
+            </ToggleGroupItem>
+            <ToggleGroupItem value="Landscape" aria-label="Toggle Landscape">
+              <RectangleHorizontal className="h-6 w-6" />
+            </ToggleGroupItem>
+            <ToggleGroupItem value="Square" aria-label="Toggle Square">
+              <Square className="h-6 w-6" />
+            </ToggleGroupItem>
+          </ToggleGroup>
+        </div>
+      )}
+
       <ExportModal
         templateName={templateName}
         screenResolution={screenResolution}

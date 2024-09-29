@@ -9,6 +9,7 @@ export const preloadImages = (
   for (const src in images) {
     if (Object.prototype.hasOwnProperty.call(images, src)) {
       loadedImages[src] = new Image();
+      loadedImages[src].crossOrigin = "anonymous";
 
       loadedImages[src].onload = function () {
         if (++imagesLoaded === totalImagesToLoad) {

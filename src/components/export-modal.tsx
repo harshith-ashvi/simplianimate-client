@@ -128,7 +128,11 @@ const ExportModal = ({
               <SelectContent>
                 <SelectGroup>
                   {downloadFormats.map((format) => {
-                    return <SelectItem value={format}>{format}</SelectItem>;
+                    return (
+                      <SelectItem key={format} value={format}>
+                        {format}
+                      </SelectItem>
+                    );
                   })}
                 </SelectGroup>
               </SelectContent>
