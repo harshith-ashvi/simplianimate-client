@@ -23,7 +23,6 @@ const ASCIICanvas = ({
   resetFileDownload: () => void;
 }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const imagesPreloaded = useRef(false);
   const imagesRef = useRef<{ [key: string]: HTMLImageElement | undefined }>({});
 
   useLayoutEffect(() => {
@@ -31,6 +30,8 @@ const ASCIICanvas = ({
       const canvas = canvasRef.current;
       const context = canvas.getContext("2d");
       if (!context) return;
+
+      console.log("top", formData);
 
       imagesRef.current = preloadImages(
         { image: formData.imageUrl },
@@ -74,6 +75,7 @@ const ASCIICanvas = ({
           canvas.width = newWidth;
           canvas.height = newHeight;
 
+          console.log("ascii", formData);
           const asciiEffect = new ASCIIEffect(
             context,
             image,
@@ -84,7 +86,6 @@ const ASCIICanvas = ({
           asciiEffect.draw(formData.resolution, image, formData.isColored);
         }
       );
-      imagesPreloaded.current = true;
     }
   }, [formData, width, height]);
 
