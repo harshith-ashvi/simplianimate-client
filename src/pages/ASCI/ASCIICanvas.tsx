@@ -31,8 +31,6 @@ const ASCIICanvas = ({
       const context = canvas.getContext("2d");
       if (!context) return;
 
-      console.log("top", formData);
-
       imagesRef.current = preloadImages(
         { image: formData.imageUrl },
         function (images) {
@@ -75,7 +73,6 @@ const ASCIICanvas = ({
           canvas.width = newWidth;
           canvas.height = newHeight;
 
-          console.log("ascii", formData);
           const asciiEffect = new ASCIIEffect(
             context,
             image,

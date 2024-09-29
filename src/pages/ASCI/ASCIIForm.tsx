@@ -21,27 +21,6 @@ const ASCIIForm = ({
 }) => {
   const { user } = useAuth();
 
-  // const getImageUrl = async () => {
-  //   if (!user) return;
-
-  //   const { data, error } = await supabase.storage
-  //     .from("user_images")
-  //     .list(`${user.id}/`, {
-  //       limit: 1,
-  //       offset: 0,
-  //       sortBy: { column: "name", order: "asc" },
-  //     });
-
-  //   if (data) {
-  //     handleFormDataChange(
-  //       "imageUrl",
-  //       `https://nvahzazenzjsisbjthhb.supabase.co/storage/v1/object/public/user_images/${user.id}/${data[0].name}`
-  //     );
-  //   } else {
-  //     console.log(error, "error loading image");
-  //   }
-  // };
-
   const onFilesUploaded = async (files: File[]) => {
     const file = files[0];
 
@@ -51,7 +30,6 @@ const ASCIIForm = ({
       .from("user_images")
       .upload(`${user.id}/${uuid}`, file);
     if (data) {
-      // getImageUrl();
       handleFormDataChange(
         "imageUrl",
         `https://nvahzazenzjsisbjthhb.supabase.co/storage/v1/object/public/user_images/${user.id}/${uuid}`
