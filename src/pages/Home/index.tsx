@@ -4,8 +4,8 @@ import Navbar from "@/components/navbar";
 import TemplateCard from "./templateCard";
 
 import {
+  imageBasedAnimation,
   otherAnimation,
-  // imageBasedAnimation,
   textBasedAnimation,
 } from "@/data/animationTemplates";
 
@@ -23,6 +23,22 @@ const Home = () => {
             <h4 className="mb-5 text-lg font-medium">Text Based</h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
               {textBasedAnimation.map((template) => (
+                <TemplateCard
+                  key={template.url}
+                  name={template.name}
+                  url={template.url}
+                  img={template.img}
+                  handleNavigate={handleNavigate}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+        <div className="flex items-center justify-center">
+          <div className="my-5 mx-5">
+            <h4 className="mb-5 text-lg font-medium">Image Based</h4>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+              {imageBasedAnimation.map((template) => (
                 <TemplateCard
                   key={template.url}
                   name={template.name}

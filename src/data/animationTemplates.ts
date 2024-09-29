@@ -25,17 +25,17 @@ export const textBasedAnimation: {
   },
 ];
 
-// export const imageBasedAnimation: {
-//   name: string;
-//   url: string;
-//   img: string;
-// }[] = [
-//   {
-//     name: "Image Flyers",
-//     url: "/image-flyers",
-//     img: textFlyers,
-//   },
-// ];
+export const imageBasedAnimation: {
+  name: string;
+  url: string;
+  img: string;
+}[] = [
+  {
+    name: "ASCII Art",
+    url: "/ascii-art",
+    img: "https://nvahzazenzjsisbjthhb.supabase.co/storage/v1/object/public/assets/gif/textFalling.gif",
+  },
+];
 
 export const otherAnimation: {
   name: string;
