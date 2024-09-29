@@ -10,14 +10,18 @@ import { Button } from "@/components/ui/button";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import ExportModal from "@/components/export-modal";
 
+import { videoDownloadFormats } from "@/data/canvas";
+
 const TemplateNavbar = ({
   templateName,
   screenResolution,
+  downloadFormats = videoDownloadFormats,
   handleFormDataChange,
   handleExportAnimation,
 }: {
   templateName: string;
   screenResolution: string;
+  downloadFormats?: string[];
   handleFormDataChange: (key: string, value: string) => void;
   handleExportAnimation: (fileName: string, fileFormat: string) => void;
 }) => {
@@ -62,6 +66,7 @@ const TemplateNavbar = ({
       <ExportModal
         templateName={templateName}
         screenResolution={screenResolution}
+        downloadFormats={downloadFormats}
         handleExportAnimation={handleExportAnimation}
       />
     </div>

@@ -25,3 +25,6 @@ export const aspectRatio: {
     desiredHeight: 1080,
   },
 };
+
+export const videoDownloadFormats = ["webm"];
+export const imageDownloadFormats = ["png", "jpg", "jpeg", "webp", "bmp"];
