@@ -28,17 +28,19 @@ import { aspectRatio } from "@/data/canvas";
 const ExportModal = ({
   templateName,
   screenResolution,
+  downloadFormats,
   handleExportAnimation,
 }: {
   templateName: string;
   screenResolution: string;
+  downloadFormats: string[];
   handleExportAnimation: (fileName: string, fileFormat: string) => void;
 }) => {
   const { user } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [fileDetails, setFileDetails] = useState({
     fileName: "",
-    fileFormat: "webm",
+    fileFormat: downloadFormats[0],
   });
 
   const handleFileDetailsChange = (key: string, value: string) => {
@@ -47,7 +49,7 @@ const ExportModal = ({
 
   const toggleModal = () => {
     setIsModalOpen((prevState) => !prevState);
-    setFileDetails({ fileName: "", fileFormat: "webm" });
+    setFileDetails({ fileName: "", fileFormat: downloadFormats[0] });
   };
 
   const exportAnimation = async () => {
@@ -125,9 +127,13 @@ const ExportModal = ({
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="webm">webm</SelectItem>
-                  {/* <SelectItem value="mp4">mp4</SelectItem>
-                  <SelectItem value="gif">gif</SelectItem> */}
+                  {downloadFormats.map((format) => {
+                    return (
+                      <SelectItem key={format} value={format}>
+                        {format}
+                      </SelectItem>
+                    );
+                  })}
                 </SelectGroup>
               </SelectContent>
             </Select>
