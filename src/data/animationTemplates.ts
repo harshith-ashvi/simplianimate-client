@@ -35,6 +35,11 @@ export const imageBasedAnimation: {
     url: "/ascii-art",
     img: "https://nvahzazenzjsisbjthhb.supabase.co/storage/v1/object/public/assets/images/ascii-image.png",
   },
+  {
+    name: "Pixel Art",
+    url: "/pixel-art",
+    img: "https://nvahzazenzjsisbjthhb.supabase.co/storage/v1/object/public/assets/images/pixel-effect-landscape.png",
+  },
 ];
 
 export const otherAnimation: {

@@ -12,6 +12,7 @@ import TextReveal from "@/pages/TextReveal";
 import TextFalling from "@/pages/TextFalling";
 
 import ASCII from "@/pages/ASCI";
+import PixelEffect from "@/pages/PixelEffect";
 
 import Kotyadhipati from "@/pages/Kotyadhipati";
 import GradientArora from "@/pages/GradientArora";
@@ -88,6 +89,14 @@ const AppRoutes = () => {
         element={
           <TemplateScreen>
             <ASCII />
+          </TemplateScreen>
+        }
+      />
+      <Route
+        path="/pixel-art"
+        element={
+          <TemplateScreen>
+            <PixelEffect />
           </TemplateScreen>
         }
       />
