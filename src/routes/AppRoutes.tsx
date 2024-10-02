@@ -11,6 +11,8 @@ import MatrixRain from "@/pages/MatrixRain";
 import TextReveal from "@/pages/TextReveal";
 import TextFalling from "@/pages/TextFalling";
 
+import ASCII from "@/pages/ASCI";
+
 import Kotyadhipati from "@/pages/Kotyadhipati";
 import GradientArora from "@/pages/GradientArora";
 
@@ -78,6 +80,14 @@ const AppRoutes = () => {
         element={
           <TemplateScreen>
             <GradientArora />
+          </TemplateScreen>
+        }
+      />
+      <Route
+        path="/ascii-art"
+        element={
+          <TemplateScreen>
+            <ASCII />
           </TemplateScreen>
         }
       />
