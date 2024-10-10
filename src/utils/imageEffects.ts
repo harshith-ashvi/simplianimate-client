@@ -1,3 +1,4 @@
+// acsii effect cell
 class Cell {
   x: number; // Declare properties
   y: number;
@@ -19,6 +20,7 @@ class Cell {
   }
 }
 
+// acsii effect
 export class ASCIIEffect {
   #imageCellArray: Cell[] = [];
   #symbols: string = "Ñ@#W$9876543210?!abc;:+=-,._ ";
@@ -83,6 +85,109 @@ export class ASCIIEffect {
         this.#context.font = `${cellSize * 1.2}px Verdana`;
       }
       this.#drawAscii(isColored);
+    } else {
+      this.#drawImage(image);
+    }
+  }
+}
+
+class PixelCell {
+  x: number;
+  y: number;
+  cellSize: number;
+  radius: number;
+  color: string;
+  constructor(x: number, y: number, cellSize: number, color: string) {
+    this.x = x;
+    this.y = y;
+    this.cellSize = cellSize;
+    this.radius = cellSize / 2;
+    this.color = color;
+  }
+  draw(context: CanvasRenderingContext2D, shape: string) {
+    context.fillStyle = this.color;
+    switch (shape) {
+      case "Semi-Circle":
+      case "Circle":
+        context.beginPath();
+        context.arc(
+          this.x + this.radius,
+          this.y + this.radius,
+          this.radius,
+          0,
+          shape === "Semi-Circle" ? Math.PI : 2 * Math.PI
+        );
+        context.fillStyle = this.color;
+        context.fill();
+        break;
+      default:
+        context.fillRect(this.x, this.y, this.cellSize, this.cellSize);
+        break;
+    }
+  }
+}
+
+// pixel effect
+export class PixelEffect {
+  #imageCellArray: PixelCell[] = [];
+  #context: CanvasRenderingContext2D | null = null;
+  #width: number = 0;
+  #height: number = 0;
+  #pixels: ImageData | null = null;
+  constructor(
+    context: CanvasRenderingContext2D,
+    image: HTMLImageElement,
+    width: number,
+    height: number
+  ) {
+    this.#context = context;
+    this.#width = width;
+    this.#height = height;
+    this.#context.drawImage(image, 0, 0, this.#width, this.#height);
+    this.#pixels = this.#context.getImageData(0, 0, this.#width, this.#height);
+  }
+
+  #scanImage(cellSize: number) {
+    this.#imageCellArray = [];
+    if (this.#pixels) {
+      for (let y = 0; y < this.#pixels.height; y += cellSize) {
+        for (let x = 0; x < this.#pixels.width; x += cellSize) {
+          const index = (y * this.#pixels.width + x) * 4;
+          // if (this.#pixels.data[index + 3] > 128) {
+          const r = this.#pixels.data[index];
+          const g = this.#pixels.data[index + 1];
+          const b = this.#pixels.data[index + 2];
+          const color = `rgb(${r}, ${g}, ${b})`;
+          this.#imageCellArray.push(new PixelCell(x, y, cellSize, color));
+          // }
+        }
+      }
+    }
+  }
+
+  #drawPixel(shape: string) {
+    if (this.#context) {
+      this.#context.clearRect(0, 0, this.#width, this.#height);
+      this.#context.fillStyle = "black";
+      this.#context.fillRect(0, 0, this.#width, this.#height);
+      console.log("first", this.#imageCellArray);
+      for (let i = 0; i < this.#imageCellArray.length; i++) {
+        this.#imageCellArray[i].draw(this.#context, shape);
+      }
+    }
+  }
+
+  #drawImage(image: HTMLImageElement) {
+    if (this.#context) {
+      this.#context.clearRect(0, 0, this.#width, this.#height);
+      this.#context.drawImage(image, 0, 0, this.#width, this.#height);
+    }
+  }
+
+  draw(image: HTMLImageElement, cellSize: number, shape: string) {
+    if (cellSize > 1) {
+      this.#scanImage(cellSize);
+      this.#drawPixel(shape);
     } else {
       this.#drawImage(image);
     }
