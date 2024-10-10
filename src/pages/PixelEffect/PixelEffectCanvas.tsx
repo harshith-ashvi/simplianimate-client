@@ -1,11 +1,11 @@
 import { useEffect, useLayoutEffect, useRef } from "react";
 
 import { preloadImages } from "@/utils/images";
-import { ASCIIEffect } from "@/utils/imageEffects";
+import { PixelEffect } from "@/utils/imageEffects";
 
-import { ASCIIEffectForm } from "@/types/effectsOptions";
+import { PixelEffectFormType } from "@/types/effectsOptions";
 
-const ASCIICanvas = ({
+const PixelEffectCanvas = ({
   width,
   height,
   formData,
@@ -14,7 +14,7 @@ const ASCIICanvas = ({
 }: {
   width: number;
   height: number;
-  formData: ASCIIEffectForm;
+  formData: PixelEffectFormType;
   downloadFile: {
     canDownload: boolean;
     fileName: string;
@@ -73,14 +73,13 @@ const ASCIICanvas = ({
           canvas.width = newWidth;
           canvas.height = newHeight;
 
-          const asciiEffect = new ASCIIEffect(
+          const pixelEffect = new PixelEffect(
             context,
             image,
             newWidth,
-            newHeight,
-            formData.symbols
+            newHeight
           );
-          asciiEffect.draw(formData.resolution, image, formData.isColored);
+          pixelEffect.draw(image, formData.resolution, formData.shape);
         }
       );
     }
@@ -107,7 +106,7 @@ const ASCIICanvas = ({
   return (
     <div className="h-full flex items-center justify-center bg-template-canvas">
       <canvas
-        id="ascii-art"
+        id="pixel-art"
         data-transition-in
         ref={canvasRef}
         width={width - 100}
@@ -118,4 +117,4 @@ const ASCIICanvas = ({
   );
 };
 
-export default ASCIICanvas;
+export default PixelEffectCanvas;

@@ -5,3 +5,10 @@ export interface ASCIIEffectForm {
   symbols: string;
   imageUrl: string;
 }
+
+export interface PixelEffectFormType {
+  screenResolution: string;
+  resolution: number;
+  shape: string;
+  imageUrl: string;
+}
