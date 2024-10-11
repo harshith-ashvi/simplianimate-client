@@ -13,6 +13,7 @@ import TextFalling from "@/pages/TextFalling";
 
 import ASCII from "@/pages/ASCI";
 import PixelEffect from "@/pages/PixelEffect";
+import DisplacementMap from "@/pages/DisplacementMap";
 
 import Kotyadhipati from "@/pages/Kotyadhipati";
 import GradientArora from "@/pages/GradientArora";
@@ -97,6 +98,14 @@ const AppRoutes = () => {
         element={
           <TemplateScreen>
             <PixelEffect />
+          </TemplateScreen>
+        }
+      />
+      <Route
+        path="/displacement-map"
+        element={
+          <TemplateScreen>
+            <DisplacementMap />
           </TemplateScreen>
         }
       />
