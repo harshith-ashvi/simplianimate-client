@@ -40,6 +40,11 @@ export const imageBasedAnimation: {
     url: "/pixel-art",
     img: "https://nvahzazenzjsisbjthhb.supabase.co/storage/v1/object/public/assets/images/pixel-effect-landscape.png",
   },
+  {
+    name: "Displacement Map",
+    url: "/displacement-map",
+    img: "https://nvahzazenzjsisbjthhb.supabase.co/storage/v1/object/public/assets/images/pixel-effect-landscape.png",
+  },
 ];
 
 export const otherAnimation: {
