@@ -211,7 +211,6 @@ export class DisplacementMapEffect {
   }
   #createDisplacementMap() {
     const map = new Uint8ClampedArray(this.#width * this.#height * 4); // RGBA array
-    console.log("first", map);
     for (let i = 0; i < map.length; i += 4) {
       map[i] = Math.random() * 255; // Red (used for x displacement)
       map[i + 1] = Math.random() * 255; // Green (used for y displacement)
@@ -252,7 +251,12 @@ export class DisplacementMapEffect {
 
     return new ImageData(newImageData, width, height);
   }
-  draw(strength: number, hFactor: number, vFactor: number) {
+  draw(
+    // displacementEffectType: string,
+    strength: number,
+    hFactor: number,
+    vFactor: number
+  ) {
     if (!this.#context) return;
     const displacementMap = this.#createDisplacementMap(); // Custom function to create displacement map
 

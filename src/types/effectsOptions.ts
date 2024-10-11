@@ -15,6 +15,7 @@ export interface PixelEffectFormType {
 
 export interface DisplacementMapEffectFormType {
   screenResolution: string;
+  displacementEffectType: "Glass";
   strength: number;
   horizontalDisplacement: number;
   verticalDisplacement: number;

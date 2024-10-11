@@ -80,6 +80,7 @@ const DisplacementMapCanvas = ({
             newHeight
           );
           displacementEffect.draw(
+            // formData.displacementEffectType,
             formData.strength,
             formData.horizontalDisplacement,
             formData.verticalDisplacement

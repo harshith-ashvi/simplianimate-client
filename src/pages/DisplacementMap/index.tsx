@@ -35,6 +35,7 @@ const DisplacementMap = () => {
   });
   const [formData, setFormData] = useState<DisplacementMapEffectFormType>({
     screenResolution: "Portrait",
+    displacementEffectType: "Glass",
     strength: 10,
     horizontalDisplacement: 1,
     verticalDisplacement: 1,

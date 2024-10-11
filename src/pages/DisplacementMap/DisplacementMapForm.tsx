@@ -2,18 +2,19 @@ import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import FileUpload from "@/components/ui/file-upload";
 
-// import {
-//   Select,
-//   SelectContent,
-//   SelectGroup,
-//   SelectItem,
-//   SelectTrigger,
-//   SelectValue,
-// } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 import { DisplacementMapEffectFormType } from "@/types/effectsOptions";
 
-// const shapes = ["Square", "Circle", "Semi-Circle"];
+// const displacementEffectTypes = ["Glass", "Pattern", "Noise", "Glitch"];
+const displacementEffectTypes = ["Glass"];
 
 const DisplacementMapForm = ({
   formData,
@@ -73,29 +74,34 @@ const DisplacementMapForm = ({
           className="mt-2"
         />
       </div>
-      {/* <div className="my-4">
+      <div className="my-4">
         <Label htmlFor="text">Pixel Shape</Label>
         <Select
-          defaultValue="Square"
-          value={formData.shape}
-          onValueChange={(value) => handleFormDataChange("shape", value)}
+          defaultValue="Glass"
+          value={formData.displacementEffectType}
+          onValueChange={(value) =>
+            handleFormDataChange("displacementEffectType", value)
+          }
         >
           <SelectTrigger className="col-span-3">
             <SelectValue placeholder="Select file format" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              {shapes.map((shape) => {
+              {displacementEffectTypes.map((displacementEffectType) => {
                 return (
-                  <SelectItem key={shape} value={shape}>
-                    {shape}
+                  <SelectItem
+                    key={displacementEffectType}
+                    value={displacementEffectType}
+                  >
+                    {displacementEffectType}
                   </SelectItem>
                 );
               })}
             </SelectGroup>
           </SelectContent>
         </Select>
-      </div> */}
+      </div>
       <div className="my-4">
         <Label htmlFor="text">Image</Label>
         <FileUpload onFilesUploaded={onFilesUploaded} />
