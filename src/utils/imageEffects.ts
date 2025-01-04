@@ -168,7 +168,6 @@ export class PixelEffect {
       this.#context.clearRect(0, 0, this.#width, this.#height);
       this.#context.fillStyle = "black";
       this.#context.fillRect(0, 0, this.#width, this.#height);
-      console.log("first", this.#imageCellArray);
       for (let i = 0; i < this.#imageCellArray.length; i++) {
         this.#imageCellArray[i].draw(this.#context, shape);
       }
