@@ -9,15 +9,15 @@ import Signup from "@/pages/Auth/Signup";
 const AuthRoutes = () => {
   const { user } = useAuth();
 
-  if (user) return null;
+  if (user) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <Routes>
       <Route path="/signin" element={<Signin />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
-      <Route path="/" element={<Signin />} />
-      <Route path="*" element={<Navigate to="/signin" />} />
     </Routes>
   );
 };
