@@ -1,8 +1,6 @@
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
-import TemplateScreen from "@/layouts/TemplateScreen";
 import DashboardLayout from "@/layouts/DashboardLayout";
-import { useAuth } from "@/components/auth/Auth";
 
 import Home from "@/pages/Home";
 
@@ -22,17 +20,13 @@ import TestDemos from "@/pages/TestDemo";
 import RecoverPassword from "@/pages/Auth/RecoverPassword";
 
 const AppRoutes = () => {
-  const { user } = useAuth();
-
-  if (!user) return;
-
   return (
     <Routes>
       <Route path="/reset-password" element={<RecoverPassword />} />
       <Route
-        path="/"
+        path="/dashboard"
         element={
-          <DashboardLayout>
+          <DashboardLayout isTemplate={false}>
             <Home />
           </DashboardLayout>
         }
@@ -40,84 +34,93 @@ const AppRoutes = () => {
       <Route
         path="/text-flyers"
         element={
-          <TemplateScreen>
+          <DashboardLayout>
             <TextFlyers />
-          </TemplateScreen>
+          </DashboardLayout>
         }
       />
       <Route
         path="/matrix-rain"
         element={
-          <TemplateScreen>
+          <DashboardLayout>
             <MatrixRain />
-          </TemplateScreen>
+          </DashboardLayout>
         }
       />
       <Route
         path="/text-reveal"
         element={
-          <TemplateScreen>
+          <DashboardLayout>
             <TextReveal />
-          </TemplateScreen>
+          </DashboardLayout>
         }
       />
       <Route
         path="/text-falling"
         element={
-          <TemplateScreen>
+          <DashboardLayout>
             <TextFalling />
-          </TemplateScreen>
+          </DashboardLayout>
         }
       />
       <Route
         path="/quiz"
         element={
-          <TemplateScreen>
+          <DashboardLayout>
             <Kotyadhipati />
-          </TemplateScreen>
+          </DashboardLayout>
         }
       />
       <Route
         path="/gradient-arora"
         element={
-          <TemplateScreen>
+          <DashboardLayout>
             <GradientArora />
-          </TemplateScreen>
+          </DashboardLayout>
         }
       />
       <Route
         path="/ascii-art"
         element={
-          <TemplateScreen>
+          <DashboardLayout>
             <ASCII />
-          </TemplateScreen>
+          </DashboardLayout>
         }
       />
       <Route
         path="/pixel-art"
         element={
-          <TemplateScreen>
+          <DashboardLayout>
             <PixelEffect />
-          </TemplateScreen>
+          </DashboardLayout>
         }
       />
       <Route
         path="/displacement-map"
         element={
-          <TemplateScreen>
+          <DashboardLayout>
             <DisplacementMap />
-          </TemplateScreen>
+          </DashboardLayout>
+        }
+      />
+      <Route
+        path="/displacement-map"
+        element={
+          <DashboardLayout>
+            <DisplacementMap />
+          </DashboardLayout>
         }
       />
       <Route
         path="/test-demos"
         element={
-          <TemplateScreen>
+          <DashboardLayout>
             <TestDemos />
-          </TemplateScreen>
+          </DashboardLayout>
         }
       />
-      <Route path="*" element={<Navigate to="/" />} />
+      <Route path="/" element={<Home />} />
+      {/* <Route path="*" element={<Navigate to="/" />} /> */}
     </Routes>
   );
 };

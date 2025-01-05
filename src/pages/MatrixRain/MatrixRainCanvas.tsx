@@ -21,6 +21,7 @@ class EffectSymbol {
     this.canvasHeight = canvasHeight;
     this.text = "";
   }
+
   draw(context: CanvasRenderingContext2D, customCharacters: string) {
     this.characters = customCharacters.length
       ? customCharacters

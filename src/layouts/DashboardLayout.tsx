@@ -1,16 +1,19 @@
-import { Navigate } from "react-router-dom";
-
-import { useAuth } from "@/components/auth/Auth";
-
-const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
-  const { user } = useAuth();
-
-  if (!user) {
-    // user is not authenticated
-    return <Navigate to="/signin" />;
-  }
-
-  return <div className="">{children}</div>;
+const DashboardLayout = ({
+  children,
+  isTemplate = true,
+}: {
+  children: React.ReactNode;
+  isTemplate?: boolean;
+}) => {
+  return (
+    <div
+      className={
+        isTemplate ? "md:h-screen-minus-45 max-md:h-screen-minus-70" : ""
+      }
+    >
+      {children}
+    </div>
+  );
 };
 
 export default DashboardLayout;
