@@ -97,53 +97,63 @@ const ExportModal = ({
         <p className="flex items-center justify-center sm:hidden">
           Export works on web browsers
         </p>
-        <div className="grid gap-4 py-4 max-sm:hidden">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              File Name
-            </Label>
-            <Input
-              id="name"
-              value={fileDetails.fileName}
-              className="col-span-3"
-              onChange={(e) =>
-                handleFileDetailsChange("fileName", e.target.value)
-              }
-            />
+        {user ? (
+          <div className="grid gap-4 py-4 max-sm:hidden">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="name" className="text-right">
+                File Name
+              </Label>
+              <Input
+                id="name"
+                value={fileDetails.fileName}
+                className="col-span-3"
+                onChange={(e) =>
+                  handleFileDetailsChange("fileName", e.target.value)
+                }
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="fileFormat" className="text-right">
+                File Format
+              </Label>
+              <Select
+                defaultValue="mp4"
+                value={fileDetails.fileFormat}
+                onValueChange={(value) =>
+                  handleFileDetailsChange("fileFormat", value)
+                }
+              >
+                <SelectTrigger className="col-span-3">
+                  <SelectValue placeholder="Select file format" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {downloadFormats.map((format) => {
+                      return (
+                        <SelectItem key={format} value={format}>
+                          {format}
+                        </SelectItem>
+                      );
+                    })}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="fileFormat" className="text-right">
-              File Format
-            </Label>
-            <Select
-              defaultValue="mp4"
-              value={fileDetails.fileFormat}
-              onValueChange={(value) =>
-                handleFileDetailsChange("fileFormat", value)
-              }
-            >
-              <SelectTrigger className="col-span-3">
-                <SelectValue placeholder="Select file format" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  {downloadFormats.map((format) => {
-                    return (
-                      <SelectItem key={format} value={format}>
-                        {format}
-                      </SelectItem>
-                    );
-                  })}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
+        ) : (
+          <div>
+            <p>You need to sign in or create an account to download files</p>
+            <Button>Login</Button>
           </div>
-        </div>
-        <DialogFooter className="max-sm:hidden">
-          <Button type="submit" onClick={exportAnimation}>
-            Export
-          </Button>
-        </DialogFooter>
+        )}
+
+        {user ? (
+          <DialogFooter className="max-sm:hidden">
+            <Button type="submit" onClick={exportAnimation}>
+              Export
+            </Button>
+          </DialogFooter>
+        ) : null}
       </DialogContent>
     </Dialog>
   );
