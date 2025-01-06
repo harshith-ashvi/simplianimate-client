@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -141,10 +142,19 @@ const ExportModal = ({
             </div>
           </div>
         ) : (
-          <div>
-            <p>You need to sign in or create an account to download files</p>
-            <Button>Login</Button>
-          </div>
+          <>
+            <p className="text-center">
+              You need to sign in or create an account to download files
+            </p>
+            <div className="mt-4 text-center">
+              <Button variant="link" className="mr-10">
+                <Link to="/signin">Login</Link>
+              </Button>
+              <Button variant="outline">
+                <Link to="/signup">Signup</Link>
+              </Button>
+            </div>
+          </>
         )}
 
         {user ? (
