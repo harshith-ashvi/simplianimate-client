@@ -42,6 +42,11 @@ export class ASCIIEffect {
     this.#context.drawImage(image, 0, 0, this.#width, this.#height);
     this.#pixels = this.#context.getImageData(0, 0, this.#width, this.#height);
   }
+  #getCharacters(colorValue: number) {
+    const intervalSize = 255 / this.#symbols.length;
+    const index = Math.floor(colorValue / intervalSize);
+    return this.#symbols[Math.min(index, this.#symbols.length - 1)] ?? 0;
+  }
   #scanImage(cellSize: number) {
     this.#imageCellArray = [];
     if (this.#pixels) {
@@ -53,7 +58,8 @@ export class ASCIIEffect {
             const g = this.#pixels.data[index + 1];
             const b = this.#pixels.data[index + 2];
             const avg = (r + g + b) / 3;
-            const symbol = this.#symbols[Math.floor(avg / 25)];
+            // const symbol = this.#symbols[Math.floor(avg / 25)];
+            const symbol = this.#getCharacters(avg);
             const color = `rgb(${r}, ${g}, ${b})`;
             if (avg > 25)
               this.#imageCellArray.push(new Cell(x, y, symbol, color));
@@ -62,10 +68,10 @@ export class ASCIIEffect {
       }
     }
   }
-  #drawAscii(isColored: Boolean) {
+  #drawAscii(isColored: Boolean, backgroundColor: string) {
     if (this.#context) {
       this.#context.clearRect(0, 0, this.#width, this.#height);
-      this.#context.fillStyle = "black";
+      this.#context.fillStyle = backgroundColor ?? "black";
       this.#context.fillRect(0, 0, this.#width, this.#height);
       for (let i = 0; i < this.#imageCellArray.length; i++) {
         this.#imageCellArray[i].draw(this.#context, isColored);
@@ -78,13 +84,18 @@ export class ASCIIEffect {
       this.#context.drawImage(image, 0, 0, this.#width, this.#height);
     }
   }
-  draw(cellSize: number, image: HTMLImageElement, isColored: Boolean) {
+  draw(
+    cellSize: number,
+    image: HTMLImageElement,
+    isColored: Boolean,
+    backgroundColor: string
+  ) {
     if (cellSize > 1) {
       this.#scanImage(cellSize);
       if (this.#context) {
         this.#context.font = `${cellSize * 1.2}px Verdana`;
       }
-      this.#drawAscii(isColored);
+      this.#drawAscii(isColored, backgroundColor);
     } else {
       this.#drawImage(image);
     }

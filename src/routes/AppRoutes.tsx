@@ -9,7 +9,7 @@ import MatrixRain from "@/pages/MatrixRain";
 import TextReveal from "@/pages/TextReveal";
 import TextFalling from "@/pages/TextFalling";
 
-import ASCII from "@/pages/ASCI";
+import ASCII from "@/pages/ASCII";
 import PixelEffect from "@/pages/PixelEffect";
 import DisplacementMap from "@/pages/DisplacementMap";
 

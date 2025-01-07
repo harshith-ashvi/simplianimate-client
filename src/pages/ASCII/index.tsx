@@ -35,6 +35,7 @@ const ASCII = () => {
   });
   const [formData, setFormData] = useState<ASCIIEffectForm>({
     screenResolution: "Portrait",
+    backgroundColor: "#000000",
     isColored: true,
     symbols: "Ñ@#W$9876543210?!abc;:+=-,._ ",
     resolution: 5,

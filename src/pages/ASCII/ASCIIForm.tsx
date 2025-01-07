@@ -5,6 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import FileUpload from "@/components/ui/file-upload";
 
 import { ASCIIEffectForm } from "@/types/effectsOptions";
+import { Input } from "@/components/ui/input";
 
 const ASCIIForm = ({
   formData,
@@ -24,6 +25,17 @@ const ASCIIForm = ({
 
   return (
     <div className="p-5 overflow-y-auto md:h-screen-minus-45 max-md:h-fit bg-template-form">
+      <div>
+        <Label htmlFor="backgroundColor">Background color</Label>
+        <Input
+          id="backgroundColor"
+          type="color"
+          value={formData.backgroundColor}
+          onChange={(e) =>
+            handleFormDataChange("backgroundColor", e.target.value)
+          }
+        />
+      </div>
       <div className="flex items-center justify-between my-2">
         <Label htmlFor="gradientOne">Colored</Label>
         <Switch
