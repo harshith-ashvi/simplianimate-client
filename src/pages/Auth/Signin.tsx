@@ -1,7 +1,8 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -33,11 +34,17 @@ const FormSchema = z.object({
 });
 
 const Signin = () => {
-  const { signin, signinWithProvider, loading, errorMessage } = useAuth();
+  const { user, signin, signinWithProvider, loading, errorMessage } = useAuth();
   const form = useForm<FormValues>({
     resolver: zodResolver(FormSchema),
     defaultValues: { email: "", password: "" },
   });
+
+  useEffect(() => {
+    if (user) {
+      <Navigate to="/" />;
+    }
+  }, []);
 
   const onSubmit = async (formData: FormValues) => signin(formData);
 

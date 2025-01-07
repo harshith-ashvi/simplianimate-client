@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { MailCheck, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -44,14 +44,26 @@ const FormSchema = z.object({
 });
 
 const Signup = () => {
-  const { signinWithProvider, signup, loading, isMessageSent, errorMessage } =
-    useAuth();
+  const {
+    user,
+    signinWithProvider,
+    signup,
+    loading,
+    isMessageSent,
+    errorMessage,
+  } = useAuth();
   const [isTermsAgreed, setIsTermsAgreed] = useState<boolean>(false);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(FormSchema),
     defaultValues: { name: "", email: "", password: "" },
   });
+
+  useEffect(() => {
+    if (user) {
+      <Navigate to="/" />;
+    }
+  }, []);
 
   const onSubmit = async ({ name, email, password }: FormValues) =>
     signup({ name, email, password });

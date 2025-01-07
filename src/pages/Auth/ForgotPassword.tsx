@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { Navigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { MailCheck, X } from "lucide-react";
@@ -28,13 +30,24 @@ const FormSchema = z.object({
 });
 
 const ForgotPassword = () => {
-  const { handleResetPasswordForEmail, loading, isMessageSent, errorMessage } =
-    useAuth();
+  const {
+    user,
+    handleResetPasswordForEmail,
+    loading,
+    isMessageSent,
+    errorMessage,
+  } = useAuth();
 
   const form = useForm<FormValues>({
     resolver: zodResolver(FormSchema),
     defaultValues: { email: "" },
   });
+
+  useEffect(() => {
+    if (user) {
+      <Navigate to="/" />;
+    }
+  }, []);
 
   const onSubmit = async (formData: FormValues) =>
     handleResetPasswordForEmail(formData.email);
