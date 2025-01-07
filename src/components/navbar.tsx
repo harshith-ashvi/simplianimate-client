@@ -61,11 +61,13 @@ const Navbar = () => {
           </div>
         </div>
         <div className="flex lg:gap-x-5 gap-x-2">
-          <UserButton
-            handleSignout={signout}
-            avatarUrl={avatarUrl}
-            userInitial={userInitial}
-          />
+          {user ? (
+            <UserButton
+              handleSignout={signout}
+              avatarUrl={avatarUrl}
+              userInitial={userInitial}
+            />
+          ) : null}
           <div className="lg:hidden duration-200 ease-in">
             {isNavOpen ? (
               <X size={32} onClick={toggleOpenNav} />
