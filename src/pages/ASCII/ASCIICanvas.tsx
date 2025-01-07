@@ -80,7 +80,12 @@ const ASCIICanvas = ({
             newHeight,
             formData.symbols
           );
-          asciiEffect.draw(formData.resolution, image, formData.isColored);
+          asciiEffect.draw(
+            formData.resolution,
+            image,
+            formData.isColored,
+            formData.backgroundColor
+          );
         }
       );
     }

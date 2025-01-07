@@ -1,6 +1,7 @@
 export interface ASCIIEffectForm {
   screenResolution: string;
   resolution: number;
+  backgroundColor: string;
   isColored: boolean;
   symbols: string;
   imageUrl: string;
