@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useRef } from "react";
 
 import { preloadImages } from "@/utils/images";
-import { ASCIIEffect } from "@/utils/imageEffects";
+import { ComicEffect } from "@/utils/imageEffects";
 
 import { ASCIIEffectForm } from "@/types/effectsOptions";
 
@@ -73,19 +73,13 @@ const ComicEffectCanvas = ({
           canvas.width = newWidth;
           canvas.height = newHeight;
 
-          const asciiEffect = new ASCIIEffect(
+          const asciiEffect = new ComicEffect(
             context,
             image,
             newWidth,
-            newHeight,
-            formData.symbols
+            newHeight
           );
-          asciiEffect.draw(
-            formData.resolution,
-            image,
-            formData.isColored,
-            formData.backgroundColor
-          );
+          asciiEffect.draw(image);
         }
       );
     }

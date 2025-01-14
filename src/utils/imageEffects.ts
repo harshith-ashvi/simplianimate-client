@@ -282,3 +282,136 @@ export class DisplacementMapEffect {
     this.#context.putImageData(displacedImageData, 0, 0);
   }
 }
+
+export class ComicEffect {
+  #context: CanvasRenderingContext2D | null = null;
+  #width: number = 0;
+  #height: number = 0;
+  #pixels: ImageData | null = null;
+  constructor(
+    context: CanvasRenderingContext2D,
+    image: HTMLImageElement,
+    width: number,
+    height: number
+  ) {
+    this.#context = context;
+    this.#width = width;
+    this.#height = height;
+    this.#context.drawImage(image, 0, 0, this.#width, this.#height);
+    this.#pixels = this.#context.getImageData(0, 0, this.#width, this.#height);
+  }
+  #applyHalftoneDots() {
+    const dotSize = 5;
+    console.log(dotSize);
+
+    if (this.#pixels && this.#context) {
+      const data = this.#pixels.data;
+      for (let y = 0; y < this.#pixels.height; y += dotSize) {
+        for (let x = 0; x < this.#pixels.width; x += dotSize) {
+          const index = (y * this.#width + x) * 4;
+          const avg = (data[index] + data[index + 1] + data[index + 2]) / 3; // Grayscale average
+          const radius = (dotSize / 255) * avg;
+
+          this.#context.fillStyle = `rgb(${data[index]}, ${data[index + 1]}, ${
+            data[index + 2]
+          })`;
+          this.#context.beginPath();
+          this.#context.arc(
+            x + dotSize / 2,
+            y + dotSize / 2,
+            radius / 2,
+            0,
+            Math.PI * 2
+          );
+          this.#context.fill();
+        }
+      }
+    }
+  }
+
+  #applyBoldOutlines() {
+    const outlineThreshold = 80; // Edge detection threshold
+    if (this.#pixels && this.#context) {
+      const data = this.#pixels.data;
+      // Create an empty array for the edge detection result
+      const edgeData = new Uint8ClampedArray(data.length);
+      for (let y = 1; y < this.#pixels.height - 1; y++) {
+        for (let x = 1; x < this.#pixels.width - 1; x++) {
+          const index = (y * this.#pixels.width + x) * 4;
+
+          // Calculate differences in brightness
+          const brightness =
+            (data[index] + data[index + 1] + data[index + 2]) / 3;
+          const brightnessRight =
+            (data[index + 4] + data[index + 5] + data[index + 6]) / 3;
+          const brightnessDown =
+            (data[index + this.#pixels.width * 4] +
+              data[index + this.#pixels.width * 4 + 1] +
+              data[index + this.#pixels.width * 4 + 2]) /
+            3;
+
+          if (
+            Math.abs(brightness - brightnessRight) > outlineThreshold ||
+            Math.abs(brightness - brightnessDown) > outlineThreshold
+          ) {
+            edgeData[index] = 0; // Black outline
+            edgeData[index + 1] = 0;
+            edgeData[index + 2] = 0;
+            edgeData[index + 3] = 255;
+          } else {
+            edgeData[index] = data[index];
+            edgeData[index + 1] = data[index + 1];
+            edgeData[index + 2] = data[index + 2];
+            edgeData[index + 3] = data[index + 3];
+          }
+        }
+      }
+
+      this.#context.putImageData(
+        new ImageData(edgeData, this.#pixels.width, this.#pixels.height),
+        0,
+        0
+      );
+    }
+  }
+
+  #applyColorEnhancement() {
+    if (this.#pixels && this.#context) {
+      const data = this.#pixels.data;
+      for (let i = 0; i < data.length; i += 4) {
+        // Increase saturation by amplifying differences from the average
+        const avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+        data[i] += (data[i] - avg) * 0.5; // Red
+        data[i + 1] += (data[i + 1] - avg) * 0.5; // Green
+        data[i + 2] += (data[i + 2] - avg) * 0.5; // Blue
+      }
+
+      this.#context.putImageData(this.#pixels, 0, 0);
+    }
+  }
+
+  #drawImage(image: HTMLImageElement) {
+    if (this.#context) {
+      this.#context.clearRect(0, 0, this.#width, this.#height);
+      this.#context.drawImage(image, 0, 0, this.#width, this.#height);
+    }
+  }
+  draw(image: HTMLImageElement) {
+    this.#drawImage(image);
+    // if (cellSize > 1) {
+    //   this.#scanImage(cellSize);
+    //   this.#drawPixel(shape);
+    // } else {
+    //   this.#drawImage(image);
+    // }
+
+    // Apply halftone dots
+    this.#applyHalftoneDots();
+
+    // Apply bold outlines
+    this.#applyBoldOutlines();
+
+    // Enhance colors
+    this.#applyColorEnhancement();
+  }
+}
