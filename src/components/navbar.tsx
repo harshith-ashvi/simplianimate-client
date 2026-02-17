@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 
 import UserButton from "./navbar/UserButton";
@@ -33,7 +34,7 @@ const Navbar = () => {
       avatarUrl: user?.user_metadata?.avatar_url ?? "",
       userInitial: user?.user_metadata?.full_name[0] || "",
     }),
-    [user]
+    [user],
   );
 
   return (
@@ -48,7 +49,7 @@ const Navbar = () => {
             <img src={fullLogo} alt="SimpliAnimate" width={200} height={50} />
           </a>
           <div className="hidden lg:flex pl-[74px] gap-x-[56px]">
-            {navLinks.map((link) => (
+            {[navLinks[0]].map((link) => (
               <a
                 key={link.label}
                 href={link.href}
@@ -67,7 +68,22 @@ const Navbar = () => {
               avatarUrl={avatarUrl}
               userInitial={userInitial}
             />
-          ) : null}
+          ) : (
+            <div className="hidden lg:flex items-center gap-x-3">
+              <Link
+                to="/signin"
+                className="hidden lg:inline text-[#36485C] font-medium"
+              >
+                Login
+              </Link>
+              <Link
+                to="/signup"
+                className="lg:px-6 px-2 py-1 font-medium rounded-full bg-gradient-to-b from-green-500 to-green-600 text-white focus:ring-2 focus:ring-green-400 hover:shadow-xl transition duration-200"
+              >
+                Sign Up
+              </Link>
+            </div>
+          )}
           <div className="lg:hidden duration-200 ease-in">
             {isNavOpen ? (
               <X size={32} onClick={toggleOpenNav} />
