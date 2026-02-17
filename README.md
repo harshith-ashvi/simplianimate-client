@@ -20,6 +20,7 @@ SimpliAnimate is a browser-based tool built with React + TypeScript + Vite that 
 - [Project Structure](#project-structure)
 - [Contributing](#contributing)
 - [Request Templates](#request-templates)
+- [License](#license)
 
 ## Features
 
@@ -149,3 +150,7 @@ Contributions are welcome! Feel free to open issues or submit pull requests.
 ## Request Templates
 
 Have an idea for a new animation template? [Request it here](https://simplianimate.canny.io/).
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
