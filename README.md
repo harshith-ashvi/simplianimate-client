@@ -1,5 +1,11 @@
 # SimpliAnimate
 
+[![X (Twitter)](https://img.shields.io/badge/X-000000?style=for-the-badge&logo=x&logoColor=white)](https://x.com/HarshithAshvi) [![Buy Me a Coffee](https://img.shields.io/badge/Buy_Me_A_Coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/harshith_ashvi)
+
+<p align="center">
+  <img width="1512" height="864" alt="image" src="https://github.com/user-attachments/assets/09d071e1-fc49-4f6f-9044-1c3e1374399b" />
+</p>
+
 > An open-source web app to create animations, visual effects, and creative media — right in your browser.
 
 SimpliAnimate is a browser-based tool built with React + TypeScript + Vite that lets you generate text animations, image effects, and export them as videos or images. No software to install — just open, customize, and export.
