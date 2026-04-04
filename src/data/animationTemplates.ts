@@ -47,6 +47,11 @@ export const imageBasedAnimation: {
     url: "/displacement-map",
     img: `${cloudFlareURL}/images/displacement.png`,
   },
+  {
+    name: "Comic Effect",
+    url: "/comic-effect",
+    img: `${cloudFlareURL}/images/displacement.png`,
+  },
 ];
 
 export const otherAnimation: {

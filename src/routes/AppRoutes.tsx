@@ -12,6 +12,7 @@ import TextFalling from "@/pages/TextFalling";
 import ASCII from "@/pages/ASCII";
 import PixelEffect from "@/pages/PixelEffect";
 import DisplacementMap from "@/pages/DisplacementMap";
+import ComicEffect from "@/pages/ComicEffect";
 
 import Kotyadhipati from "@/pages/Kotyadhipati";
 import GradientArora from "@/pages/GradientArora";
@@ -100,6 +101,14 @@ const AppRoutes = () => {
         element={
           <DashboardLayout>
             <DisplacementMap />
+          </DashboardLayout>
+        }
+      />
+      <Route
+        path="/comic-effect"
+        element={
+          <DashboardLayout>
+            <ComicEffect />
           </DashboardLayout>
         }
       />
